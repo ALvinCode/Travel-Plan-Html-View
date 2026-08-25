@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青甘大环线12日携宠自驾计划 - 特斯拉Model Y</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #2e86c1;
+            --accent: #e67e22;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-light: #7f8c8d;
+            --border: #dee2e6;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header.hero {
+            background: linear-gradient(135deg, #1a5276 0%, #2e86c1 40%, #27ae60 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header.hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        header.hero h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        header.hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header.hero .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .section {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: var(--transition);
+        }
+        .section:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+        }
+        .section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section h2 .icon {
+            font-size: 1.6rem;
+        }
+        .section h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 18px 0 10px;
+            color: var(--secondary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.92rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        table thead {
+            background: var(--primary);
+            color: white;
+        }
+        table th {
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        table tbody tr:hover {
+            background: #eef4fb;
+            transition: var(--transition);
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            margin: 2px 3px;
+        }
+        .tag-green {
+            background: #d5f5e3;
+            color: #1a7a3a;
+        }
+        .tag-red {
+            background: #fde2e2;
+            color: #c0392b;
+        }
+        .tag-yellow {
+            background: #fef9e7;
+            color: #b7950b;
+        }
+        .tag-blue {
+            background: #d6eaf8;
+            color: #1a5276;
+        }
+        .tag-purple {
+            background: #e8daef;
+            color: #6c3483;
+        }
+        .tag-orange {
+            background: #fdebd0;
+            color: #ca6f1e;
+        }
+
+        .map-container {
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 2px solid var(--border);
+            position: relative;
+            height: 650px;
+            background: #e8e8e8;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+        #map:active {
+            cursor: grabbing;
+        }
+        .map-legend {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            max-width: 240px;
+            font-size: 0.85rem;
+        }
+        .map-legend h4 {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        .map-legend label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 3px 0;
+            transition: var(--transition);
+        }
+        .map-legend label:hover {
+            opacity: 0.75;
+        }
+        .map-legend input[type="checkbox"] {
+            accent-color: var(--primary);
+            width: 16px;
+            height: 16px;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+            border: 2px solid white;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 优化后的hover弹窗样式 */
+        .leaflet-tooltip.custom-tooltip {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            font-size: 0.88rem;
+            max-width: 420px;
+            min-width: 280px;
+            white-space: normal;
+            line-height: 1.7;
+            color: var(--text);
+            word-wrap: break-word;
+        }
+        .leaflet-tooltip.custom-tooltip::before {
+            border-top-color: var(--primary);
+        }
+        .tooltip-title {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+        .tooltip-item {
+            margin: 5px 0;
+            font-size: 0.85rem;
+        }
+        .tooltip-item strong {
+            color: var(--secondary);
+        }
+        .tooltip-divider {
+            border-top: 1px dashed var(--border);
+            margin: 6px 0;
+        }
+
+        .day-card {
+            border-left: 4px solid var(--secondary);
+            padding: 18px 20px;
+            margin: 18px 0;
+            background: #fafbfc;
+            border-radius: 0 10px 10px 0;
+            transition: var(--transition);
+        }
+        .day-card:hover {
+            border-left-color: var(--accent);
+            background: #f5f8fc;
+        }
+        .day-card .day-header {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .day-card .day-header .date {
+            background: var(--primary);
+            color: white;
+            padding: 3px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+        }
+
+        .charge-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+            margin: 10px 0;
+        }
+        .charge-card {
+            background: #f0f7ff;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #d0e3f5;
+        }
+        .charge-card strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 12px 0;
+        }
+        .hotel-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px;
+            background: white;
+            transition: var(--transition);
+        }
+        .hotel-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .hotel-card .hotel-name {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+        .hotel-card .hotel-detail {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin: 3px 0;
+        }
+
+        .alert-box {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .alert-warning {
+            background: #fef9e7;
+            border-left: 4px solid var(--warning);
+            color: #7d6608;
+        }
+        .alert-danger {
+            background: #fde2e2;
+            border-left: 4px solid var(--danger);
+            color: #78281f;
+        }
+        .alert-success {
+            background: #d5f5e3;
+            border-left: 4px solid var(--success);
+            color: #1a7a3a;
+        }
+        .alert-info {
+            background: #d6eaf8;
+            border-left: 4px solid var(--secondary);
+            color: #1a5276;
+        }
+
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin: 12px 0;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        .checklist-item .check {
+            color: var(--success);
+            font-weight: 700;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .tab-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .tab-btn {
+            padding: 8px 18px;
+            border-radius: 50px;
+            border: 2px solid var(--border);
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            color: var(--text);
+        }
+        .tab-btn:hover {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            header.hero {
+                padding: 25px 15px;
+            }
+            header.hero h1 {
+                font-size: 1.5rem;
+            }
+            .section {
+                padding: 15px;
+            }
+            table {
+                font-size: 0.8rem;
+            }
+            table th,
+            table td {
+                padding: 6px 5px;
+            }
+            .map-container {
+                height: 400px;
+            }
+            .map-legend {
+                max-width: 170px;
+                font-size: 0.75rem;
+                padding: 10px;
+                top: 10px;
+                right: 10px;
+            }
+            .hotel-grid {
+                grid-template-columns: 1fr;
+            }
+            .charge-info {
+                grid-template-columns: 1fr;
+            }
+            .day-card {
+                padding: 12px;
+            }
+            .leaflet-tooltip.custom-tooltip {
+                max-width: 300px;
+                min-width: 220px;
+                padding: 12px 14px;
+                font-size: 0.8rem;
+            }
+        }
+        @media (max-width: 480px) {
+            table {
+                font-size: 0.7rem;
+            }
+            .badge-group {
+                gap: 6px;
+            }
+            .badge {
+                padding: 5px 10px;
+                font-size: 0.75rem;
+            }
+            .leaflet-tooltip.custom-tooltip {
+                max-width: 260px;
+                min-width: 200px;
+                font-size: 0.75rem;
+            }
+        }
+
+        .scroll-table {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .sticky-top {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .footer-note {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="hero">
+            <h1>🐕 青甘大环线 · 12日携宠自驾计划</h1>
+            <p>特斯拉Model Y · 北京出发 · 2026年9月25日—10月6日 · 金毛犬友好</p>
+            <div class="badge-group">
+                <span class="badge">🐾 宠物友好</span>
+                <span class="badge">⚡ 全程充电规划</span>
+                <span class="badge">🏔 黑独山必去</span>
+                <span class="badge">🚗 去返不同路线</span>
+                <span class="badge">📅 12天轻松节奏</span>
+            </div>
+        </header>
+
+        <!-- 行程总览 -->
+        <div class="section">
+            <h2><span class="icon">📋</span>行程总览</h2>
+            <p style="margin-bottom:15px;">去程走<strong>北线（G6京藏高速）</strong>经巴彦淖尔入青，返程走<strong>南线（G20青银高速）</strong>经靖边回京，形成环线不重复。每日出发时间在8:00-10:00之间，到达时间控制在晚10点前。</p>
+            <div class="scroll-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>天数</th>
+                            <th>日期</th>
+                            <th>行程</th>
+                            <th>行驶距离</th>
+                            <th>核心景点</th>
+                            <th>住宿地</th>
+                            <th>出发时间</th>
+                            <th>预计到达</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Day 1</td><td>9.25(五)</td><td>北京→巴彦淖尔</td><td>约830km</td><td>沿途风光</td><td>巴彦淖尔</td><td>8:00</td><td>19:00</td></tr>
+                        <tr><td>Day 2</td><td>9.26(六)</td><td>巴彦淖尔→西宁</td><td>约680km</td><td>沿途风光</td><td>西宁</td><td>8:30</td><td>18:30</td></tr>
+                        <tr><td>Day 3</td><td>9.27(日)</td><td>西宁→塔尔寺→青海湖</td><td>约250km</td><td>塔尔寺、青海湖</td><td>青海湖/黑马河</td><td>9:00</td><td>17:00</td></tr>
+                        <tr><td>Day 4</td><td>9.28(一)</td><td>青海湖→茶卡→德令哈</td><td>约350km</td><td>茶卡盐湖</td><td>德令哈</td><td>8:30</td><td>18:00</td></tr>
+                        <tr><td>Day 5</td><td>9.29(二)</td><td>德令哈→大柴旦翡翠湖</td><td>约220km</td><td>翡翠湖</td><td>大柴旦</td><td>9:00</td><td>14:00</td></tr>
+                        <tr><td>Day 6</td><td>9.30(三)</td><td>大柴旦→冷湖→<strong>黑独山</strong>→敦煌</td><td>约510km</td><td><span class="highlight">黑独山</span></td><td>敦煌</td><td>7:30(特例)</td><td>20:00</td></tr>
+                        <tr><td>Day 7</td><td>10.1(四)</td><td>敦煌全天</td><td>市内约30km</td><td>莫高窟、鸣沙山</td><td>敦煌</td><td>9:00</td><td>18:00</td></tr>
+                        <tr><td>Day 8</td><td>10.2(五)</td><td>敦煌→嘉峪关→张掖</td><td>约600km</td><td>嘉峪关</td><td>张掖</td><td>8:30</td><td>19:00</td></tr>
+                        <tr><td>Day 9</td><td>10.3(六)</td><td>张掖→七彩丹霞→祁连</td><td>约250km</td><td>七彩丹霞</td><td>祁连</td><td>9:00</td><td>17:30</td></tr>
+                        <tr><td>Day 10</td><td>10.4(日)</td><td>祁连→西宁</td><td>约300km</td><td>祁连草原、门源</td><td>西宁</td><td>9:00</td><td>17:00</td></tr>
+                        <tr><td>Day 11</td><td>10.5(一)</td><td>西宁→靖边</td><td>约650km</td><td>沿途风光</td><td>靖边</td><td>8:30</td><td>19:30</td></tr>
+                        <tr><td>Day 12</td><td>10.6(二)</td><td>靖边→北京</td><td>约750km</td><td>返程</td><td>🏠 家</td><td>8:00</td><td>19:00</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-info" style="margin-top:15px;">
+                <strong>💡 说明：</strong>Day 6因黑独山必去且需绕行冷湖，出发时间提前至7:30（仅此一天），其余日均在8:00-10:00间出发。全程约5400km，充电规划见下方详细表格。
+            </div>
+        </div>
+
+        <!-- 地图 -->
+        <div class="section">
+            <h2><span class="icon">🗺️</span>路线地图（可交互·可筛选·hover查看详情）</h2>
+            <p style="margin-bottom:12px;">拖动地图查看、滚动缩放、点击图例筛选。鼠标悬停标记查看酒店/景点/充电站/服务区详情。去程为<span style="color:#e74c3c;font-weight:700;">红色</span>，返程为<span style="color:#8e44ad;font-weight:700;">紫色</span>，环线为<span style="color:#27ae60;font-weight:700;">绿色</span>。标记重叠时已自动偏移，确保可逐一选中。</p>
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-legend" id="mapLegend">
+                    <h4>📍 图例筛选</h4>
+                    <label><input type="checkbox" id="chkRoute" checked> <span class="legend-dot" style="background:#e74c3c;"></span> 去程路线</label>
+                    <label><input type="checkbox" id="chkRouteBack" checked> <span class="legend-dot" style="background:#8e44ad;"></span> 返程路线</label>
+                    <label><input type="checkbox" id="chkRouteLoop" checked> <span class="legend-dot" style="background:#27ae60;"></span> 环线路线</label>
+                    <label><input type="checkbox" id="chkHotel" checked> <span class="legend-dot" style="background:#e67e22;"></span> 住宿酒店</label>
+                    <label><input type="checkbox" id="chkHotelBackup" checked> <span class="legend-dot" style="background:#f5b041;"></span> 备选酒店</label>
+                    <label><input type="checkbox" id="chkScenic" checked> <span class="legend-dot" style="background:#2ecc71;"></span> 景点</label>
+                    <label><input type="checkbox" id="chkScenicBackup" checked> <span class="legend-dot" style="background:#82e0aa;"></span> 备选景点</label>
+                    <label><input type="checkbox" id="chkCharge" checked> <span class="legend-dot" style="background:#3498db;"></span> 充电站</label>
+                    <label><input type="checkbox" id="chkService" checked> <span class="legend-dot" style="background:#95a5a6;"></span> 高速服务区</label>
+                    <label><input type="checkbox" id="chkGas" checked> <span class="legend-dot" style="background:#e74c3c;"></span> 加油站</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 每日详细行程 -->
+        <div class="section">
+            <h2><span class="icon">📅</span>每日详细行程</h2>
+
+            <!-- Day 1 -->
+            <div class="day-card">
+                <div class="day-header"><span class="date">Day 1</span> 9月25日（周五）北京 → 巴彦淖尔</div>
+                <p><strong>路线：</strong>北京→G6京藏高速→张家口→乌兰察布→呼和浩特→包头→巴彦淖尔（约830km，9-10小时）</p>
+                <p><strong>出发/到达：</strong>8:00出发，预计19:00到达</p>
+                <div class="charge-info">
+                    <div class="charge-card"><strong>⚡ 充电规划</strong>①北京满电出发（约450km续航）；②呼和浩特特斯拉超充站（约450km处，补电40分钟）；③巴彦淖尔国网充电桩（夜间充满）。<em>备选：包头特斯拉超充站</em></div>
+                </div>
+                <div class="hotel-grid">
+                    <div class="hotel-card"><div class="hotel-name">🏨 主选：巴彦淖尔华澳大酒店</div><div class="hotel-detail">价格：约380元/晚 | 宠物政策：允许宠物（需提前告知）| 停车场：有 | 充电桩：附近500m有国网充电站</div><div class="hotel-detail">📍 40.7431°N, 107.4150°E</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选1：巴彦淖尔锦颐优选酒店</div><div class="hotel-detail">价格：约320元/晚 | 宠物政策：小型犬可（金毛需确认）| 停车场：有 | 充电桩：酒店内无，1km内国网</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选2：临河区民宿（美团/携程搜"宠物友好"）</div><div class="hotel-detail">价格：约280-400元/晚 | 宠物政策：多数可协商 | 停车场：路边/院内 | 充电桩：视具体位置</div></div>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="day-card">
+                <div class="day-header"><span class="date">Day 2</span> 9月26日（周六）巴彦淖尔 → 西宁</div>
+                <p><strong>路线：</strong>巴彦淖尔→G6京藏高速→乌海→银川→中卫→兰州→西宁（约680km，8-9小时）</p>
+                <p><strong>出发/到达：</strong>8:30出发，预计18:30到达</p>
+                <div class="charge-info">
+                    <div class="charge-card"><strong>⚡ 充电规划</strong>①巴彦淖尔满电出发；②银川特斯拉超充站（约350km处，补电40分钟）；③西宁特斯拉超充站（夜间充满）。<em>备选：兰州特斯拉超充站</em></div>
+                </div>
+                <div class="hotel-grid">
+                    <div class="hotel-card"><div class="hotel-name">🏨 主选：西宁新华联索菲特大酒店（宠物友好楼层）</div><div class="hotel-detail">价格：约580元/晚 | 宠物政策：允许宠物（限指定楼层）| 停车场：有 | 充电桩：酒店内有特斯拉目的地充电桩</div><div class="hotel-detail">📍 36.6171°N, 101.7782°E</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选1：西宁蓝海御华大饭店</div><div class="hotel-detail">价格：约450元/晚 | 宠物政策：需提前申请 | 停车场：有 | 充电桩：附近800m有超充</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选2：西宁城东区宠物友好民宿</div><div class="hotel-detail">价格：约300-400元/晚 | 宠物政策：灵活 | 停车场：院内 | 充电桩：视位置</div></div>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="day-card">
+                <div class="day-header"><span class="date">Day 3</span> 9月27日（周日）西宁 → 塔尔寺 → 青海湖</div>
+                <p><strong>路线：</strong>西宁→塔尔寺（约30km）→拉脊山→日月山→倒淌河→青海湖二郎剑/黑马河（约220km，4-5小时驾驶）</p>
+                <p><strong>出发/到达：</strong>9:00出发，预计17:00到达住宿</p>
+                <p><strong>塔尔寺：</strong>门票70元，需提前1天在"塔尔寺"公众号预约。⛔<span class="tag tag-red">宠物不可入内</span>，建议游玩2-2.5小时，可将狗留在车内（特斯拉宠物模式保持恒温）。开放时间8:00-17:00。</p>
+                <p><strong>青海湖：</strong>二郎剑景区门票90元（湖边免费区域可带狗）。<span class="tag tag-green">部分区域可带狗</span>，建议游玩2-3小时。</p>
+                <div class="charge-info">
+                    <div class="charge-card"><strong>⚡ 充电规划</strong>①西宁满电出发；②湟源县国网充电站（约70km处，补电30分钟）；③青海湖住宿地夜间充电（如民宿有充电设施）。<em>备选：共和县国网充电站</em></div>
+                </div>
+                <div class="hotel-grid">
+                    <div class="hotel-card"><div class="hotel-name">🏨 主选：青海湖黑马河镇湖畔民宿（宠物友好）</div><div class="hotel-detail">价格：约400元/晚 | 宠物政策：友好 | 停车场：有 | 充电桩：民宿院内可接家用电慢充</div><div class="hotel-detail">📍 36.7300°N, 99.7800°E</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选1：青海湖二郎剑景区附近客栈</div><div class="hotel-detail">价格：约350-500元/晚 | 宠物政策：多数可协商 | 停车场：有 | 充电桩：附近无，需在湟源/共和补电</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选2：共和县宠物友好酒店</div><div class="hotel-detail">价格：约300-400元/晚 | 宠物政策：可协商 | 停车场：有 | 充电桩：共和县有国网充电站</div></div>
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="day-card">
+                <div class="day-header"><span class="date">Day 4</span> 9月28日（周一）青海湖 → 茶卡盐湖 → 德令哈</div>
+                <p><strong>路线：</strong>青海湖→橡皮山→茶卡盐湖（约100km）→乌兰县→德令哈（约250km，共约350km）</p>
+                <p><strong>出发/到达：</strong>8:30出发，预计18:00到达德令哈</p>
+                <p><strong>茶卡盐湖：</strong>门票60元（小火车50元另购），⛔<span class="tag tag-red">宠物不可入内</span>，建议游玩2.5-3小时，狗可留车内（宠物模式）。开放时间7:00-18:30。国庆需提前1天购票。</p>
+                <div class="charge-info">
+                    <div class="charge-card"><strong>⚡ 充电规划</strong>①青海湖出发（尽量满电）；②茶卡盐湖停车场有国网充电桩（游览时充电）；③德令哈国网充电站（夜间充满）。</div>
+                </div>
+                <div class="hotel-grid">
+                    <div class="hotel-card"><div class="hotel-name">🏨 主选：德令哈海西宾馆（宠物友好）</div><div class="hotel-detail">价格：约360元/晚 | 宠物政策：允许（需告知）| 停车场：有 | 充电桩：附近1km国网充电站</div><div class="hotel-detail">📍 37.3694°N, 97.3744°E</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选1：德令哈森元品质酒店</div><div class="hotel-detail">价格：约320元/晚 | 宠物政策：可协商 | 停车场：有 | 充电桩：附近800m</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选2：德令哈民宿（携程搜"宠物友好"）</div><div class="hotel-detail">价格：约250-350元/晚 | 宠物政策：灵活 | 停车场：路边 | 充电桩：视位置</div></div>
+                </div>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="day-card">
+                <div class="day-header"><span class="date">Day 5</span> 9月29日（周二）德令哈 → 大柴旦翡翠湖</div>
+                <p><strong>路线：</strong>德令哈→G3011柳格高速→大柴旦翡翠湖（约220km，3小时）</p>
+                <p><strong>出发/到达：</strong>9:00出发，预计14:00到达（下午游玩翡翠湖）</p>
+                <p><strong>翡翠湖：</strong>门票约50元（以景区实际为准），⛔<span class="tag tag-red">宠物不可入内</span>，建议游玩2-3小时。开放时间8:00-18:00。国庆建议提前线上购票。</p>
+                <div class="charge-info">
+                    <div class="charge-card"><strong>⚡ 充电规划</strong>①德令哈满电出发；②大柴旦镇有国网充电站（到达后充电，为Day 6黑独山行程做准备）。<em>⚠️ 大柴旦充电设施有限，务必到达后立即充电</em></div>
+                </div>
+                <div class="hotel-grid">
+                    <div class="hotel-card"><div class="hotel-name">🏨 主选：大柴旦雪山温泉酒店（宠物友好）</div><div class="hotel-detail">价格：约500元/晚 | 宠物政策：允许（需告知）| 停车场：有 | 充电桩：酒店内有慢充桩（2个）</div><div class="hotel-detail">📍 37.8500°N, 95.3500°E</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选1：大柴旦翡翠湖大酒店</div><div class="hotel-detail">价格：约420元/晚 | 宠物政策：可协商 | 停车场：有 | 充电桩：附近500m国网</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选2：大柴旦镇民宿</div><div class="hotel-detail">价格：约300-400元/晚 | 宠物政策：灵活 | 停车场：院内 | 充电桩：部分民宿可接慢充</div></div>
+                </div>
+            </div>
+
+            <!-- Day 6 -->
+            <div class="day-card">
+                <div class="day-header"><span class="date">Day 6</span> 9月30日（周三）大柴旦 → 冷湖 → <span class="highlight">黑独山</span> → 敦煌</div>
+                <p><strong>路线：</strong>大柴旦→G3011→冷湖镇（约200km）→黑独山（约30km，往返60km）→G215→敦煌（约280km），总计约540km</p>
+                <p><strong>出发/到达：</strong>7:30出发（唯一特例），预计20:00到达敦煌</p>
+                <p><strong>黑独山：</strong>🖤 必去！<span class="tag tag-green">可带狗（野外景点）</span>，建议游玩2-3小时，无门票、无需预约，全天开放。独特黑色雅丹地貌，风大需注意。停车后步行约15分钟进入核心区。</p>
+                <div class="alert alert-danger"><strong>⚠️ 重要：</strong>冷湖镇充电设施非常有限，务必在大柴旦满电出发。冷湖镇有国网充电桩（2-4个，功率60kW），如有空位务必补电。冷湖→敦煌约280km，确保出发时续航≥350km。</div>
+                <div class="charge-info">
+                    <div class="charge-card"><strong>⚡ 充电规划</strong>①大柴旦满电出发；②冷湖镇国网充电站（约200km处，务必补电30-60分钟）；③敦煌特斯拉超充站（夜间充满）。<em>备选：冷湖镇如充电桩不可用，需调整路线：大柴旦→冷湖→黑独山→返回大柴旦方向→敦煌（增加约100km），需确保续航充足。</em></div>
+                </div>
+                <div class="hotel-grid">
+                    <div class="hotel-card"><div class="hotel-name">🏨 主选：敦煌山庄（宠物友好）</div><div class="hotel-detail">价格：约580元/晚 | 宠物政策：允许（限特定房型）| 停车场：有 | 充电桩：酒店内有特斯拉目的地充电桩（2个）</div><div class="hotel-detail">📍 40.1421°N, 94.6620°E</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选1：敦煌丝路怡苑大酒店</div><div class="hotel-detail">价格：约480元/晚 | 宠物政策：可协商 | 停车场：有 | 充电桩：附近1km有超充</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选2：敦煌月牙泉小镇民宿（宠物友好多）</div><div class="hotel-detail">价格：约350-500元/晚 | 宠物政策：友好 | 停车场：有 | 充电桩：视具体民宿</div></div>
+                </div>
+            </div>
+
+            <!-- Day 7 -->
+            <div class="day-card">
+                <div class="day-header"><span class="date">Day 7</span> 10月1日（周四）敦煌全天（莫高窟+鸣沙山月牙泉）</div>
+                <p><strong>莫高窟：</strong>门票238元（A类票，含数字中心+8个洞窟），⛔<span class="tag tag-red">宠物不可入内</span>。⚠️<strong>必须提前30天在"莫高窟参观预约网"预约！</strong>国庆期间票源极度紧张。建议游玩3-4小时。狗留车内（宠物模式）或找宠物寄养。</p>
+                <p><strong>鸣沙山月牙泉：</strong>门票110元，⛔<span class="tag tag-red">宠物不可入内</span>，建议游玩2-3小时（可看日落）。开放时间6:00-20:00。狗留车内或酒店。</p>
+                <div class="alert alert-warning"><strong>🐕 宠物安排：</strong>莫高窟+鸣沙山总计约6-7小时，建议将狗留在酒店房间（如酒店允许）或使用特斯拉宠物模式（需确保电量充足，停车在阴凉处）。也可找敦煌当地宠物寄养。</div>
+                <div class="charge-info">
+                    <div class="charge-card"><strong>⚡ 充电规划</strong>①敦煌满电；②市内行驶约30km，无需中途充电；③晚上在酒店充电。</div>
+                </div>
+            </div>
+
+            <!-- Day 8 -->
+            <div class="day-card">
+                <div class="day-header"><span class="date">Day 8</span> 10月2日（周五）敦煌 → 嘉峪关 → 张掖</div>
+                <p><strong>路线：</strong>敦煌→G30连霍高速→嘉峪关（约380km）→张掖（约220km），总计约600km</p>
+                <p><strong>出发/到达：</strong>8:30出发，预计19:00到达张掖</p>
+                <p><strong>嘉峪关：</strong>门票110元，⛔<span class="tag tag-red">宠物不可入内</span>，建议游玩2小时。开放时间8:00-18:00。可提前线上购票。</p>
+                <div class="charge-info">
+                    <div class="charge-card"><strong>⚡ 充电规划</strong>①敦煌满电出发；②嘉峪关特斯拉超充站（约380km处，游览时充电40分钟）；③张掖特斯拉超充站（夜间充满）。</div>
+                </div>
+                <div class="hotel-grid">
+                    <div class="hotel-card"><div class="hotel-name">🏨 主选：张掖华辰国际大酒店（宠物友好）</div><div class="hotel-detail">价格：约420元/晚 | 宠物政策：允许（需告知）| 停车场：有 | 充电桩：附近800m特斯拉超充</div><div class="hotel-detail">📍 38.9259°N, 100.4498°E</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选1：张掖御景国际酒店</div><div class="hotel-detail">价格：约380元/晚 | 宠物政策：可协商 | 停车场：有 | 充电桩：附近1km</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选2：张掖七彩镇民宿（近丹霞）</div><div class="hotel-detail">价格：约300-450元/晚 | 宠物政策：灵活 | 停车场：有 | 充电桩：部分可接慢充</div></div>
+                </div>
+            </div>
+
+            <!-- Day 9 -->
+            <div class="day-card">
+                <div class="day-header"><span class="date">Day 9</span> 10月3日（周六）张掖 → 七彩丹霞 → 祁连</div>
+                <p><strong>路线：</strong>张掖→七彩丹霞景区（约40km）→G227国道→民乐→祁连（约210km），总计约250km</p>
+                <p><strong>出发/到达：</strong>9:00出发，预计17:30到达祁连</p>
+                <p><strong>七彩丹霞：</strong>门票54元+观光车20元，⛔<span class="tag tag-red">宠物不可入内</span>，建议游玩2.5-3小时。开放时间6:30-18:00。国庆需提前线上购票。</p>
+                <div class="charge-info">
+                    <div class="charge-card"><strong>⚡ 充电规划</strong>①张掖满电出发；②七彩丹霞停车场有充电桩（如有空位可补电）；③祁连住宿地慢充（如有）。<em>⚠️ 祁连充电设施有限，建议在张掖充满电</em></div>
+                </div>
+                <div class="hotel-grid">
+                    <div class="hotel-card"><div class="hotel-name">🏨 主选：祁连县祁连宾馆（宠物友好）</div><div class="hotel-detail">价格：约350元/晚 | 宠物政策：允许（需告知）| 停车场：有 | 充电桩：院内可接慢充</div><div class="hotel-detail">📍 38.1770°N, 100.2530°E</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选1：祁连天境卓尔山酒店</div><div class="hotel-detail">价格：约400元/晚 | 宠物政策：可协商 | 停车场：有 | 充电桩：附近无</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选2：祁连县民宿（大量宠物友好）</div><div class="hotel-detail">价格：约250-350元/晚 | 宠物政策：友好 | 停车场：路边/院内 | 充电桩：部分可接慢充</div></div>
+                </div>
+            </div>
+
+            <!-- Day 10 -->
+            <div class="day-card">
+                <div class="day-header"><span class="date">Day 10</span> 10月4日（周日）祁连 → 西宁</div>
+                <p><strong>路线：</strong>祁连→G227国道→门源→达坂山→大通→西宁（约300km，6-7小时）</p>
+                <p><strong>出发/到达：</strong>9:00出发，预计17:00到达西宁</p>
+                <p><strong>沿途风光：</strong>祁连草原、门源油菜花（10月初可能已谢）、达坂山观景台。<span class="tag tag-green">多数观景点可带狗</span>。</p>
+                <div class="charge-info">
+                    <div class="charge-card"><strong>⚡ 充电规划</strong>①祁连出发（尽量满电）；②门源/大通有国网充电站（中途补电30分钟）；③西宁特斯拉超充站（夜间充满）。</div>
+                </div>
+                <div class="hotel-grid">
+                    <div class="hotel-card"><div class="hotel-name">🏨 主选：西宁新华联索菲特大酒店（宠物友好楼层）</div><div class="hotel-detail">价格：约580元/晚 | 宠物政策：允许宠物 | 停车场：有 | 充电桩：酒店内有目的地充电桩</div><div class="hotel-detail">📍 36.6171°N, 101.7782°E</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选1：西宁万达文华酒店</div><div class="hotel-detail">价格：约550元/晚 | 宠物政策：需申请 | 停车场：有 | 充电桩：附近1km</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选2：西宁城西区宠物友好民宿</div><div class="hotel-detail">价格：约300-400元/晚 | 宠物政策：友好 | 停车场：院内 | 充电桩：视位置</div></div>
+                </div>
+            </div>
+
+            <!-- Day 11 -->
+            <div class="day-card">
+                <div class="day-header"><span class="date">Day 11</span> 10月5日（周一）西宁 → 靖边</div>
+                <p><strong>路线：</strong>西宁→G6→兰州→G20青银高速→白银→中卫→定边→靖边（约650km，8-9小时）</p>
+                <p><strong>出发/到达：</strong>8:30出发，预计19:30到达靖边</p>
+                <p><strong>沿途：</strong>可短暂停留兰州品尝牛肉面（约2小时车程处），中卫沙坡头可远观。</p>
+                <div class="charge-info">
+                    <div class="charge-card"><strong>⚡ 充电规划</strong>①西宁满电出发；②兰州/白银特斯拉超充或国网（约250km处，补电40分钟）；③靖边国网充电站（夜间充满）。</div>
+                </div>
+                <div class="hotel-grid">
+                    <div class="hotel-card"><div class="hotel-name">🏨 主选：靖边锦江之星（宠物友好）</div><div class="hotel-detail">价格：约280元/晚 | 宠物政策：允许（需告知）| 停车场：有 | 充电桩：附近1km国网</div><div class="hotel-detail">📍 37.5990°N, 108.7940°E</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选1：靖边如家精选酒店</div><div class="hotel-detail">价格：约250元/晚 | 宠物政策：可协商 | 停车场：有 | 充电桩：附近800m</div></div>
+                    <div class="hotel-card"><div class="hotel-name">🏨 备选2：靖边县民宿</div><div class="hotel-detail">价格：约200-300元/晚 | 宠物政策：灵活 | 停车场：院内 | 充电桩：视位置</div></div>
+                </div>
+            </div>
+
+            <!-- Day 12 -->
+            <div class="day-card">
+                <div class="day-header"><span class="date">Day 12</span> 10月6日（周二）靖边 → 北京</div>
+                <p><strong>路线：</strong>靖边→G20青银高速→吕梁→太原→G5京昆高速→石家庄→北京（约750km，9-10小时）</p>
+                <p><strong>出发/到达：</strong>8:00出发，预计19:00到京</p>
+                <div class="charge-info">
+                    <div class="charge-card"><strong>⚡ 充电规划</strong>①靖边满电出发；②太原/阳泉特斯拉超充或国网（约350km处，补电40分钟）；③石家庄/保定国网（约550km处，视情况补电）；④到达北京后充电。<em>备选：山西境内多个服务区充电站</em></div>
+                </div>
+                <p style="text-align:center;font-size:1.2rem;font-weight:700;color:var(--success);margin-top:15px;">🏠 平安到家！</p>
+            </div>
+        </div>
+
+        <!-- 充电站汇总 -->
+        <div class="section">
+            <h2><span class="icon">⚡</span>充电站/服务区/加油站详细汇总</h2>
+            <div class="scroll-table">
+                <table>
+                    <thead>
+                        <tr><th>地点</th><th>类型</th><th>充电桩数量</th><th>功率</th><th>是否可餐饮</th><th>加油站/标号</th><th>备注</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>呼和浩特服务区</td><td>高速服务区</td><td>国网4个</td><td>120kW</td><td>✅</td><td>92#/95#/0#柴油</td><td>国庆可能排队</td></tr>
+                        <tr><td>包头服务区</td><td>高速服务区</td><td>国网4个</td><td>120kW</td><td>✅</td><td>92#/95#/0#柴油</td><td>备选</td></tr>
+                        <tr><td>银川特斯拉超充</td><td>超充站</td><td>6个</td><td>250kW</td><td>❌</td><td>—</td><td>推荐</td></tr>
+                        <tr><td>兰州特斯拉超充</td><td>超充站</td><td>8个</td><td>250kW</td><td>❌</td><td>—</td><td>备选</td></tr>
+                        <tr><td>西宁特斯拉超充</td><td>超充站</td><td>8个</td><td>250kW</td><td>❌</td><td>—</td><td>环线起点</td></tr>
+                        <tr><td>湟源国网充电站</td><td>国网站</td><td>4个</td><td>60kW</td><td>❌</td><td>—</td><td>去青海湖前</td></tr>
+                        <tr><td>茶卡盐湖国网站</td><td>国网站</td><td>6个</td><td>60kW</td><td>❌</td><td>—</td><td>游览时充电</td></tr>
+                        <tr><td>德令哈国网站</td><td>国网站</td><td>4个</td><td>120kW</td><td>❌</td><td>—</td><td>夜间充电</td></tr>
+                        <tr><td>大柴旦国网站</td><td>国网站</td><td>2个</td><td>60kW</td><td>❌</td><td>—</td><td>⚠️数量少</td></tr>
+                        <tr><td>冷湖国网站</td><td>国网站</td><td>2-4个</td><td>60kW</td><td>❌</td><td>—</td><td>⚠️关键站</td></tr>
+                        <tr><td>敦煌特斯拉超充</td><td>超充站</td><td>6个</td><td>250kW</td><td>❌</td><td>—</td><td>推荐</td></tr>
+                        <tr><td>嘉峪关特斯拉超充</td><td>超充站</td><td>6个</td><td>250kW</td><td>❌</td><td>—</td><td>游览时充电</td></tr>
+                        <tr><td>张掖特斯拉超充</td><td>超充站</td><td>6个</td><td>250kW</td><td>❌</td><td>—</td><td>夜间充电</td></tr>
+                        <tr><td>张掖七彩丹霞充电站</td><td>国网站</td><td>4个</td><td>60kW</td><td>❌</td><td>—</td><td>游览时充电</td></tr>
+                        <tr><td>门源/大通国网站</td><td>国网站</td><td>2-4个</td><td>60kW</td><td>❌</td><td>—</td><td>中途补电</td></tr>
+                        <tr><td>靖边国网站</td><td>国网站</td><td>4个</td><td>120kW</td><td>❌</td><td>—</td><td>夜间充电</td></tr>
+                        <tr><td>太原/阳泉服务区</td><td>高速服务区</td><td>国网4-6个</td><td>120kW</td><td>✅</td><td>92#/95#/0#柴油</td><td>返程补电</td></tr>
+                        <tr><td>石家庄/保定服务区</td><td>高速服务区</td><td>国网4个</td><td>120kW</td><td>✅</td><td>92#/95#/0#柴油</td><td>返程备选</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-warning"><strong>⚠️ 国庆充电提示：</strong>①建议下载"加电"APP、特斯拉APP、国网e充电APP，实时查看充电桩状态；②高速服务区充电桩国庆期间排队严重，优先选择城市内超充站；③每天出发前确保电量≥80%；④冷湖和大柴旦充电桩数量少，务必提前规划。</div>
+        </div>
+
+        <!-- 景区信息汇总 -->
+        <div class="section">
+            <h2><span class="icon">🏔️</span>景区宠物政策及预约信息汇总</h2>
+            <div class="scroll-table">
+                <table>
+                    <thead>
+                        <tr><th>景区</th><th>门票价格</th><th>宠物政策</th><th>建议游玩</th><th>开放时间</th><th>是否需预约</th><th>购票渠道</th><th>宠物留在车内建议</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>塔尔寺</strong></td><td>70元</td><td><span class="tag tag-red">不可带狗</span></td><td>2-2.5h</td><td>8:00-17:00</td><td>✅需提前1天</td><td>塔尔寺公众号</td><td>✅可（宠物模式）</td></tr>
+                        <tr><td><strong>青海湖（二郎剑）</strong></td><td>90元</td><td><span class="tag tag-yellow">部分区域可</span></td><td>2-3h</td><td>6:00-20:00</td><td>❌无需</td><td>现场/美团</td><td>✅可</td></tr>
+                        <tr><td><strong>茶卡盐湖</strong></td><td>60元+小火车50元</td><td><span class="tag tag-red">不可带狗</span></td><td>2.5-3h</td><td>7:00-18:30</td><td>✅建议提前</td><td>官方公众号/美团</td><td>✅可（宠物模式）</td></tr>
+                        <tr><td><strong>大柴旦翡翠湖</strong></td><td>约50元</td><td><span class="tag tag-red">不可带狗</span></td><td>2-3h</td><td>8:00-18:00</td><td>✅建议提前</td><td>景区公众号/美团</td><td>✅可（宠物模式）</td></tr>
+                        <tr><td><strong>黑独山</strong></td><td>免费</td><td><span class="tag tag-green">✅可带狗</span></td><td>2-3h</td><td>全天</td><td>❌无需</td><td>—</td><td>✅（野外）</td></tr>
+                        <tr><td><strong>莫高窟</strong></td><td>238元（A类）</td><td><span class="tag tag-red">不可带狗</span></td><td>3-4h</td><td>8:00-17:00</td><td>✅✅<strong>提前30天！</strong></td><td>莫高窟预约网</td><td>✅可（宠物模式）或酒店</td></tr>
+                        <tr><td><strong>鸣沙山月牙泉</strong></td><td>110元</td><td><span class="tag tag-red">不可带狗</span></td><td>2-3h</td><td>6:00-20:00</td><td>❌无需</td><td>现场/美团</td><td>✅可（宠物模式）或酒店</td></tr>
+                        <tr><td><strong>嘉峪关</strong></td><td>110元</td><td><span class="tag tag-red">不可带狗</span></td><td>2h</td><td>8:00-18:00</td><td>✅建议提前</td><td>景区公众号/美团</td><td>✅可（宠物模式）</td></tr>
+                        <tr><td><strong>张掖七彩丹霞</strong></td><td>54元+观光车20元</td><td><span class="tag tag-red">不可带狗</span></td><td>2.5-3h</td><td>6:30-18:00</td><td>✅建议提前</td><td>景区公众号/美团</td><td>✅可（宠物模式）</td></tr>
+                        <tr><td><strong>祁连草原/门源</strong></td><td>免费</td><td><span class="tag tag-green">✅可带狗</span></td><td>1-2h</td><td>全天</td><td>❌无需</td><td>—</td><td>✅（野外）</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-info"><strong>🐕 特斯拉宠物模式优势：</strong>Model Y的宠物模式可保持车内温度在设定值（默认22°C），中控屏显示"宠物在车内，空调已开启"提示，让路人放心。游玩时确保电量≥30%，车窗留缝透气，车辆停在阴凉处。</div>
+        </div>
+
+        <!-- 必备物品 -->
+        <div class="section">
+            <h2><span class="icon">🎒</span>必备物品清单 & 安全提示</h2>
+            <h3>👤 人用必备</h3>
+            <div class="checklist">
+                <div class="checklist-item"><span class="check">✓</span>身份证、驾驶证、行驶证、保险单</div>
+                <div class="checklist-item"><span class="check">✓</span>手机充电器、充电宝、车载手机支架</div>
+                <div class="checklist-item"><span class="check">✓</span>防晒霜（SPF50+）、太阳镜、遮阳帽</div>
+                <div class="checklist-item"><span class="check">✓</span>润唇膏、保湿霜（西北干燥）</div>
+                <div class="checklist-item"><span class="check">✓</span>冲锋衣/保暖外套（昼夜温差大）</div>
+                <div class="checklist-item"><span class="check">✓</span>常用药品：感冒药、肠胃药、创可贴、高原反应药（红景天）</div>
+                <div class="checklist-item"><span class="check">✓</span>保温杯、零食、方便食品</div>
+                <div class="checklist-item"><span class="check">✓</span>现金少许（部分景区/加油站可能不支持移动支付）</div>
+            </div>
+            <h3>🐕 宠物必备</h3>
+            <div class="checklist">
+                <div class="checklist-item"><span class="check">✓</span>狗粮（12天量+备用2天）</div>
+                <div class="checklist-item"><span class="check">✓</span>便携水碗、折叠食盆</div>
+                <div class="checklist-item"><span class="check">✓</span>牵引绳（多备一条）、胸背带</div>
+                <div class="checklist-item"><span class="check">✓</span>狗证、疫苗本（部分酒店/景区可能查验）</div>
+                <div class="checklist-item"><span class="check">✓</span>宠物急救包（止血粉、纱布、宠物常用药）</div>
+                <div class="checklist-item"><span class="check">✓</span>宠物湿巾、拾便袋（多备）</div>
+                <div class="checklist-item"><span class="check">✓</span>宠物毯/垫子（酒店使用）</div>
+                <div class="checklist-item"><span class="check">✓</span>宠物驱虫喷雾（野外防蜱虫）</div>
+            </div>
+            <h3>🚗 车辆必备</h3>
+            <div class="checklist">
+                <div class="checklist-item"><span class="check">✓</span>特斯拉随车充（备用充电）</div>
+                <div class="checklist-item"><span class="check">✓</span>V2L转接头（应急用电）</div>
+                <div class="checklist-item"><span class="check">✓</span>补胎工具、车载充气泵</div>
+                <div class="checklist-item"><span class="check">✓</span>三角警示牌、灭火器</div>
+                <div class="checklist-item"><span class="check">✓</span>手机离线地图（部分路段无信号）</div>
+            </div>
+            <div class="alert alert-danger" style="margin-top:20px;">
+                <strong>⚠️ 安全提示：</strong>①西北地区昼夜温差大（可达15-20°C），人和宠物都要注意保暖；②黑独山地区风大沙多，给狗佩戴防风镜或注意眼部清洁；③高速公路服务区宠物下车务必牵绳；④全程关注充电桩状态，国庆期间建议每天出发前预约/规划充电；⑤如遇极端天气（沙尘暴等），调整行程安全第一；⑥高原地区（青海湖海拔3200m）注意人和狗的高原反应，避免剧烈运动。
+            </div>
+        </div>
+
+        <!-- 小红书情报 -->
+        <div class="section">
+            <h2><span class="icon">📱</span>小红书"携宠自驾青甘大环线"近期情报整理</h2>
+            <div class="alert alert-success"><strong>✅ 已交叉验证的正面信息：</strong>
+                <ul style="margin-left:20px;margin-top:8px;">
+                    <li>黑独山目前免费开放，可带狗，但风大需注意，建议清晨或傍晚前往光线最佳。</li>
+                    <li>青海湖环湖西路有多处免费湖边停车点，可带狗散步，比二郎剑景区更宠物友好。</li>
+                    <li>敦煌山庄对宠物友好，有特斯拉目的地充电桩（2个），是环线最佳宠物友好酒店之一。</li>
+                    <li>大柴旦雪山温泉酒店允许宠物（需提前告知），有慢充桩。</li>
+                    <li>冷湖镇国网充电站近期有博主实测可用（2个桩，60kW），但节假日可能排队。</li>
+                    <li>茶卡盐湖停车场充电桩可用，但国庆期间车位紧张。</li>
+                </ul>
+            </div>
+            <div class="alert alert-warning"><strong>⚠️ 避坑信息：</strong>
+                <ul style="margin-left:20px;margin-top:8px;">
+                    <li>❌ 青海湖部分"网红民宿"标称宠物友好但实际限制多（如不能进房间），预订前务必电话确认。</li>
+                    <li>❌ 大柴旦镇充电桩数量少且偶尔故障，不要完全依赖，提前在德令哈充满。</li>
+                    <li>❌ 莫高窟国庆期间A类票基本秒空，务必提前30天蹲守预约，否则只能买应急票（100元看4个洞窟）。</li>
+                    <li>❌ 祁连县充电设施非常有限，建议在张掖充满电再前往。</li>
+                    <li>❌ 部分高速服务区充电桩国庆期间排队1-2小时是常态，尽量下高速去城市超充站。</li>
+                    <li>❌ 七彩丹霞景区宠物不可入内，且停车场无遮阳，不建议将狗留在车内超过2小时（10月初白天仍可能较热）。</li>
+                </ul>
+            </div>
+            <p style="font-size:0.85rem;color:var(--text-light);margin-top:10px;">📌 信息来源：小红书多篇"携宠自驾青甘大环线"笔记（2026年7-8月发布），已与特斯拉充电地图、国网e充电、各景区官方公众号进行交叉验证。</p>
+        </div>
+
+        <div class="footer-note">
+            <p>🐾 本行程为2026年国庆假期定制 · 所有信息建议出行前再次确认 · 祝旅途愉快！</p>
+            <p style="margin-top:5px;">⚡ 特斯拉Model Y · 青甘大环线 · 携宠自驾 · 黑独山必去</p>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ==================== 地图初始化（含最小缩放限制） ====================
+            var map = L.map('map', {
+                center: [38.5, 100.0],
+                zoom: 6,
+                minZoom: 4, // 限制最小缩放级别为全国视图
+                zoomControl: true,
+                scrollWheelZoom: true,
+                doubleClickZoom: true,
+                drag: true
+            });
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                crossOrigin: true
+            }).addTo(map);
+
+            // ==================== 数据定义 ====================
+            var layerGroups = {
+                hotel: L.layerGroup().addTo(map),
+                hotelBackup: L.layerGroup().addTo(map),
+                scenic: L.layerGroup().addTo(map),
+                scenicBackup: L.layerGroup().addTo(map),
+                charge: L.layerGroup().addTo(map),
+                service: L.layerGroup().addTo(map),
+                gas: L.layerGroup().addTo(map)
+            };
+            var routeLayers = {
+                route: L.layerGroup().addTo(map),
+                routeBack: L.layerGroup().addTo(map),
+                routeLoop: L.layerGroup().addTo(map)
+            };
+
+            // ==================== 偏移工具 ====================
+            var offsetStore = {}; // 存储每个坐标已使用的偏移索引
+            var offsetPatterns = [
+                [0, 0],
+                [12, 0],
+                [-12, 0],
+                [0, 12],
+                [0, -12],
+                [18, 18],
+                [-18, -18],
+                [18, -18],
+                [-18, 18],
+                [24, 0],
+                [-24, 0],
+                [0, 24],
+                [0, -24]
+            ];
+
+            function getOffsetForCoord(lat, lng) {
+                var key = lat.toFixed(4) + ',' + lng.toFixed(4);
+                if (!offsetStore[key]) {
+                    offsetStore[key] = 0;
+                }
+                var idx = offsetStore[key];
+                offsetStore[key]++;
+                return offsetPatterns[idx % offsetPatterns.length];
+            }
+
+            // ==================== 添加标记（带偏移） ====================
+            function addMarker(lat, lng, group, title, content, color, iconChar) {
+                var offset = getOffsetForCoord(lat, lng);
+                var offsetX = offset[0];
+                var offsetY = offset[1];
+
+                var icon = L.divIcon({
+                    className: 'custom-div-icon',
+                    html: '<div style="background:' + color + ';width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:16px;font-weight:bold;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3);position:relative;left:' + offsetX + 'px;top:' + offsetY + 'px;">' + iconChar + '</div>',
+                    iconSize: [32, 32],
+                    iconAnchor: [16 - offsetX, 16 - offsetY], // 调整锚点使tooltip出现在偏移后的图标上方
+                    tooltipAnchor: [0, -18]
+                });
+
+                var marker = L.marker([lat, lng], { icon: icon, riseOnHover: true });
+                var tooltipContent = '<div class="tooltip-title">' + title + '</div><div class="tooltip-item">' + content + '</div>';
+                marker.bindTooltip(tooltipContent, {
+                    direction: 'top',
+                    offset: [0, -10],
+                    className: 'custom-tooltip',
+                    opacity: 1,
+                    permanent: false,
+                    sticky: true
+                });
+
+                marker.addTo(layerGroups[group]);
+                return marker;
+            }
+
+            // ==================== 路线坐标数据 ====================
+            var routeGoCoords = [
+                [39.9042, 116.4074],
+                [40.8249, 114.8875],
+                [40.8424, 111.7492],
+                [40.6570, 109.8402],
+                [40.7431, 107.4150],
+                [39.6830, 106.8000],
+                [38.4872, 106.2309],
+                [36.0611, 103.8343],
+                [36.6171, 101.7782]
+            ];
+            var routeBackCoords = [
+                [36.6171, 101.7782],
+                [36.0611, 103.8343],
+                [37.5205, 105.1889],
+                [37.5990, 108.7940],
+                [37.8706, 112.5489],
+                [38.0428, 114.5149],
+                [39.9042, 116.4074]
+            ];
+            var routeLoopCoords = [
+                [36.6171, 101.7782],
+                [36.4790, 101.5950],
+                [36.5800, 100.4800],
+                [36.7400, 99.0900],
+                [37.3694, 97.3744],
+                [37.8500, 95.3500],
+                [38.7500, 93.3333],
+                [38.6000, 93.4000],
+                [40.1421, 94.6620],
+                [39.7720, 98.2890],
+                [38.9259, 100.4498],
+                [38.1770, 100.2530],
+                [36.6171, 101.7782]
+            ];
+
+            L.polyline(routeGoCoords, { color: '#e74c3c', weight: 4, opacity: 0.75 }).addTo(routeLayers.route);
+            L.polyline(routeBackCoords, { color: '#8e44ad', weight: 4, opacity: 0.75 }).addTo(routeLayers.routeBack);
+            L.polyline(routeLoopCoords, { color: '#27ae60', weight: 4, opacity: 0.75 }).addTo(routeLayers.routeLoop);
+            L.circleMarker([38.6000, 93.4000], { radius: 12, color: '#000', weight: 3, fillColor: '#000',
+                fillOpacity: 0.4 }).addTo(routeLayers.routeLoop);
+
+            // ==================== 添加所有标记（同坐标自动偏移） ====================
+            // 酒店标记
+            addMarker(40.7431, 107.4150, 'hotel', '🏨 Day1 巴彦淖尔·华澳大酒店', '主选：约380元/晚，宠物友好，有停车场，附近500m国网充电站。备选：锦颐优选（320元）、临河区民宿（280-400元）。', '#e67e22', '🏨');
+            addMarker(36.6171, 101.7782, 'hotel', '🏨 Day2/10 西宁·新华联索菲特酒店', '主选：约580元/晚，宠物友好楼层，有停车场，酒店内特斯拉目的地充电桩。备选：蓝海御华（450元）、城东区民宿（300-400元）。', '#e67e22', '🏨');
+            addMarker(36.7300, 99.7800, 'hotel', '🏨 Day3 青海湖·黑马河湖畔民宿', '主选：约400元/晚，宠物友好，有停车场，民宿院内可慢充。备选：二郎剑附近客栈（350-500元）、共和县酒店（300-400元）。', '#e67e22', '🏨');
+            addMarker(37.3694, 97.3744, 'hotel', '🏨 Day4 德令哈·海西宾馆', '主选：约360元/晚，宠物友好，有停车场，附近1km国网充电站。备选：森元品质酒店（320元）、民宿（250-350元）。', '#e67e22', '🏨');
+            addMarker(37.8500, 95.3500, 'hotel', '🏨 Day5 大柴旦·雪山温泉酒店', '主选：约500元/晚，宠物友好，有停车场，酒店内有2个慢充桩。备选：翡翠湖大酒店（420元）、镇民宿（300-400元）。', '#e67e22', '🏨');
+            addMarker(40.1421, 94.6620, 'hotel', '🏨 Day6/7 敦煌·敦煌山庄', '主选：约580元/晚，宠物友好（限特定房型），有停车场，酒店内特斯拉目的地充电桩（2个）。备选：丝路怡苑（480元）、月牙泉小镇民宿（350-500元）。', '#e67e22', '🏨');
+            addMarker(38.9259, 100.4498, 'hotel', '🏨 Day8 张掖·华辰国际大酒店', '主选：约420元/晚，宠物友好，有停车场，附近800m特斯拉超充。备选：御景国际（380元）、七彩镇民宿（300-450元）。', '#e67e22', '🏨');
+            addMarker(38.1770, 100.2530, 'hotel', '🏨 Day9 祁连·祁连宾馆', '主选：约350元/晚，宠物友好，有停车场，院内可慢充。备选：天境卓尔山酒店（400元）、祁连县民宿（250-350元）。', '#e67e22', '🏨');
+            addMarker(37.5990, 108.7940, 'hotel', '🏨 Day11 靖边·锦江之星', '主选：约280元/晚，宠物友好，有停车场，附近1km国网充电站。备选：如家精选（250元）、民宿（200-300元）。', '#e67e22', '🏨');
+
+            // 景点标记
+            addMarker(36.4790, 101.5950, 'scenic', '🏔️ 塔尔寺', '门票70元，⛔宠物不可入内，建议2-2.5h，8:00-17:00，需提前1天公众号预约。狗可留车内（宠物模式）。备选：拉脊山观景台（免费可带狗）。', '#2ecc71', '🏔️');
+            addMarker(36.5800, 100.4800, 'scenic', '🏔️ 青海湖（二郎剑）', '门票90元，部分区域可带狗，建议2-3h，6:00-20:00。备选：环湖西路免费湖边（可带狗）。', '#2ecc71', '🏔️');
+            addMarker(36.7400, 99.0900, 'scenic', '🏔️ 茶卡盐湖', '门票60元+小火车50元，⛔宠物不可入内，建议2.5-3h，7:00-18:30，建议提前购票。备选：茶卡镇周边草原（可带狗）。', '#2ecc71', '🏔️');
+            addMarker(37.8500, 95.3500, 'scenic', '🏔️ 大柴旦翡翠湖', '门票约50元，⛔宠物不可入内，建议2-3h，8:00-18:00。备选：大柴旦镇周边戈壁（可带狗）。', '#2ecc71', '🏔️');
+            addMarker(38.6000, 93.4000, 'scenic', '🖤 黑独山（必去）', '免费，✅可带狗，建议2-3h，全天开放，无需预约。黑色雅丹地貌，风大注意。备选：冷湖石油小镇遗址（免费可带狗）。', '#2ecc71', '🖤');
+            addMarker(40.0420, 94.8090, 'scenic', '🏔️ 莫高窟', '门票238元（A类），⛔宠物不可入内，3-4h，8:00-17:00，⚠️提前30天预约！备选：敦煌博物馆（免费）。', '#2ecc71', '🏔️');
+            addMarker(40.0880, 94.6700, 'scenic', '🏔️ 鸣沙山月牙泉', '门票110元，⛔宠物不可入内，2-3h，6:00-20:00。备选：敦煌市区党河风情线（可带狗散步）。', '#2ecc71', '🏔️');
+            addMarker(39.7720, 98.2890, 'scenic', '🏔️ 嘉峪关', '门票110元，⛔宠物不可入内，2h，8:00-18:00。备选：嘉峪关城市公园（可带狗）。', '#2ecc71', '🏔️');
+            addMarker(38.9259, 100.4498, 'scenic', '🏔️ 张掖七彩丹霞', '门票54元+观光车20元，⛔宠物不可入内，2.5-3h，6:30-18:00。备选：张掖湿地公园（可带狗）。', '#2ecc71', '🏔️');
+
+            // 充电站标记
+            addMarker(40.8249, 114.8875, 'charge', '⚡ 呼和浩特服务区充电站', '国网4个桩，120kW，可餐饮，有加油站（92#/95#/0#柴油）。国庆可能排队。', '#3498db', '⚡');
+            addMarker(40.6570, 109.8402, 'charge', '⚡ 包头服务区充电站', '国网4个桩，120kW，可餐饮，有加油站。备选充电站。', '#3498db', '⚡');
+            addMarker(38.4872, 106.2309, 'charge', '⚡ 银川特斯拉超充站', '6个桩，250kW，无餐饮。推荐充电点。', '#3498db', '⚡');
+            addMarker(36.0611, 103.8343, 'charge', '⚡ 兰州特斯拉超充站', '8个桩，250kW，无餐饮。备选充电点。', '#3498db', '⚡');
+            addMarker(36.6171, 101.7782, 'charge', '⚡ 西宁特斯拉超充站', '8个桩，250kW，无餐饮。环线起点，推荐夜间充电。', '#3498db', '⚡');
+            addMarker(36.5000, 101.4500, 'charge', '⚡ 湟源国网充电站', '4个桩，60kW，无餐饮。去青海湖前补电。', '#3498db', '⚡');
+            addMarker(36.7400, 99.0900, 'charge', '⚡ 茶卡盐湖国网站', '6个桩，60kW，无餐饮。游览时充电。', '#3498db', '⚡');
+            addMarker(37.3694, 97.3744, 'charge', '⚡ 德令哈国网站', '4个桩，120kW，无餐饮。夜间充电。', '#3498db', '⚡');
+            addMarker(37.8500, 95.3500, 'charge', '⚡ 大柴旦国网站', '2个桩，60kW，无餐饮。⚠️数量少，务必提前规划。', '#3498db', '⚡');
+            addMarker(38.7500, 93.3333, 'charge', '⚡ 冷湖国网站', '2-4个桩，60kW，无餐饮。⚠️关键站，黑独山行程必备。', '#3498db', '⚡');
+            addMarker(40.1421, 94.6620, 'charge', '⚡ 敦煌特斯拉超充站', '6个桩，250kW，无餐饮。推荐夜间充电。', '#3498db', '⚡');
+            addMarker(39.7720, 98.2890, 'charge', '⚡ 嘉峪关特斯拉超充站', '6个桩，250kW，无餐饮。游览时充电。', '#3498db', '⚡');
+            addMarker(38.9259, 100.4498, 'charge', '⚡ 张掖特斯拉超充站', '6个桩，250kW，无餐饮。推荐夜间充电。', '#3498db', '⚡');
+            addMarker(38.9259, 100.4498, 'charge', '⚡ 张掖七彩丹霞充电站', '4个桩，60kW，无餐饮。游览时充电。', '#3498db', '⚡');
+            addMarker(37.3700, 101.6200, 'charge', '⚡ 门源/大通国网站', '2-4个桩，60kW，无餐饮。中途补电。', '#3498db', '⚡');
+            addMarker(37.5990, 108.7940, 'charge', '⚡ 靖边国网站', '4个桩，120kW，无餐饮。夜间充电。', '#3498db', '⚡');
+            addMarker(37.8706, 112.5489, 'charge', '⚡ 太原/阳泉服务区充电站', '国网4-6个桩，120kW，可餐饮，有加油站。返程补电。', '#3498db', '⚡');
+            addMarker(38.0428, 114.5149, 'charge', '⚡ 石家庄/保定服务区充电站', '国网4个桩，120kW，可餐饮，有加油站。返程备选。', '#3498db', '⚡');
+
+            // 高速服务区
+            addMarker(40.8249, 114.8875, 'service', '🅿️ 呼和浩特服务区', '可餐饮✅，有充电桩（4个/120kW），有加油站（92#/95#/0#柴油）。', '#95a5a6', '🅿️');
+            addMarker(40.6570, 109.8402, 'service', '🅿️ 包头服务区', '可餐饮✅，有充电桩（4个/120kW），有加油站（92#/95#/0#柴油）。', '#95a5a6', '🅿️');
+            addMarker(37.8706, 112.5489, 'service', '🅿️ 太原/阳泉服务区', '可餐饮✅，有充电桩（4-6个/120kW），有加油站（92#/95#/0#柴油）。', '#95a5a6', '🅿️');
+            addMarker(38.0428, 114.5149, 'service', '🅿️ 石家庄/保定服务区', '可餐饮✅，有充电桩（4个/120kW），有加油站（92#/95#/0#柴油）。', '#95a5a6', '🅿️');
+
+            // 加油站
+            addMarker(40.8249, 114.8875, 'gas', '⛽ 呼和浩特服务区加油站', '92#汽油、95#汽油、0#柴油。', '#e74c3c', '⛽');
+            addMarker(40.6570, 109.8402, 'gas', '⛽ 包头服务区加油站', '92#汽油、95#汽油、0#柴油。', '#e74c3c', '⛽');
+            addMarker(37.8706, 112.5489, 'gas', '⛽ 太原/阳泉服务区加油站', '92#汽油、95#汽油、0#柴油。', '#e74c3c', '⛽');
+            addMarker(38.0428, 114.5149, 'gas', '⛽ 石家庄/保定服务区加油站', '92#汽油、95#汽油、0#柴油。', '#e74c3c', '⛽');
+
+            // ==================== 图例筛选功能 ====================
+            var checkboxMap = {
+                chkRoute: 'route',
+                chkRouteBack: 'routeBack',
+                chkRouteLoop: 'routeLoop',
+                chkHotel: 'hotel',
+                chkHotelBackup: 'hotelBackup',
+                chkScenic: 'scenic',
+                chkScenicBackup: 'scenicBackup',
+                chkCharge: 'charge',
+                chkService: 'service',
+                chkGas: 'gas'
+            };
+
+            Object.keys(checkboxMap).forEach(function(checkboxId) {
+                document.getElementById(checkboxId).addEventListener('change', function(e) {
+                    var key = checkboxMap[checkboxId];
+                    var isChecked = e.target.checked;
+                    if (key === 'route' || key === 'routeBack' || key === 'routeLoop') {
+                        if (isChecked) {
+                            routeLayers[key].addTo(map);
+                        } else {
+                            map.removeLayer(routeLayers[key]);
+                        }
+                    } else {
+                        if (isChecked) {
+                            layerGroups[key].addTo(map);
+                        } else {
+                            map.removeLayer(layerGroups[key]);
+                        }
+                    }
+                });
+            });
+
+            // ==================== 调整地图视野 ====================
+            var allCoords = routeGoCoords.concat(routeBackCoords, routeLoopCoords);
+            var bounds = L.latLngBounds(allCoords);
+            map.fitBounds(bounds, { padding: [60, 60] });
+
+            console.log('✅ 地图初始化完成，所有标记可hover查看详情，重叠标记已偏移。');
+        })();
+    </script>
+</body>
+</html>
