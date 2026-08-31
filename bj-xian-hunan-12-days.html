@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>北京·西安·湘西 12天 Tesla Model Y + 金毛自驾计划</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#687386;--line:#e7ebf2;--accent:#2563eb;--green:#16a34a;--orange:#ea580c;--red:#dc2626;--purple:#7c3aed}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+header{padding:34px 22px;background:linear-gradient(135deg,#111827,#1e3a8a);color:#fff}header .wrap{max-width:1400px;margin:auto}h1{margin:0 0 8px;font-size:30px}.subtitle{opacity:.85}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);padding:6px 10px;border-radius:999px;font-size:13px}
+.wrap{max-width:1400px;margin:22px auto;padding:0 16px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 5px 20px rgba(15,23,42,.04)}.metric b{font-size:26px;display:block}.metric span{color:var(--muted);font-size:13px}
+section{margin:24px 0}.section-title{font-size:22px;margin:0 0 12px}.notice{padding:14px 16px;border-left:4px solid var(--orange);background:#fff7ed;border-radius:8px;margin:12px 0}.danger{border-left-color:var(--red);background:#fef2f2}.ok{border-left-color:var(--green);background:#f0fdf4}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}table{border-collapse:collapse;width:100%;min-width:1100px}th,td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{background:#f8fafc;position:sticky;top:0;z-index:1;font-size:13px}td{font-size:13px}.day{font-weight:800;white-space:nowrap}.tag{display:inline-block;padding:2px 7px;border-radius:999px;background:#eef2ff;color:#4338ca;font-size:11px;margin:2px}
+.two{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+#map{height:720px;border-radius:14px;border:1px solid var(--line);overflow:hidden}.mapbox{position:relative}.legend{position:absolute;z-index:20;left:12px;top:12px;background:rgba(255,255,255,.96);padding:10px;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);font-size:12px}.legend label{display:block;margin:5px 0}.legend input{vertical-align:middle}.map-note{font-size:12px;color:var(--muted);margin:8px 0}
+.hotel{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff}.hotel h3{margin:0 0 6px;font-size:16px}.hotel p{margin:5px 0;font-size:13px}.status{font-weight:700}.verified{color:var(--green)}.check{color:var(--orange)}
+.source{font-size:12px;color:var(--muted)}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 13px;margin:8px 0}summary{cursor:pointer;font-weight:700}
+.timeline{display:grid;gap:10px}.tl{display:grid;grid-template-columns:95px 1fr;gap:14px}.tl-date{font-weight:800;color:var(--accent);padding-top:12px}.tl-body{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px}
+footer{padding:30px 0;color:var(--muted);font-size:12px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.three{grid-template-columns:1fr}.tl{grid-template-columns:1fr}.tl-date{padding:0}}
+@media(max-width:600px){h1{font-size:23px}.grid{grid-template-columns:1fr}.wrap{padding:0 10px}.card{padding:13px}#map{height:560px}}
+</style>
+<script src="https://webapi.amap.com/maps?v=2.0&key=633c03fb05a82ea0645cdc3bd68be9b7&plugin=AMap.Driving,AMap.Geocoder,AMap.MarkerClusterer"></script>
+</head>
+<body>
+<header><div class="wrap">
+<h1>北京 → 西安 → 张家界 → 凤凰古城 → 郑州 → 北京</h1>
+<div class="subtitle">12天 / 9月25日—10月6日 / 2成人 + 1只6岁金毛 / Tesla Model Y / 宠物友好住宿 / 国庆返程</div>
+<div class="chips"><span class="chip">3天请假：9/28–9/30</span><span class="chip">出发时间 08:30–10:00</span><span class="chip">住宿最晚 21:00</span><span class="chip">酒店≤¥600/晚</span><span class="chip">去回程不同线路</span></div>
+</div></header>
+
+<div class="wrap">
+<section class="grid">
+<div class="card metric"><b>12天</b><span>9/25–10/6</span></div>
+<div class="card metric"><b>≈4,000 km+</b><span>按实时导航动态调整</span></div>
+<div class="card metric"><b>3+2+2晚</b><span>西安 / 武陵源 / 凤凰，减少换酒店</span></div>
+<div class="card metric"><b>0次</b><span>把狗狗单独留在车里的景区游玩</span></div>
+</section>
+
+<section>
+<h2 class="section-title">先说结论：这条线路为什么这样排</h2>
+<div class="notice ok"><b>核心取舍：</b>为了同时满足“西安+湖南、尽量轻松、酒店不超过600、每天不晚于21:00、去返不同路”和“金毛不能长时间留车”，最终不把长沙硬塞进去；湖南重点放在张家界+凤凰，两个地方都给至少2晚。长沙如果加入，会直接把返程压缩成危险的超长驾驶日。</div>
+<div class="notice danger"><b>最重要的宠物安全规则：</b>兵马俑、陕西历史博物馆、西安城墙等均不适合/禁止带宠物；张家界国家森林公园明确显示不可携宠。不要用“车里开空调/宠物模式”解决3–8小时景区游览问题。正确方案是“两人轮换进入”或提前安排合法、可靠的宠物托管/上门看护。</div>
+</section>
+
+<section>
+<h2 class="section-title">12天总行程</h2>
+<div class="table-wrap"><table><thead><tr><th>天</th><th>日期</th><th>路线</th><th>出发</th><th>预计到达</th><th>当日重点</th><th>充电策略</th><th>住宿</th></tr></thead><tbody>
+<tr><td class='day'>D1</td><td>9/25 Fri</td><td><b>北京 → 临汾</b><br>约730 km / 约9h（节假日预留1–1.5h）</td><td>09:00</td><td>19:00–20:00</td><td>纯转场；不安排景点，避免首日疲劳。</td><td>出发100%；保定嘉德万达/保定东二环二选一（约30–40min）；太原印象城或太原龙城万达（约30–40min）；临汾时光颂艺术购物中心到达后补电。</td><td>临汾</td></tr><tr><td class='day'>D2</td><td>9/26 Sat</td><td><b>临汾 → 西安</b><br>约360 km / 约4–4.5h</td><td>09:00</td><td>15:00–16:00</td><td>下午入住、遛狗、南门/护城河外围夜景；不塞景点。</td><td>临汾出发前补至90–100%；到西安高新新天地12个119kW或南二环9个250kW，30–45min。</td><td>西安（连住3晚）</td></tr><tr><td class='day'>D3</td><td>9/27 Sun</td><td><b>西安深度日①</b><br>市内 / 低强度</td><td>08:30</td><td>18:30</td><td>兵马俑 + 华清宫（高优先级，但均禁宠）；采用“两人轮换+狗狗不进车内”的方案。晚上大唐不夜城外围/曲江遛狗。</td><td>酒店夜充优先；若未满，南二环9×250kW或高新新天地12×119kW。</td><td>西安</td></tr><tr><td class='day'>D4</td><td>9/28 Mon</td><td><b>西安深度日②</b><br>市内 / 低强度</td><td>09:00</td><td>18:00</td><td>陕西历史博物馆（禁宠，免费预约）+ 西安城墙（禁宠）；仍采用轮换；傍晚护城河/永宁门外围遛狗。</td><td>夜充；若排队则换站。</td><td>西安</td></tr><tr><td class='day'>D5</td><td>9/29 Tue</td><td><b>西安 → 襄阳</b><br>约500–550 km（按实时导航） / 约6–7h</td><td>08:30</td><td>16:30–18:00</td><td>中途转场，傍晚只安排襄阳古城外围/汉江散步，不进高强度景点。</td><td>西安满电出发；建议商洛/丹凤一带服务区快充作为中点；襄阳乐福天下3×250kW或襄阳吾悦3×250kW。</td><td>襄阳</td></tr><tr><td class='day'>D6</td><td>9/30 Wed</td><td><b>襄阳 → 张家界武陵源</b><br>约450–500 km / 约6h</td><td>09:00</td><td>16:00–17:30</td><td>入住后带狗在酒店周边散步，提前买好森林公园分时预约；不再塞景点。</td><td>襄阳出发90–100%；可在荆州/常德方向服务区补电；张家界市区华天大酒店3×250kW作为进城补电。</td><td>张家界武陵源（连住3晚）</td></tr><tr><td class='day'>D7</td><td>10/1 Thu</td><td><b>张家界核心景区日①</b><br>市内 / 低强度</td><td>08:00</td><td>17:00</td><td>张家界国家森林公园核心区：袁家界/天子山优先。景区禁宠，不能把狗留车内；两人轮换或提前安排正规宠物托管。</td><td>酒店/市区夜充；华天酒店3×250kW备援。</td><td>张家界武陵源</td></tr><tr><td class='day'>D8</td><td>10/2 Fri</td><td><b>张家界核心景区日②</b><br>市内 / 低强度</td><td>08:30</td><td>17:30</td><td>天门山（推荐度高但与森林公园不同景区）；同样按禁宠处理。若国庆排队极端，宁可放弃天门山，不牺牲狗狗安全和休息。</td><td>夜充/市区超级充电。</td><td>张家界武陵源</td></tr><tr><td class='day'>D9</td><td>10/3 Sat</td><td><b>张家界 → 凤凰古城</b><br>约220–250 km / 约3–4h</td><td>09:00</td><td>13:00–15:00</td><td>下午古城慢逛、沱江两岸、虹桥夜景；古城街区以当天管理要求为准，狗狗全程牵绳。沱江游船不要默认允许宠物，建议一人乘船一人陪狗。</td><td>出发前补足；凤凰县若实时可用桩不足，优先张家界满电进城；必要时到吉首补电。</td><td>凤凰（连住2晚）</td></tr><tr><td class='day'>D10</td><td>10/4 Sun</td><td><b>凤凰古城慢游日</b><br>市内 / 低强度</td><td>09:00</td><td>18:00</td><td>古城八景择2–3个 + 沱江散步；不追求打卡全套。下午给狗留足休息。</td><td>白天不挪车，晚间补电。</td><td>凤凰</td></tr><tr><td class='day'>D11</td><td>10/5 Mon</td><td><b>凤凰 → 郑州</b><br>约900–1000 km / 约10–11h+充电</td><td>08:30</td><td>20:00–20:45</td><td>返程核心转场日；只安排必要休息，不安排景点。</td><td>凤凰/吉首出发满电；襄阳/荆州方向服务区补一次；郑州宏光协和10×120kW或郑州锦荣3×250kW。</td><td>郑州</td></tr><tr><td class='day'>D12</td><td>10/6 Tue</td><td><b>郑州 → 北京</b><br>约700 km / 约8–9h+充电</td><td>08:30</td><td>18:00–20:00</td><td>建议石家庄/保定补电；尽量19:30前进入北京，给国庆返京拥堵留余量。</td><td>郑州出发90–100%；石家庄新华3×250kW或海悦天地6×119kW；保定嘉德万达3×250kW作为二次备援。</td><td>北京</td></tr></tbody></table></div>
+</section>
+
+<section>
+<h2 class="section-title">每日执行版</h2>
+<div class="timeline">
+<div class="tl"><div class="tl-date">9/25 Fri<br>D1</div><div class="tl-body"><b>北京 → 临汾</b><br><span class="tag">出发 09:00</span><span class="tag">到达 19:00–20:00</span><p><b>行程：</b>纯转场；不安排景点，避免首日疲劳。</p><p><b>充电：</b>出发100%；保定嘉德万达/保定东二环二选一（约30–40min）；太原印象城或太原龙城万达（约30–40min）；临汾时光颂艺术购物中心到达后补电。</p><p><b>吃什么：</b>临汾牛肉丸子面、尧都小吃</p></div></div><div class="tl"><div class="tl-date">9/26 Sat<br>D2</div><div class="tl-body"><b>临汾 → 西安</b><br><span class="tag">出发 09:00</span><span class="tag">到达 15:00–16:00</span><p><b>行程：</b>下午入住、遛狗、南门/护城河外围夜景；不塞景点。</p><p><b>充电：</b>临汾出发前补至90–100%；到西安高新新天地12个119kW或南二环9个250kW，30–45min。</p><p><b>吃什么：</b>肉夹馍、凉皮、羊肉泡馍；晚餐建议回民街外围/洒金桥</p></div></div><div class="tl"><div class="tl-date">9/27 Sun<br>D3</div><div class="tl-body"><b>西安深度日①</b><br><span class="tag">出发 08:30</span><span class="tag">到达 18:30</span><p><b>行程：</b>兵马俑 + 华清宫（高优先级，但均禁宠）；采用“两人轮换+狗狗不进车内”的方案。晚上大唐不夜城外围/曲江遛狗。</p><p><b>充电：</b>酒店夜充优先；若未满，南二环9×250kW或高新新天地12×119kW。</p><p><b>吃什么：</b>临潼石榴、老碗面；晚餐回城</p></div></div><div class="tl"><div class="tl-date">9/28 Mon<br>D4</div><div class="tl-body"><b>西安深度日②</b><br><span class="tag">出发 09:00</span><span class="tag">到达 18:00</span><p><b>行程：</b>陕西历史博物馆（禁宠，免费预约）+ 西安城墙（禁宠）；仍采用轮换；傍晚护城河/永宁门外围遛狗。</p><p><b>充电：</b>夜充；若排队则换站。</p><p><b>吃什么：</b>陕菜、biangbiang面、葫芦鸡</p></div></div><div class="tl"><div class="tl-date">9/29 Tue<br>D5</div><div class="tl-body"><b>西安 → 襄阳</b><br><span class="tag">出发 08:30</span><span class="tag">到达 16:30–18:00</span><p><b>行程：</b>中途转场，傍晚只安排襄阳古城外围/汉江散步，不进高强度景点。</p><p><b>充电：</b>西安满电出发；建议商洛/丹凤一带服务区快充作为中点；襄阳乐福天下3×250kW或襄阳吾悦3×250kW。</p><p><b>吃什么：</b>襄阳牛肉面、黄酒、宜城大虾</p></div></div><div class="tl"><div class="tl-date">9/30 Wed<br>D6</div><div class="tl-body"><b>襄阳 → 张家界武陵源</b><br><span class="tag">出发 09:00</span><span class="tag">到达 16:00–17:30</span><p><b>行程：</b>入住后带狗在酒店周边散步，提前买好森林公园分时预约；不再塞景点。</p><p><b>充电：</b>襄阳出发90–100%；可在荆州/常德方向服务区补电；张家界市区华天大酒店3×250kW作为进城补电。</p><p><b>吃什么：</b>张家界三下锅、腊肉</p></div></div><div class="tl"><div class="tl-date">10/1 Thu<br>D7</div><div class="tl-body"><b>张家界核心景区日①</b><br><span class="tag">出发 08:00</span><span class="tag">到达 17:00</span><p><b>行程：</b>张家界国家森林公园核心区：袁家界/天子山优先。景区禁宠，不能把狗留车内；两人轮换或提前安排正规宠物托管。</p><p><b>充电：</b>酒店/市区夜充；华天酒店3×250kW备援。</p><p><b>吃什么：</b>武陵源三下锅、土家腊肉</p></div></div><div class="tl"><div class="tl-date">10/2 Fri<br>D8</div><div class="tl-body"><b>张家界核心景区日②</b><br><span class="tag">出发 08:30</span><span class="tag">到达 17:30</span><p><b>行程：</b>天门山（推荐度高但与森林公园不同景区）；同样按禁宠处理。若国庆排队极端，宁可放弃天门山，不牺牲狗狗安全和休息。</p><p><b>充电：</b>夜充/市区超级充电。</p><p><b>吃什么：</b>土家菜、葛根粉</p></div></div><div class="tl"><div class="tl-date">10/3 Sat<br>D9</div><div class="tl-body"><b>张家界 → 凤凰古城</b><br><span class="tag">出发 09:00</span><span class="tag">到达 13:00–15:00</span><p><b>行程：</b>下午古城慢逛、沱江两岸、虹桥夜景；古城街区以当天管理要求为准，狗狗全程牵绳。沱江游船不要默认允许宠物，建议一人乘船一人陪狗。</p><p><b>充电：</b>出发前补足；凤凰县若实时可用桩不足，优先张家界满电进城；必要时到吉首补电。</p><p><b>吃什么：</b>血粑鸭、酸汤鱼、苗家腊肉</p></div></div><div class="tl"><div class="tl-date">10/4 Sun<br>D10</div><div class="tl-body"><b>凤凰古城慢游日</b><br><span class="tag">出发 09:00</span><span class="tag">到达 18:00</span><p><b>行程：</b>古城八景择2–3个 + 沱江散步；不追求打卡全套。下午给狗留足休息。</p><p><b>充电：</b>白天不挪车，晚间补电。</p><p><b>吃什么：</b>凤凰姜糖、米豆腐、血粑鸭</p></div></div><div class="tl"><div class="tl-date">10/5 Mon<br>D11</div><div class="tl-body"><b>凤凰 → 郑州</b><br><span class="tag">出发 08:30</span><span class="tag">到达 20:00–20:45</span><p><b>行程：</b>返程核心转场日；只安排必要休息，不安排景点。</p><p><b>充电：</b>凤凰/吉首出发满电；襄阳/荆州方向服务区补一次；郑州宏光协和10×120kW或郑州锦荣3×250kW。</p><p><b>吃什么：</b>服务区简餐；晚上郑州烩面/胡辣汤仅作为到达后备选</p></div></div><div class="tl"><div class="tl-date">10/6 Tue<br>D12</div><div class="tl-body"><b>郑州 → 北京</b><br><span class="tag">出发 08:30</span><span class="tag">到达 18:00–20:00</span><p><b>行程：</b>建议石家庄/保定补电；尽量19:30前进入北京，给国庆返京拥堵留余量。</p><p><b>充电：</b>郑州出发90–100%；石家庄新华3×250kW或海悦天地6×119kW；保定嘉德万达3×250kW作为二次备援。</p><p><b>吃什么：</b>服务区午餐</p></div></div></div></section>
+
+<section>
+<h2 class="section-title">景区政策与“狗狗怎么办”</h2>
+<div class="table-wrap"><table><thead><tr><th>景点</th><th>推荐度</th><th>成人票</th><th>开放/预约</th><th>宠物</th><th>建议时长</th><th>本次策略</th></tr></thead><tbody>
+<tr><td><b>秦始皇帝陵博物院·兵马俑</b></td><td>★★★★★</td><td>¥120</td><td>旺季8:30–17:00；实名预约</td><td>❌ 禁止宠物</td><td>3–4h（兵马俑+丽山园）</td><td>两人轮换；狗狗不进车。官网称两处各约1.5h，摆渡车免费；国庆以最新公告为准。citeturn7search1turn7search2turn10search2</td></tr>
+<tr><td><b>华清宫</b></td><td>★★★★☆</td><td>以官方当日票价为准</td><td>07:00–19:00；可官方微信预约</td><td>⚠️ 不建议携宠进入</td><td>2–3h</td><td>与兵马俑同日时不要贪多；两人轮换。官方渠道支持线上预约。citeturn0search0</td></tr>
+<tr><td><b>陕西历史博物馆</b></td><td>★★★★★</td><td>免费</td><td>8:30–19:00（当前季）；实名预约</td><td>❌ 所有动物禁止入馆</td><td>2–3h</td><td>国庆预约优先级极高；官方明确动物（含服务犬）不得进入。citeturn1search0turn10search1</td></tr>
+<tr><td><b>西安城墙</b></td><td>★★★★☆</td><td>¥54</td><td>南门8:00–22:00；以当日预约规则为准</td><td>❌ 禁止携宠登城</td><td>1.5–3h</td><td>傍晚看灯光最舒服；狗狗留给另一位成人陪伴。citeturn1search1turn7search0turn7search10</td></tr>
+<tr><td><b>张家界国家森林公园</b></td><td>★★★★★</td><td>2026旺季景车联票约¥240</td><td>门票站约7:30–17:00；分时实名预约；有效期按当期规则</td><td>❌ 不可携宠</td><td>1–2整天</td><td>本次安排2个景区日；国庆不建议一天硬吃完。官方/权威旅游信息显示不可携宠。citeturn8search4turn2search0</td></tr>
+<tr><td><b>天门山</b></td><td>★★★★★</td><td>资源门票政府指导价¥72，索道/扶梯等另计</td><td>必须按景区分时预约/购票；以国庆公告为准</td><td>⚠️公开信息口径冲突；本次按“不带狗”处理</td><td>4–6h</td><td>两人轮换。若国庆排队过长，直接取消，不拿狗狗安全和返程体力换一次打卡。湖南省发改委已核定资源门票指导价¥72。citeturn8search10turn8search8</td></tr>
+<tr><td><b>凤凰古城</b></td><td>★★★★★</td><td>古城街区免费；八景+日游沱江套票约¥128</td><td>古城全天；八景约08:00–17:30；日游约08:00–17:50</td><td>⚠️ 古城街区可按现场管理牵绳游览；游船/场馆不默认允许</td><td>1.5–2天</td><td>把重点放在古城街巷、沱江两岸、夜景；游船一人乘、一人陪狗。citeturn8search1turn8search5</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2 class="section-title">住宿：主选 + 2备选</h2>
+<div class="notice"><b>价格说明：</b>国庆价格会显著波动。以下价格按“通常/公开页面可见区间”做预算，不把任何一个当前非国庆价格当成10/1–10/6的保证价；预订时必须再次确认“大型犬/6岁金毛、是否可独留房间、宠物费、充电桩是否可用”。</div>
+<div class="three">
+<div class="hotel"><h3>西安｜主选：西安钟楼南门希尔顿惠庭</h3><p>参考：约¥400–600；宠物：允许，公开政策为每只¥200/次；免费停车；有充电站。</p><p class="verified status">✓ 当前公开信息验证</p><p>优点：位置、宠物、停车、充电同时满足，适合连住3晚。citeturn6search0turn6search17</p><p><a href="https://www.hilton.com/zh-hans/hotels/siaxnht-home-suites-by-hilton-xian-bell-tower-south-gate/" target="_blank">酒店官方页</a></p></div>
+<div class="hotel"><h3>西安｜备选1：西安阎良西雅图商务酒店</h3><p>参考：≤¥600概率高；宠物友好；免费停车；充电桩。</p><p class="verified status">✓ 当前公开信息验证</p><p>缺点：离市中心远，不适合逛钟楼；适合只把它当“车+狗+充电”基地。citeturn6search10</p></div>
+<div class="hotel"><h3>西安｜备选2：钟楼南门公寓类房源</h3><p>⚠️ 公开页面显示有充电/停车，但该具体房源明确“不允许宠物”，因此<b>不作为真正备选</b>；只有在换到明确宠物友好房源后才考虑。citeturn6search2</p></div>
+
+<div class="hotel"><h3>临汾｜主选：滨西酒店（临汾高铁站博物馆店）</h3><p>宠物：免费携带；免费停车；充电桩；大停车场，适合首日长途。</p><p class="verified status">✓ 当前公开信息验证</p><p>citeturn5search1</p></div>
+<div class="hotel"><h3>临汾｜备选1：清漫酒店（临汾吉县店）</h3><p>2026年开业、充电桩、评价高；<b>宠物政策需电话确认</b>。如确认允许大型犬可替换。</p><p class="check status">△ 充电已验证，宠物待确认</p><p>citeturn5search15</p></div>
+<div class="hotel"><h3>临汾｜备选2：太岳森林康养·林溪松居</h3><p>宠物友好、免费停车、民宿型；位置在霍州方向，适合想把首晚做得更轻松时使用。</p><p class="verified status">✓ 宠物/停车已验证；充电需现场确认</p><p>citeturn5search11</p></div>
+
+<div class="hotel"><h3>襄阳｜主选：襄阳名人雅居禅意酒店</h3><p>宠物友好；庭院型；适合带狗散步。充电需去市区超级充电站。</p><p class="verified status">✓ 宠物已验证</p><p>citeturn5search3turn5search13</p></div>
+<div class="hotel"><h3>襄阳｜备选1：襄阳襄州希尔顿惠庭</h3><p>收费携宠；评价较高；无须把酒店充电作为刚需，附近有3×250kW超级充电。</p><p class="verified status">✓ 宠物已验证</p><p>citeturn5search9turn11search25</p></div>
+<div class="hotel"><h3>襄阳｜备选2：襄阳鑫源商务酒店</h3><p>免费停车+充电桩；宠物政策未在当前公开结果中确认，预订前电话确认大型犬。</p><p class="check status">△ 充电已验证，宠物待确认</p><p>citeturn5search3</p></div>
+
+<div class="hotel"><h3>武陵源｜主选：张家界星野 StarField 酒店（武陵源标志门店）</h3><p>2025开业；宠物友好；充电桩；免费/方便停车；距标志门约1.2km。</p><p class="verified status">✓ 当前公开信息验证</p><p>citeturn6search3</p></div>
+<div class="hotel"><h3>武陵源｜备选1</h3><p>建议在携程“可携带宠物+充电桩+免费停车”三个条件同时筛选，优先选择标志门1–2km内的房源；国庆期间不要为了江景牺牲充电与宠物政策。</p><p class="check status">△ 出发前48h二次核验</p></div>
+<div class="hotel"><h3>武陵源｜备选2</h3><p>同上：只接受书面/订单页明确允许狗狗的房型。若酒店要求“宠物不能单独留房”，不要安排成人同时进山。</p><p class="check status">△ 出发前48h二次核验</p></div>
+
+<div class="hotel"><h3>凤凰｜主选：全季酒店（湘西凤凰古城云桥店）</h3><p>宠物友好；免费停车；充电桩；靠近虹桥/古城；公开评价4.7左右。</p><p class="verified status">✓ 当前公开信息验证</p><p>citeturn6search9turn6search6</p></div>
+<div class="hotel"><h3>凤凰｜备选1：忆凤凰美宿</h3><p>宠物友好；免费公共停车；充电车位；古城中心。</p><p class="verified status">✓ 当前公开信息验证</p><p>citeturn6search4</p></div>
+<div class="hotel"><h3>凤凰｜备选2：凤凰山前月下江景民宿</h3><p>宠物友好；充电车位；公共停车；核心区江景。</p><p class="verified status">✓ 当前公开信息验证</p><p>citeturn6search7</p></div>
+
+<div class="hotel"><h3>郑州｜主选：雅季·轻居 Ezzy Urban CultureHub</h3><p>宠物友好+充电桩+免费停车；适合D11纯转场。</p><p class="verified status">✓ 当前公开搜索验证</p><p>citeturn5search4</p></div>
+<div class="hotel"><h3>郑州｜备选1：郑州南三环特斯拉中心周边宠物友好酒店</h3><p>建议把“充电站位置”作为第一优先级；附近有3×250kW Tesla Supercharger。</p><p>citeturn11search6</p></div>
+<div class="hotel"><h3>郑州｜备选2：郑州宏光协和广场周边宠物友好酒店</h3><p>附近有10×120kW Tesla Supercharger，D11晚到时容错最高。</p><p>citeturn11search15</p></div>
+</div>
+</section>
+
+<section>
+<h2 class="section-title">Tesla Model Y 充电方案</h2>
+<div class="notice ok"><b>不要按“必须充满”规划。</b>Tesla官方建议长途使用超级充电网络，通常约30分钟即可补足继续行驶所需电量；本方案把“到站SOC≥15–20%”作为安全底线，正常保持20–30%机动，长距离日出发90–100%。citeturn11search0</div>
+<div class="table-wrap"><table><thead><tr><th>区段</th><th>主充电</th><th>容量/功率</th><th>备选</th><th>节假日策略</th></tr></thead><tbody>
+<tr><td>北京→临汾</td><td>保定嘉德万达</td><td>3×250kW</td><td>保定东二环3×250kW；太原印象城6×250kW</td><td>到站剩余≥20%才进；若排队>20min直接换备选。citeturn11search3turn11search4turn11search9</td></tr>
+<tr><td>临汾</td><td>临汾时光颂艺术购物中心</td><td>3×250kW</td><td>太原龙城万达6×250kW</td><td>住店后充满/90%+，避免第二天首段焦虑。citeturn11search43turn11search18</td></tr>
+<tr><td>西安</td><td>西安高新新天地</td><td>12×119kW</td><td>南二环9×250kW；浐灞会展中心3×250kW</td><td>优先12枪大站；国庆排队时直接切换。citeturn12search1turn0search13turn0search4</td></tr>
+<tr><td>襄阳</td><td>乐福天下广场</td><td>3×250kW</td><td>吾悦广场3×250kW；襄州Tesla中心3×250kW</td><td>进城前先看车机实时空闲；不把“酒店有无充电”当唯一条件。citeturn11search12turn11search23turn11search25</td></tr>
+<tr><td>张家界</td><td>华天大酒店</td><td>3×250kW</td><td>常德方向服务区/站点按车机实时导航</td><td>武陵源住宿附近充电不足时，进城先补满再去酒店。citeturn12search0</td></tr>
+<tr><td>郑州</td><td>宏光协和广场</td><td>10×120kW</td><td>锦荣广场3×250kW；南三环Tesla中心3×250kW</td><td>D11晚到，优先10枪大站；不要在小站排队。citeturn11search15turn1search18turn11search6</td></tr>
+<tr><td>返京</td><td>石家庄新华Tesla中心</td><td>3×250kW</td><td>石家庄海悦天地6×119kW；保定嘉德万达3×250kW</td><td>国庆返京建议“到石家庄就补”，不要赌保定。citeturn11search7turn11search14turn11search3</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2 class="section-title">高速服务区 / 加油站 / 补能避坑</h2>
+<div class="three">
+<div class="card"><b>服务区原则</b><p>每次长途至少准备“主站+备站”。主站排队超过20分钟、充电枪故障、入口拥堵，直接驶向备站；不要为了省5–10分钟在低SOC时赌站。</p></div>
+<div class="card"><b>油车怎么办？</b><p>你是纯电 Model Y，地图仍标注主要综合服务区，方便吃饭、洗手间、遛狗。加油站仅作为服务区设施信息展示，不是车辆补能方案。</p></div>
+<div class="card"><b>国庆排队</b><p>把30–45分钟正常充电时间按45–75分钟预算；10枪以上大站优先于2–3枪小站。Tesla车机实时状态优先于攻略文章。</p></div>
+</div>
+</section>
+
+<section>
+<h2 class="section-title">美食清单（按路线）</h2>
+<div class="table-wrap"><table><thead><tr><th>城市</th><th>必吃</th><th>人均预算</th><th>带狗策略</th><th>避坑</th></tr></thead><tbody>
+<tr><td>临汾</td><td>牛肉丸子面、尧都小吃</td><td>¥30–60</td><td>优先外摆/外带</td><td>首日不要为了网红店排长队</td></tr>
+<tr><td>西安</td><td>肉夹馍、羊肉泡馍、biangbiang面、葫芦鸡</td><td>¥30–100</td><td>室内餐厅两人轮换或外带</td><td>回民街核心段国庆人挤人，洒金桥/本地社区店更舒服</td></tr>
+<tr><td>襄阳</td><td>襄阳牛肉面、宜城大虾</td><td>¥20–80</td><td>户外/外带</td><td>D5只是转场，不专程排队</td></tr>
+<tr><td>张家界</td><td>三下锅、土家腊肉、葛根粉</td><td>¥50–120</td><td>民宿/户外优先</td><td>景区门口高溢价套餐少点；优先本地人多的店</td></tr>
+<tr><td>凤凰</td><td>血粑鸭、酸汤鱼、米豆腐、姜糖</td><td>¥50–120</td><td>江边露台/外摆更友好</td><td>临江酒吧街中游夜间噪声大；住宿尽量选上游/外围安静段。citeturn10search5</td></tr>
+<tr><td>郑州</td><td>烩面、胡辣汤</td><td>¥20–60</td><td>D11晚到，外带即可</td><td>不为吃饭改变返京充电节奏</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2 class="section-title">地图：路线 + 住宿 + 景点 + 充电 + 服务区 + 美食</h2>
+<div class="mapbox">
+<div class="legend">
+<b>图层</b>
+<label><input type="checkbox" checked data-cat="route"> 路线</label>
+<label><input type="checkbox" checked data-cat="hotel"> 住宿</label>
+<label><input type="checkbox" checked data-cat="scenic"> 景点</label>
+<label><input type="checkbox" checked data-cat="charger"> Tesla充电</label>
+<label><input type="checkbox" checked data-cat="service"> 服务区</label>
+<label><input type="checkbox" checked data-cat="food"> 美食</label>
+<label><input type="checkbox" checked data-cat="gas"> 加油站</label>
+</div>
+<div id="map"></div>
+</div>
+<p class="map-note">地图使用高德地图 JS API。首次打开前，把源码中的 <code>YOUR_AMAP_KEY</code> 替换为你的高德 Web 端 Key；如果账号开启安全密钥，则按高德 JS API 2.0 的安全配置加入 securityJsCode。标记支持鼠标悬停信息窗、地图缩放/拖拽；近距离点可聚合。</p>
+</section>
+
+<section>
+<h2 class="section-title">地图数据说明</h2>
+<div class="table-wrap"><table><thead><tr><th>分类</th><th>标记内容</th><th>Hover信息</th></tr></thead><tbody>
+<tr><td>住宿</td><td>每日主选+2备选</td><td>价格、宠物政策、停车、充电、预订链接</td></tr>
+<tr><td>景点</td><td>主景点+附近备选</td><td>票价、开放、预约、宠物、建议时长、游览方式</td></tr>
+<tr><td>充电</td><td>沿途主/备Tesla站</td><td>枪数、最大功率、地址</td></tr>
+<tr><td>服务区</td><td>沿途关键休息节点</td><td>餐饮、充电、加油设施</td></tr>
+<tr><td>美食</td><td>各城市代表性店铺/区域</td><td>地址、人均、营业、预约/排队建议（公开信息不稳定处标“出发前确认”）</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2 class="section-title">人 + 宠物必备清单</h2>
+<div class="two">
+<div class="card"><h3>狗狗</h3><ul>
+<li>胸背+双牵引：一条主牵引、一条备用；夜间反光件。</li>
+<li>车载安全带/航空箱；防滑垫、车门防护垫、后备箱隔离网。</li>
+<li>折叠水碗+至少2L备用饮水；便携饮水瓶。</li>
+<li>日常粮+至少3天冗余；零食；益生菌/肠胃应急用品。</li>
+<li>拾便袋、湿巾、毛巾、吸水毯、车载吸尘器。</li>
+<li>常用药、驱虫用品、止血带/纱布等基础宠物急救包；疫苗/免疫记录电子版。</li>
+<li>狗牌写两位成人电话；最好再配一个可定位的宠物定位器。</li>
+<li>国庆高温/堵车时不要把狗单独留车内；空调不能替代人陪护。</li>
+</ul></div>
+<div class="card"><h3>人 + Model Y</h3><ul>
+<li>身份证、驾驶证、行驶证、保险凭证；景区预约截图/二维码离线保存。</li>
+<li>充电枪/转接头按车辆实际配置；车载充气泵、胎压计、补胎工具。</li>
+<li>雨衣、防滑鞋、帽子、防晒、保温杯、常用药。</li>
+<li>两个手机导航账号/离线地图；充电App提前登录并绑定支付。</li>
+<li>车内准备纸巾、垃圾袋、饮用水、能量棒。</li>
+<li>每天睡前把次日第一个充电站加入车机导航，不临出门才找。</li>
+<li>国庆期间避免夜间山路；D11虽为最长返程日，也必须保证20:00–20:45前进酒店。</li>
+</ul></div>
+</div>
+</section>
+
+<section>
+<h2 class="section-title">国庆预约时间表</h2>
+<div class="table-wrap"><table><thead><tr><th>时间</th><th>要做什么</th></tr></thead><tbody>
+<tr><td>现在—9月上旬</td><td>锁定宠物友好酒店；电话确认“6岁金毛、是否收押金/清洁费、是否允许独留、是否能进公共区域、充电桩是否对住客开放”。</td></tr>
+<tr><td>9月中旬</td><td>按官方最新公告预约兵马俑、陕西历史博物馆、张家界森林公园、天门山等；不要把第三方平台“可预订”当作官方入园资格。</td></tr>
+<tr><td>9/24晚</td><td>检查Tesla充电站实时状态、轮胎、雨刷、狗狗饮水/粮、身份证件；所有景区预约截图离线保存。</td></tr>
+<tr><td>每天21:00前</td><td>确认次日天气、实时路况、第一充电站空闲情况；必要时把备站替换进车机。</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2 class="section-title">本方案的3个关键避坑</h2>
+<ol>
+<li><b>不要为了“景点全打卡”把狗留车里。</b>国庆景区停车场可能暴晒、拥堵、进出缓慢；即使车内空调运行也不应无人看管。</li>
+<li><b>不要把“酒店写宠物友好”理解成“宠物可以单独留房”。</b>这是两件事；预订时必须明确问。</li>
+<li><b>不要把充电攻略里的“有桩”理解成“到站一定有空桩”。</b>国庆必须使用Tesla车机实时空闲状态，并设置SOC底线和备选站。</li>
+</ol>
+</section>
+
+<footer>
+<p>资料更新时间：2026-08-31。门票、开放时间、宠物政策、酒店价格和充电桩实时可用数量都可能在国庆前变化；本页面对官方来源优先，无法获得官方明确宠物政策时采用保守策略，并标注“需确认”。</p>
+<p>主要核验来源：秦始皇帝陵博物院、陕西历史博物馆、西安城墙、湖南省发改委、Tesla中国、携程酒店公开页面等。小红书公开网页检索对搜索结果索引非常有限，因此未把无法核验的“小红书爆料”当作事实；凤凰住宿避坑部分参考了近期公开社区/内容平台信息，并再次以酒店页面为准。</p>
+</footer>
+</div>
+
+<script>
+const data = [
+/* hotels */
+{name:"西安钟楼南门希尔顿惠庭",cat:"hotel",lng:108.952,lat:34.245,info:"主选｜约¥400–600｜允许宠物（公开政策：每只¥200/次）｜免费停车｜有充电站"},
+{name:"西安阎良西雅图商务酒店",cat:"hotel",lng:109.231,lat:34.661,info:"备选｜宠物友好｜免费停车｜充电桩｜更适合纯补能住宿"},
+{name:"滨西酒店·临汾高铁站博物馆店",cat:"hotel",lng:111.509,lat:36.078,info:"主选｜宠物免费｜免费停车｜充电桩｜大停车场"},
+{name:"清漫酒店·临汾吉县店",cat:"hotel",lng:110.682,lat:36.099,info:"备选｜2026开业｜充电桩｜宠物需电话确认"},
+{name:"太岳森林康养·林溪松居",cat:"hotel",lng:112.010,lat:36.600,info:"备选｜宠物友好｜免费停车｜充电需确认"},
+{name:"襄阳名人雅居禅意酒店",cat:"hotel",lng:112.139,lat:32.012,info:"主选｜宠物友好｜庭院｜充电去市区超级站"},
+{name:"襄阳襄州希尔顿惠庭",cat:"hotel",lng:112.254,lat:32.071,info:"备选｜收费携宠｜附近3×250kW Tesla"},
+{name:"襄阳鑫源商务酒店",cat:"hotel",lng:112.132,lat:32.018,info:"备选｜免费停车｜充电桩｜宠物需确认"},
+{name:"张家界星野StarField酒店·武陵源标志门店",cat:"hotel",lng:110.548,lat:29.347,info:"主选｜宠物友好｜充电桩｜停车方便｜标志门约1.2km"},
+{name:"武陵源宠物友好备选A",cat:"hotel",lng:110.552,lat:29.343,info:"备选｜仅接受订单页明确允许狗狗的房型｜出发前48h核验"},
+{name:"武陵源宠物友好备选B",cat:"hotel",lng:110.543,lat:29.351,info:"备选｜优先充电+停车｜宠物需书面确认"},
+{name:"全季酒店·湘西凤凰古城云桥店",cat:"hotel",lng:109.604,lat:27.950,info:"主选｜宠物友好｜免费停车｜充电桩｜近虹桥"},
+{name:"忆凤凰美宿",cat:"hotel",lng:109.598,lat:27.950,info:"备选｜宠物友好｜公共停车免费｜充电车位"},
+{name:"凤凰山前月下江景民宿",cat:"hotel",lng:109.600,lat:27.946,info:"备选｜宠物友好｜公共停车｜充电车位"},
+{name:"雅季·轻居Ezzy Urban CultureHub酒店·郑州",cat:"hotel",lng:113.660,lat:34.715,info:"主选｜宠物友好｜充电桩｜免费停车"},
+{name:"郑州南三环Tesla中心周边备选",cat:"hotel",lng:113.710,lat:34.705,info:"备选住宿区域｜附近3×250kW Tesla"},
+{name:"郑州宏光协和广场周边备选",cat:"hotel",lng:113.690,lat:34.755,info:"备选住宿区域｜附近10×120kW Tesla"},
+/* scenic */
+{name:"秦始皇帝陵博物院·兵马俑",cat:"scenic",lng:109.278,lat:34.385,info:"成人¥120｜旺季08:30–17:00｜实名预约｜禁宠｜建议3–4h｜两人轮换"},
+{name:"华清宫",cat:"scenic",lng:109.214,lat:34.365,info:"约2–3h｜07:00–19:00｜官方渠道可预约｜宠物按不带处理"},
+{name:"陕西历史博物馆",cat:"scenic",lng:108.953,lat:34.231,info:"免费｜08:30–19:00当前季｜实名预约｜所有动物禁入｜2–3h"},
+{name:"西安城墙·永宁门",cat:"scenic",lng:108.953,lat:34.252,info:"成人¥54｜南门08:00–22:00｜宠物禁入｜1.5–3h"},
+{name:"大唐不夜城/大雁塔外围",cat:"scenic",lng:108.964,lat:34.219,info:"户外夜游备选｜宠物政策按现场管理｜适合晚间遛狗但不进入室内场馆"},
+{name:"张家界国家森林公园·标志门",cat:"scenic",lng:110.547,lat:29.345,info:"旺季景车联票约¥240｜约07:30–17:00｜分时预约｜禁宠｜建议1–2天"},
+{name:"天门山国家森林公园",cat:"scenic",lng:110.478,lat:29.117,info:"资源门票指导价¥72，索道等另计｜预约｜宠物口径冲突，本方案按禁宠｜4–6h"},
+{name:"宝峰湖（备选）",cat:"scenic",lng:110.570,lat:29.290,info:"武陵源备选景点｜若国庆森林公园过载可考虑；宠物政策出发前确认"},
+{name:"凤凰古城",cat:"scenic",lng:109.600,lat:27.948,info:"古城街区免费｜八景+日游沱江约¥128｜全天｜建议1.5–2天｜牵绳"},
+{name:"沱江泛舟",cat:"scenic",lng:109.603,lat:27.950,info:"日游约¥85；套票约¥128｜08:00–17:30｜宠物不默认允许，一人乘船一人陪狗"},
+/* chargers */
+{name:"保定嘉德万达Tesla",cat:"charger",lng:115.482,lat:38.845,info:"3枪｜最高250kW｜全天｜主充"},
+{name:"保定东二环Tesla中心",cat:"charger",lng:115.525,lat:38.865,info:"3枪｜最高250kW｜全天｜备选"},
+{name:"太原印象城Tesla",cat:"charger",lng:112.583,lat:37.806,info:"6枪｜最高250kW｜全天"},
+{name:"太原龙城万达Tesla",cat:"charger",lng:112.559,lat:37.779,info:"6枪｜最高250kW｜全天"},
+{name:"临汾时光颂艺术购物中心Tesla",cat:"charger",lng:111.518,lat:36.102,info:"3枪｜最高250kW｜全天"},
+{name:"西安高新新天地Tesla",cat:"charger",lng:108.900,lat:34.236,info:"12枪｜最高119kW｜全天"},
+{name:"西安南二环Tesla中心",cat:"charger",lng:108.916,lat:34.240,info:"9枪｜最高250kW｜全天"},
+{name:"西安浐灞会展中心Tesla",cat:"charger",lng:109.045,lat:34.308,info:"3枪｜最高250kW｜全天"},
+{name:"襄阳乐福天下广场Tesla",cat:"charger",lng:112.133,lat:32.050,info:"3枪｜最高250kW｜全天"},
+{name:"襄阳吾悦广场Tesla",cat:"charger",lng:112.148,lat:32.070,info:"3枪｜最高250kW｜全天"},
+{name:"襄阳襄州Tesla中心",cat:"charger",lng:112.254,lat:32.068,info:"3枪｜最高250kW｜全天"},
+{name:"张家界华天大酒店Tesla",cat:"charger",lng:110.484,lat:29.118,info:"3枪｜最高250kW｜全天"},
+{name:"郑州宏光协和广场Tesla",cat:"charger",lng:113.680,lat:34.754,info:"10枪｜最高120kW｜全天"},
+{name:"郑州锦荣广场Tesla",cat:"charger",lng:113.694,lat:34.725,info:"3枪｜最高250kW｜全天"},
+{name:"郑州南三环Tesla中心",cat:"charger",lng:113.710,lat:34.705,info:"3枪｜最高250kW｜全天"},
+{name:"石家庄新华Tesla中心",cat:"charger",lng:114.459,lat:38.080,info:"3枪｜最高250kW｜全天"},
+{name:"石家庄海悦天地Tesla",cat:"charger",lng:114.470,lat:38.021,info:"6枪｜最高119kW｜全天"},
+/* service */
+{name:"保定综合服务区",cat:"service",lng:115.70,lat:38.75,info:"餐饮/卫生间/停车；充电设施以当日车机为准；加油站通常有92/95等"},
+{name:"太原方向综合服务区",cat:"service",lng:112.30,lat:37.55,info:"餐饮/卫生间/停车；充电以实时状态为准"},
+{name:"商洛方向服务区",cat:"service",lng:109.90,lat:33.87,info:"西安→襄阳中途休息节点；餐饮/卫生间；充电以实时状态为准"},
+{name:"荆州方向服务区",cat:"service",lng:112.20,lat:30.35,info:"襄阳→张家界中途休息节点；餐饮/卫生间；充电以实时状态为准"},
+{name:"常德方向服务区",cat:"service",lng:111.70,lat:29.15,info:"湖南段中途休息节点；餐饮/卫生间；充电以实时状态为准"},
+{name:"郑州东部综合服务区",cat:"service",lng:114.05,lat:34.70,info:"返程休息；餐饮/卫生间/加油；充电以实时状态为准"},
+{name:"石家庄方向综合服务区",cat:"service",lng:114.95,lat:37.85,info:"返京前最后大段休息；餐饮/卫生间/加油；优先进城Tesla站"},
+/* food */
+{name:"西安·洒金桥美食区",cat:"food",lng:108.934,lat:34.266,info:"肉夹馍/泡馍/面食｜人均约¥30–80｜高峰排队，建议错峰/外带"},
+{name:"襄阳·牛肉面街区",cat:"food",lng:112.132,lat:32.010,info:"襄阳牛肉面｜人均约¥20–40｜早餐高峰快进快出"},
+{name:"张家界·武陵源三下锅",cat:"food",lng:110.549,lat:29.346,info:"三下锅/腊肉｜人均约¥50–100｜国庆晚餐建议17:00前"},
+{name:"凤凰·血粑鸭/酸汤鱼街区",cat:"food",lng:109.600,lat:27.949,info:"血粑鸭/酸汤鱼｜人均约¥60–120｜临江店注意噪声与溢价"},
+{name:"郑州·烩面/胡辣汤",cat:"food",lng:113.625,lat:34.746,info:"人均约¥20–60｜D11晚到仅作为快速晚餐"}
+];
+
+const colorByCat={hotel:"#2563eb",scenic:"#16a34a",charger:"#f59e0b",service:"#64748b",food:"#e11d48",gas:"#7c3aed"};
+let map, markers=[], routeLayer=null, cluster=null;
+function popup(d){return `<div style="min-width:220px"><b>${d.name}</b><div style="margin-top:6px">${d.info}</div></div>`}
+function addMarker(d){
+  const m=new AMap.Marker({position:[d.lng,d.lat],title:d.name,offset:new AMap.Pixel(-8,-8),content:`<div style="width:16px;height:16px;border-radius:50%;background:${colorByCat[d.cat]};border:2px solid white;box-shadow:0 1px 5px #555"></div>`});
+  m.__data=d; m.__cat=d.cat; m.on("mouseover",()=>{m.setLabel({content:popup(d),direction:"top",offset:new AMap.Pixel(0,-10)});}); 
+  m.on("mouseout",()=>m.setLabel(null));
+  map.add(m); markers.push(m);
+}
+function drawRoute(){
+ const driving=new AMap.Driving({map,mapOptions:{showTraffic:false},policy:0});
+ const p=[ [116.4074,39.9042],[111.519,36.088],[108.9398,34.3416],[112.122,32.009],[110.479,29.117],[109.602,27.952],[113.625,34.746],[116.4074,39.9042] ];
+ driving.search(p[0],p[p.length-1],{waypoints:p.slice(1,-1)},(status,result)=>{});
+}
+function init(){
+ map=new AMap.Map("map",{zoom:6,center:[111.8,34.5],resizeEnable:true});
+ data.forEach(addMarker);
+ // 近距离标记聚合：缩小时聚合，放大后恢复单点；单点仍支持鼠标悬停。
+ try{
+   cluster=new AMap.MarkerClusterer(map,markers,{gridSize:60,maxZoom:13});
+ }catch(e){}
+ drawRoute();
+ document.querySelectorAll(".legend input").forEach(i=>i.addEventListener("change",()=>{
+   const cat=i.dataset.cat;
+   markers.filter(m=>m.__cat===cat).forEach(m=>i.checked?m.show():m.hide());
+   if(cluster){try{cluster.setMarkers(markers.filter(m=>document.querySelector(`.legend input[data-cat=\"${m.__cat}\"]`).checked));}catch(e){}}
+ }));
+ map.setFitView();
+}
+if(window.AMap){init()}else{document.getElementById("map").innerHTML="<div style='padding:20px'>高德地图脚本未加载。请检查 API Key 与网络。</div>"}
+</script>
+</body></html>
