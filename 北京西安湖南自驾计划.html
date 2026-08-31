@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北京-西安-长沙 12天自驾旅行计划</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            padding: 30px 40px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+        header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        header .sub {
+            font-size: 15px;
+            opacity: 0.8;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        header .sub span { background: rgba(255,255,255,0.12); padding: 4px 14px; border-radius: 20px; }
+        .section {
+            background: #fff;
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8edf4;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section h2 .badge {
+            font-size: 12px;
+            background: #e8edf4;
+            color: #555;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-weight: 400;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        table th {
+            background: #f0f4fa;
+            text-align: left;
+            padding: 10px 12px;
+            font-weight: 600;
+            border-bottom: 2px solid #dce3ed;
+        }
+        table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eef2f7;
+            vertical-align: top;
+        }
+        table tr:hover td { background: #f8faff; }
+        .tag {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .tag-green { background: #e6f7e6; color: #2d7d2d; }
+        .tag-red { background: #fde8e8; color: #c0392b; }
+        .tag-yellow { background: #fef9e7; color: #b7950b; }
+        .tag-blue { background: #e8f0fe; color: #1a56db; }
+        .tag-purple { background: #f0e8fe; color: #6c2bd9; }
+        .map-wrap {
+            width: 100%;
+            height: 600px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e0e6ef;
+            position: relative;
+        }
+        #mapContainer { width: 100%; height: 100%; }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            padding: 12px 16px;
+            background: #f8faff;
+            border-radius: 10px;
+            margin-bottom: 14px;
+            border: 1px solid #e8edf4;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 4px 10px;
+            border-radius: 16px;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .legend-item:hover { background: #eef2f7; }
+        .legend-item .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+        .legend-item.hidden { opacity: 0.35; text-decoration: line-through; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 768px) {
+            .container { padding: 12px; }
+            header { padding: 20px; }
+            .section { padding: 16px 18px; }
+            .grid-2 { grid-template-columns: 1fr; }
+            table { font-size: 13px; }
+            table th, table td { padding: 8px 10px; }
+            .map-wrap { height: 400px; }
+            header h1 { font-size: 22px; }
+            .legend { gap: 4px 10px; }
+            .legend-item { font-size: 12px; padding: 2px 8px; }
+        }
+        .info-box {
+            background: #f8faff;
+            border-left: 4px solid #1a56db;
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-size: 14px;
+        }
+        .info-box.warn { border-left-color: #e67e22; background: #fefaf5; }
+        .info-box.success { border-left-color: #27ae60; background: #f0faf5; }
+        .day-card {
+            border-left: 4px solid #1a56db;
+            padding-left: 16px;
+            margin-bottom: 20px;
+        }
+        .day-card .day-title {
+            font-weight: 700;
+            font-size: 17px;
+            color: #1a1a2e;
+        }
+        .day-card .day-meta {
+            font-size: 14px;
+            color: #666;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 24px;
+            margin: 4px 0 8px;
+        }
+        .flex-between { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .mt-8 { margin-top: 8px; }
+        .mb-8 { margin-bottom: 8px; }
+        .text-sm { font-size: 13px; }
+        .text-muted { color: #777; }
+
+        /* -------- 自定义地图控制按钮 -------- */
+        .map-controls {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            z-index: 120;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 8px 6px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .map-controls button {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #333;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+        .map-controls button:hover {
+            background: rgba(0, 0, 0, 0.08);
+            color: #0f3460;
+        }
+        .map-controls button:active {
+            background: rgba(0, 0, 0, 0.15);
+        }
+        .map-controls .divider {
+            width: 24px;
+            height: 1px;
+            background: #e0e0e0;
+            margin: 2px auto;
+        }
+        .map-controls .btn-label {
+            font-size: 10px;
+            color: #888;
+            text-align: center;
+            line-height: 1.2;
+            margin-top: 2px;
+        }
+
+        /* 地图加载错误提示 */
+        .map-error-tip {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.96);
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 50;
+            text-align: center;
+            max-width: 90%;
+            border: 1px solid #e0e6ef;
+        }
+        .map-error-tip.show { display: block; }
+        .map-error-tip h3 { color: #e74c3c; margin-bottom: 10px; }
+        .map-error-tip p { color: #555; font-size: 14px; line-height: 1.8; }
+        .map-error-tip code { background: #f0f0f0; padding: 2px 8px; border-radius: 4px; font-size: 13px; }
+
+        /* 调整高德自带控件位置，避免遮挡 */
+        .amap-controlbar { bottom: 20px !important; right: 20px !important; }
+        .amap-toolbar { right: 20px !important; top: auto !important; bottom: 80px !important; }
+
+        /* 标记名称标签：去掉高德默认的白色方角描边包裹层，只保留自定义的圆角色块 */
+        .amap-marker-label {
+            border: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+        }
+
+        /* -------- 悬停信息弹窗（自定义样式） -------- */
+        .amap-info-content { padding: 0 !important; border-radius: 12px !important; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.18) !important; }
+        .amap-info-close { top: 8px !important; right: 8px !important; }
+        .riw {
+            width: 280px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .riw-head {
+            padding: 12px 16px 10px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            color: #fff;
+        }
+        .riw-title { font-size: 15px; font-weight: 700; }
+        .riw-badge {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            background: rgba(255,255,255,0.18);
+            padding: 2px 10px;
+            border-radius: 10px;
+        }
+        .riw-body { padding: 12px 16px 14px; background: #fff; }
+        .riw-row { display: flex; gap: 8px; margin-bottom: 6px; }
+        .riw-row:last-child { margin-bottom: 0; }
+        .riw-row .riw-icon { flex-shrink: 0; width: 18px; text-align: center; }
+        .riw-row .riw-label { color: #888; flex-shrink: 0; }
+        .riw-row .riw-value { color: #333; word-break: break-all; }
+        .riw-link { color: #1a56db; text-decoration: none; font-weight: 500; }
+        .riw-link:hover { text-decoration: underline; }
+    </style>
+    <script>
+      window._AMapSecurityConfig = {
+        securityJsCode: "8dea8562090a713e47d811c17a1d8806"
+      };
+    </script>
+    
+    <script
+      src="https://webapi.amap.com/maps?v=2.0&key=c2de27926382776d9281eb5531d9ac06&plugin=AMap.Scale,AMap.ToolBar,AMap.ControlBar,AMap.MarkerClusterer,AMap.Driving"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <h1>🚗 北京 → 西安 → 长沙 · 12天自驾旅行计划</h1>
+        <div class="sub">
+            <span>📅 2026.9.25 – 10.6</span>
+            <span>🐕 携6岁金毛犬</span>
+            <span>🔋 特斯拉 Model Y</span>
+            <span>📏 约3,780 km</span>
+        </div>
+    </header>
+
+    <!-- ===== 图例 + 地图 ===== -->
+    <div class="section">
+        <h2>📍 路线地图 <span class="badge">可拖拽 · 可缩放 · Hover查看详情</span></h2>
+        <div class="legend" id="legendContainer">
+            <span class="legend-item" data-type="hotel"><span class="dot" style="background:#e74c3c;"></span>住宿</span>
+            <span class="legend-item" data-type="hotel-alt"><span class="dot" style="background:#f39c12;"></span>备选住宿</span>
+            <span class="legend-item" data-type="attraction"><span class="dot" style="background:#2ecc71;"></span>景点</span>
+            <span class="legend-item" data-type="attraction-alt"><span class="dot" style="background:#1abc9c;"></span>备选景点</span>
+            <span class="legend-item" data-type="charging"><span class="dot" style="background:#3498db;"></span>充电站</span>
+            <span class="legend-item" data-type="service"><span class="dot" style="background:#9b59b6;"></span>高速服务区</span>
+            <span class="legend-item" data-type="food"><span class="dot" style="background:#e67e22;"></span>美食</span>
+        </div>
+        <div class="map-wrap">
+            <div id="mapContainer"></div>
+            <!-- 自定义控制按钮 -->
+            <div class="map-controls" id="mapControls">
+                <button id="resetView" title="重置视野至所有地点">⟲</button>
+                <button id="refreshMap" title="刷新页面重载地图">↻</button>
+                <div class="divider"></div>
+                <button id="zoomIn" title="放大">+</button>
+                <button id="zoomOut" title="缩小">−</button>
+                <div class="divider"></div>
+                <button id="fullScreen" title="全屏模式">⛶</button>
+            </div>
+            <!-- 错误提示 -->
+            <div class="map-error-tip" id="mapErrorTip">
+                <h3>⚠️ 地图加载失败</h3>
+                <p><strong>可能原因及解决办法：</strong><br>
+                1. <strong>API Key 未配置安全域名</strong>：请登录 <a href="https://lbs.amap.com/" target="_blank">高德开放平台控制台</a>，将 <code>file://</code> 或 <code>localhost</code> 添加至“安全设置”的白名单中。<br>
+                2. <strong>本地直接打开</strong>：建议使用 <code>VS Code</code> 的 <code>Live Server</code> 插件，或使用 <code>Python</code> 启动简单服务器 <code>python -m http.server 8080</code> 后访问。<br>
+                3. 按 <code>F12</code> 打开浏览器控制台查看具体报错信息。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 行程总览 ===== -->
+    <div class="section">
+        <h2>📋 12日行程总览</h2>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead>
+                    <tr><th>日期</th><th>星期</th><th>出发</th><th>到达</th><th>路线</th><th>住宿</th><th>里程</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>9/25</td><td>周五</td><td>8:30</td><td>19:30</td><td>北京→太原</td><td>太原</td><td>~500km</td></tr>
+                    <tr><td>9/26</td><td>周六</td><td>9:00</td><td>20:00</td><td>太原→西安</td><td>西安</td><td>~600km</td></tr>
+                    <tr><td>9/27</td><td>周日</td><td>9:00</td><td>—</td><td>西安游览</td><td>西安</td><td>—</td></tr>
+                    <tr><td>9/28</td><td>周一</td><td>9:30</td><td>—</td><td>西安游览</td><td>西安</td><td>—</td></tr>
+                    <tr><td>9/29</td><td>周二</td><td>9:00</td><td>16:00</td><td>西安→十堰</td><td>十堰</td><td>~300km</td></tr>
+                    <tr><td>9/30</td><td>周三</td><td>8:30</td><td>20:00</td><td>十堰→长沙</td><td>长沙</td><td>~550km</td></tr>
+                    <tr><td>10/1</td><td>周四</td><td>9:30</td><td>—</td><td>长沙游览</td><td>长沙</td><td>—</td></tr>
+                    <tr><td>10/2</td><td>周五</td><td>9:30</td><td>—</td><td>长沙游览</td><td>长沙</td><td>—</td></tr>
+                    <tr><td>10/3</td><td>周六</td><td>9:30</td><td>—</td><td>长沙游览</td><td>长沙</td><td>—</td></tr>
+                    <tr><td>10/4</td><td>周日</td><td>9:00</td><td>20:00</td><td>长沙→郑州</td><td>郑州</td><td>~800km</td></tr>
+                    <tr><td>10/5</td><td>周一</td><td>9:00</td><td>18:00</td><td>郑州→石家庄</td><td>石家庄</td><td>~420km</td></tr>
+                    <tr><td>10/6</td><td>周二</td><td>9:00</td><td>15:00</td><td>石家庄→北京</td><td>—</td><td>~290km</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ===== 每日详情 ===== -->
+    <div class="section">
+        <h2>📅 每日详细日程</h2>
+        <!-- Day 1 -->
+        <div class="day-card">
+            <div class="day-title">Day 1 · 9月25日（周五）北京 → 太原</div>
+            <div class="day-meta"><span>⏰ 8:30出发 · 19:30到达</span><span>📍 约500km · 京港澳→京昆高速</span><span>🏨 太原</span></div>
+            <div class="info-box success"><strong>🔋 充电规划：</strong> 望都服务区（11:30，~30min）→ 阳曲服务区（15:30，~40min，功率90kW+）</div>
+            <table><thead><tr><th>住宿</th><th>价格</th><th>宠物政策</th><th>充电</th><th>停车</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>主选：</strong>太原王府井亚朵酒店</td><td>¥500-600</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>附近超充</td><td>免费</td></tr>
+                    <tr><td><span class="text-muted">备选1：</span>太原凯宾斯基饭店</td><td>¥550-600</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>有充电桩</td><td>免费</td></tr>
+                    <tr><td><span class="text-muted">备选2：</span>太原星河湾酒店</td><td>¥500-580</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>有充电桩</td><td>免费</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Day 2 -->
+        <div class="day-card">
+            <div class="day-title">Day 2 · 9月26日（周六）太原 → 西安</div>
+            <div class="day-meta"><span>⏰ 9:00出发 · 20:00到达</span><span>📍 约600km · 京昆高速</span><span>🏨 西安</span></div>
+            <div class="info-box success"><strong>🔋 充电规划：</strong> 临汾服务区（12:30，~40min）→ 韩城服务区（16:30，~50min）</div>
+            <table><thead><tr><th>住宿</th><th>价格</th><th>宠物政策</th><th>充电</th><th>停车</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>主选：</strong>西安威斯汀酒店</td><td>¥550-600</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>B0层超充</td><td>免费</td></tr>
+                    <tr><td><span class="text-muted">备选1：</span>西安高新凯悦尚萃酒店</td><td>¥500-580</td><td><span class="tag tag-green">✓ 萌宠房</span></td><td>有充电桩</td><td>免费</td></tr>
+                    <tr><td><span class="text-muted">备选2：</span>西安OYU传承酒店</td><td>¥400-500</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>附近充电桩</td><td>免费</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Day 3 -->
+        <div class="day-card">
+            <div class="day-title">Day 3 · 9月27日（周日）西安游览</div>
+            <div class="day-meta"><span>⏰ 9:00出发</span><span>🏨 西安</span></div>
+            <table><thead><tr><th>景点</th><th>宠物</th><th>时长</th><th>开放时间</th><th>票价</th><th>预约</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>兵马俑博物馆</strong></td><td><span class="tag tag-red">✗ 不可带</span></td><td>3-4h</td><td>8:30-17:00</td><td>¥120</td><td><span class="tag tag-yellow">需预约</span></td></tr>
+                    <tr><td><span class="text-muted">备选：</span>华清宫</td><td><span class="tag tag-red">✗ 不可带</span></td><td>2-3h</td><td>7:30-18:00</td><td>¥120</td><td>现场购票</td></tr>
+                    <tr><td><strong>大唐不夜城</strong></td><td><span class="tag tag-green">✓ 室外可带</span></td><td>2-3h</td><td>全天</td><td>免费</td><td>无需</td></tr>
+                </tbody>
+            </table>
+            <div class="info-box warn"><strong>🐾 狗狗安排：</strong>兵马俑不可带狗（3-4h），建议提前联系景区附近宠物寄存，或留车内（开窗通风、备足水）。</div>
+        </div>
+        <!-- Day 4 -->
+        <div class="day-card">
+            <div class="day-title">Day 4 · 9月28日（周一）西安游览</div>
+            <div class="day-meta"><span>⏰ 9:30出发</span><span>🏨 西安</span></div>
+            <table><thead><tr><th>景点</th><th>宠物</th><th>时长</th><th>开放时间</th><th>票价</th><th>预约</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>西安城墙</strong></td><td><span class="tag tag-red">✗ 不可带</span></td><td>2-3h</td><td>8:00-22:00</td><td>¥54</td><td>现场/小程序</td></tr>
+                    <tr><td><strong>陕西历史博物馆</strong></td><td><span class="tag tag-red">✗ 不可带</span></td><td>2-3h</td><td>9:00-17:30（周一闭馆）</td><td>免费</td><td><span class="tag tag-yellow">提前7天预约</span></td></tr>
+                    <tr><td><span class="text-muted">备选：</span>碑林博物馆</td><td><span class="tag tag-red">✗ 不可带</span></td><td>1.5-2h</td><td>8:00-18:00</td><td>¥65</td><td>现场购票</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Day 5 -->
+        <div class="day-card">
+            <div class="day-title">Day 5 · 9月29日（周二）西安 → 十堰</div>
+            <div class="day-meta"><span>⏰ 9:00出发 · 16:00到达</span><span>📍 约300km · 福银高速</span><span>🏨 十堰</span></div>
+            <div class="info-box success"><strong>🔋 充电：</strong> 山阳服务区（12:00）→ 十堰市区超充（抵达后）</div>
+            <table><thead><tr><th>住宿</th><th>价格</th><th>宠物政策</th><th>充电</th><th>停车</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>主选：</strong>十堰希尔顿逸林酒店</td><td>¥400-500</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>有充电桩</td><td>免费</td></tr>
+                    <tr><td><span class="text-muted">备选1：</span>十堰武当国际酒店</td><td>¥350-450</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>附近充电桩</td><td>免费</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Day 6 -->
+        <div class="day-card">
+            <div class="day-title">Day 6 · 9月30日（周三）十堰 → 长沙</div>
+            <div class="day-meta"><span>⏰ 8:30出发 · 20:00到达</span><span>📍 约550km · 福银→二广→京港澳高速</span><span>🏨 长沙</span></div>
+            <div class="info-box success"><strong>🔋 充电：</strong> 襄阳服务区（12:00）→ 岳阳服务区（16:30）</div>
+            <table><thead><tr><th>住宿</th><th>价格</th><th>宠物政策</th><th>充电</th><th>停车</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>主选：</strong>长沙机场凯悦嘉轩酒店</td><td>¥450-550</td><td><span class="tag tag-green">✓ 需预约，≤25kg</span></td><td>有充电桩</td><td>免费</td></tr>
+                    <tr><td><span class="text-muted">备选1：</span>长沙岳麓美豪丽致酒店</td><td>¥350-450</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>有充电桩</td><td>免费</td></tr>
+                    <tr><td><span class="text-muted">备选2：</span>朵微民宿（梅溪湖店）</td><td>¥300-400</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>有充电桩</td><td>免费</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Day 7-9 -->
+        <div class="day-card">
+            <div class="day-title">Day 7-9 · 10月1日-3日 长沙游览（3天）</div>
+            <div class="day-meta"><span>🏨 长沙（连住3晚）</span></div>
+            <table><thead><tr><th>景点</th><th>宠物</th><th>时长</th><th>开放时间</th><th>票价</th><th>预约</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>岳麓山</strong></td><td><span class="tag tag-green">✓ 可带（牵绳）</span></td><td>3-4h</td><td>6:00-23:00</td><td>免费</td><td>无需</td></tr>
+                    <tr><td><strong>橘子洲头</strong></td><td><span class="tag tag-green">✓ 室外可带</span></td><td>2-3h</td><td>7:00-22:00</td><td>免费</td><td><span class="tag tag-yellow">需预约</span></td></tr>
+                    <tr><td><strong>湖南省博物馆</strong></td><td><span class="tag tag-red">✗ 不可带</span></td><td>3-4h</td><td>9:00-17:00（周一闭馆）</td><td>免费</td><td><span class="tag tag-yellow">提前7天预约</span></td></tr>
+                    <tr><td><strong>烈士公园</strong></td><td><span class="tag tag-green">✓ 有宠物寄存点</span></td><td>2-3h</td><td>6:00-22:00</td><td>免费</td><td>无需</td></tr>
+                    <tr><td><span class="text-muted">备选：</span>十里圭塘滨水公园</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>2h</td><td>全天</td><td>免费</td><td>无需</td></tr>
+                </tbody>
+            </table>
+            <div class="info-box success"><strong>🐾 烈士公园亮点：</strong> 东门、东便门、南门、西门设有<strong>免费宠物寄存点</strong></div>
+        </div>
+        <!-- Day 10 -->
+        <div class="day-card">
+            <div class="day-title">Day 10 · 10月4日（周日）长沙 → 郑州</div>
+            <div class="day-meta"><span>⏰ 9:00出发 · 20:00到达</span><span>📍 约800km · 京港澳高速</span><span>🏨 郑州</span></div>
+            <div class="info-box success"><strong>🔋 充电：</strong> 岳阳服务区（12:30）→ 驻马店服务区（16:00）→ 郑州超充（抵达后）</div>
+            <table><thead><tr><th>住宿</th><th>价格</th><th>宠物政策</th><th>充电</th><th>停车</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>主选：</strong>郑州建业天筑酒店</td><td>¥450-550</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>有充电桩</td><td>免费</td></tr>
+                    <tr><td><span class="text-muted">备选1：</span>郑州索菲特国际饭店</td><td>¥480-580</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>附近超充</td><td>免费</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Day 11 -->
+        <div class="day-card">
+            <div class="day-title">Day 11 · 10月5日（周一）郑州 → 石家庄</div>
+            <div class="day-meta"><span>⏰ 9:00出发 · 18:00到达</span><span>📍 约420km · 京港澳高速</span><span>🏨 石家庄</span></div>
+            <div class="info-box success"><strong>🔋 充电：</strong> 邢台服务区（12:30）</div>
+            <table><thead><tr><th>住宿</th><th>价格</th><th>宠物政策</th><th>充电</th><th>停车</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>主选：</strong>石家庄希尔顿酒店</td><td>¥450-550</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>有充电桩</td><td>免费</td></tr>
+                    <tr><td><span class="text-muted">备选1：</span>石家庄万达洲际酒店</td><td>¥480-580</td><td><span class="tag tag-green">✓ 宠物友好</span></td><td>有充电桩</td><td>免费</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Day 12 -->
+        <div class="day-card">
+            <div class="day-title">Day 12 · 10月6日（周二）石家庄 → 北京</div>
+            <div class="day-meta"><span>⏰ 9:00出发 · 15:00到达</span><span>📍 约290km · 京港澳高速</span></div>
+            <div class="info-box success"><strong>🔋 充电：</strong> 保定服务区（11:30）</div>
+        </div>
+    </div>
+
+    <!-- ===== 美食 ===== -->
+    <div class="section">
+        <h2>🍜 美食推荐</h2>
+        <div class="grid-2">
+            <div><h3 style="font-size:16px;margin-bottom:8px;">🏮 西安</h3>
+                <table><thead><tr><th>店铺</th><th>人均</th><th>推荐菜</th></tr></thead>
+                <tbody><tr><td>回民街老孙家泡馍</td><td>¥40-60</td><td>羊肉泡馍</td></tr>
+                <tr><td>子午路张记肉夹馍</td><td>¥15-25</td><td>肉夹馍、凉皮</td></tr>
+                <tr><td>长安大排档</td><td>¥80-120</td><td>葫芦鸡</td></tr></tbody></table>
+            </div>
+            <div><h3 style="font-size:16px;margin-bottom:8px;">🌶️ 长沙</h3>
+                <table><thead><tr><th>店铺</th><th>人均</th><th>推荐菜</th></tr></thead>
+                <tbody><tr><td>文和友（海信广场）</td><td>¥100-150</td><td>口味虾、臭豆腐</td></tr>
+                <tr><td>茶颜悦色</td><td>¥15-20</td><td>幽兰拿铁</td></tr>
+                <tr><td>炊烟小炒黄牛肉</td><td>¥80-100</td><td>小炒黄牛肉</td></tr></tbody></table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 必备物品 ===== -->
+    <div class="section">
+        <h2>🎒 必备物品及安全提示</h2>
+        <div class="grid-2">
+            <div><h3 style="font-size:15px;margin-bottom:6px;">🐾 宠物必备</h3>
+                <ul style="font-size:14px;padding-left:20px;line-height:2;">
+                    <li>免疫证明、疫苗本（狂犬病）</li><li>折叠食碗/饮水壶、真空分装主食</li>
+                    <li>宠物窝垫/毛毯、耐咬玩具</li><li>宠物湿巾、去味干洗剂、尿垫、拾便袋</li>
+                    <li>牵引绳（备用1根）、宠物安全带</li><li>晕车药、止泻药、外伤喷雾</li>
+                </ul>
+            </div>
+            <div><h3 style="font-size:15px;margin-bottom:6px;">🚗 行车安全</h3>
+                <ul style="font-size:14px;padding-left:20px;line-height:2;">
+                    <li>宠物严禁坐副驾驶，必须后排</li><li>出发前6小时停止喂食</li>
+                    <li>每2-3小时停靠让狗狗活动</li><li>车窗留通风缝隙，不可过大致探头</li>
+                    <li>🔋 续航不足时关闭空调、降速至90km/h</li>
+                    <li>📱 使用“e路畅通”查询充电桩实时状态</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align:center;font-size:13px;color:#999;padding:20px 0 10px;">
+        计划生成时间：2026年8月 · 数据仅供参考，出行前请核实最新信息
+    </div>
+</div>
+
+<!-- ===== 地图逻辑（高德地图 JS API 已在 <head> 中加载，此处不再重复加载） ===== -->
+<script>
+(function() {
+    // ---------- 数据 ----------
+    const locations = [];
+
+    // ---- 住宿 ----
+    const hotels = {
+        taiyuan: { name: '太原王府井亚朵酒店', lat: 37.8705, lng: 112.5489, type: 'hotel', price: '¥500-600', pet: '宠物友好（需提前确认）', parking: '免费', charging: '附近有超充', link: '#' },
+        taiyuan_alt1: { name: '太原凯宾斯基饭店（备选）', lat: 37.8552, lng: 112.5634, type: 'hotel-alt', price: '¥550-600', pet: '宠物友好', parking: '免费', charging: '有充电桩', link: '#' },
+        taiyuan_alt2: { name: '太原星河湾酒店（备选）', lat: 37.8400, lng: 112.5300, type: 'hotel-alt', price: '¥500-580', pet: '宠物友好', parking: '免费', charging: '有充电桩', link: '#' },
+        xian: { name: '西安威斯汀酒店', lat: 34.2086, lng: 108.9637, type: 'hotel', price: '¥550-600', pet: '宠物友好', parking: '免费', charging: 'B0层特斯拉超充', link: '#' },
+        xian_alt1: { name: '西安高新凯悦尚萃酒店（备选）', lat: 34.2245, lng: 108.8833, type: 'hotel-alt', price: '¥500-580', pet: '宠物友好（萌宠房）', parking: '免费', charging: '有充电桩', link: '#' },
+        xian_alt2: { name: '西安OYU传承酒店（备选）', lat: 34.2200, lng: 108.9400, type: 'hotel-alt', price: '¥400-500', pet: '宠物友好', parking: '免费', charging: '附近有充电桩', link: '#' },
+        shiyan: { name: '十堰希尔顿逸林酒店', lat: 32.6292, lng: 110.7980, type: 'hotel', price: '¥400-500', pet: '宠物友好', parking: '免费', charging: '有充电桩', link: '#' },
+        shiyan_alt1: { name: '十堰武当国际酒店（备选）', lat: 32.6400, lng: 110.8100, type: 'hotel-alt', price: '¥350-450', pet: '宠物友好', parking: '免费', charging: '附近有充电桩', link: '#' },
+        changsha: { name: '长沙机场凯悦嘉轩酒店', lat: 28.1892, lng: 113.2196, type: 'hotel', price: '¥450-550', pet: '需提前预约，≤25kg', parking: '免费', charging: '有充电桩', link: '#' },
+        changsha_alt1: { name: '长沙岳麓美豪丽致酒店（备选）', lat: 28.1750, lng: 112.9430, type: 'hotel-alt', price: '¥350-450', pet: '宠物友好', parking: '免费', charging: '有充电桩', link: '#' },
+        changsha_alt2: { name: '朵微民宿（梅溪湖店）（备选）', lat: 28.2030, lng: 112.9130, type: 'hotel-alt', price: '¥300-400', pet: '宠物友好', parking: '免费', charging: '有充电桩', link: '#' },
+        zhengzhou: { name: '郑州建业天筑酒店', lat: 34.7566, lng: 113.6654, type: 'hotel', price: '¥450-550', pet: '宠物友好', parking: '免费', charging: '有充电桩', link: '#' },
+        zhengzhou_alt1: { name: '郑州索菲特国际饭店（备选）', lat: 34.7660, lng: 113.6800, type: 'hotel-alt', price: '¥480-580', pet: '宠物友好', parking: '免费', charging: '附近有超充', link: '#' },
+        shijiazhuang: { name: '石家庄希尔顿酒店', lat: 38.0428, lng: 114.5149, type: 'hotel', price: '¥450-550', pet: '宠物友好', parking: '免费', charging: '有充电桩', link: '#' },
+        shijiazhuang_alt1: { name: '石家庄万达洲际酒店（备选）', lat: 38.0350, lng: 114.5350, type: 'hotel-alt', price: '¥480-580', pet: '宠物友好', parking: '免费', charging: '有充电桩', link: '#' }
+    };
+
+    // ---- 景点 ----
+    const attractions = {
+       兵马俑: { name: '兵马俑博物馆', lat: 34.3853, lng: 109.2735, type: 'attraction', price: '¥120', pet: '✗ 不可带狗', duration: '3-4小时', hours: '8:30-17:00', reserve: '需提前预约（官方小程序）' },
+       华清宫: { name: '华清宫（备选）', lat: 34.3650, lng: 109.2130, type: 'attraction-alt', price: '¥120', pet: '✗ 不可带狗', duration: '2-3小时', hours: '7:30-18:00', reserve: '可现场购票' },
+       大唐不夜城: { name: '大唐不夜城', lat: 34.2200, lng: 108.9600, type: 'attraction', price: '免费', pet: '✓ 室外可带狗', duration: '2-3小时', hours: '全天开放', reserve: '无需预约' },
+       西安城墙: { name: '西安城墙', lat: 34.2550, lng: 108.9480, type: 'attraction', price: '¥54', pet: '✗ 不可带狗', duration: '2-3小时', hours: '8:00-22:00', reserve: '现场/小程序购票' },
+       陕博: { name: '陕西历史博物馆', lat: 34.2260, lng: 108.9550, type: 'attraction', price: '免费', pet: '✗ 不可带狗', duration: '2-3小时', hours: '9:00-17:30（周一闭馆）', reserve: '需提前7天预约' },
+       碑林: { name: '碑林博物馆（备选）', lat: 34.2550, lng: 108.9400, type: 'attraction-alt', price: '¥65', pet: '✗ 不可带狗', duration: '1.5-2小时', hours: '8:00-18:00', reserve: '可现场购票' },
+       岳麓山: { name: '岳麓山', lat: 28.1770, lng: 112.9360, type: 'attraction', price: '免费', pet: '✓ 可带狗（牵绳）', duration: '3-4小时', hours: '6:00-23:00', reserve: '无需预约' },
+       橘子洲: { name: '橘子洲头', lat: 28.2090, lng: 112.9700, type: 'attraction', price: '免费', pet: '✓ 室外可带狗', duration: '2-3小时', hours: '7:00-22:00', reserve: '需预约（官方小程序）' },
+       省博: { name: '湖南省博物馆', lat: 28.2150, lng: 112.9830, type: 'attraction', price: '免费', pet: '✗ 不可带狗', duration: '3-4小时', hours: '9:00-17:00（周一闭馆）', reserve: '需提前7天预约' },
+       烈士公园: { name: '烈士公园（有宠物寄存）', lat: 28.2220, lng: 113.0000, type: 'attraction', price: '免费', pet: '✓ 有免费宠物寄存点', duration: '2-3小时', hours: '6:00-22:00', reserve: '无需预约' }
+    };
+
+    // ---- 充电站 ----
+    const chargers = {
+        wangdu: { name: '望都服务区充电站', lat: 38.7100, lng: 115.1600, type: 'charging', power: '60kW', count: '4个快充桩', fee: '约1.68元/度' },
+        yangqu: { name: '阳曲服务区充电站', lat: 38.0600, lng: 112.6700, type: 'charging', power: '90kW+', count: '4个快充桩', fee: '约1.3-1.6元/度' },
+        linfen: { name: '临汾服务区充电站', lat: 36.0800, lng: 111.5200, type: 'charging', power: '约30kW', count: '4个快充桩', fee: '约1.3元/度' },
+        hancheng: { name: '韩城服务区充电站', lat: 35.4800, lng: 110.4500, type: 'charging', power: '60kW', count: '4个快充桩', fee: '约1.3元/度' },
+        shanyang: { name: '山阳服务区充电站', lat: 33.5300, lng: 110.0000, type: 'charging', power: '60kW', count: '4个快充桩', fee: '约1.2-1.5元/度' },
+        xiangyang: { name: '襄阳服务区充电站', lat: 32.0500, lng: 112.1800, type: 'charging', power: '60kW', count: '4个快充桩', fee: '约1.2-1.5元/度' },
+        yueyang: { name: '岳阳服务区充电站', lat: 29.3700, lng: 113.1000, type: 'charging', power: '60kW', count: '4个快充桩', fee: '约1.2-1.5元/度' },
+        zhumadian: { name: '驻马店服务区充电站', lat: 33.0000, lng: 114.0200, type: 'charging', power: '60kW', count: '4个快充桩', fee: '约1.2-1.5元/度' },
+        xingtai: { name: '邢台服务区充电站', lat: 37.0200, lng: 114.5600, type: 'charging', power: '60kW', count: '4个快充桩', fee: '约1.2-1.5元/度' },
+        baoding: { name: '保定服务区充电站', lat: 38.8600, lng: 115.4800, type: 'charging', power: '60kW', count: '4个快充桩', fee: '约1.2-1.5元/度' }
+    };
+
+    // ---- 服务区 ----
+    const services = {
+        wangdu_svc: { name: '望都服务区', lat: 38.7080, lng: 115.1580, type: 'service',餐饮: '有（自助餐、烤串等）', 充电: '有（4个快充桩）', 加油: '有' },
+        yangqu_svc: { name: '阳曲服务区', lat: 38.0580, lng: 112.6680, type: 'service', 餐饮: '有', 充电: '有（4个快充桩，90kW+）', 加油: '有' },
+        linfen_svc: { name: '临汾服务区', lat: 36.0780, lng: 111.5180, type: 'service', 餐饮: '有', 充电: '有（4个快充桩，约30kW）', 加油: '有' },
+        hancheng_svc: { name: '韩城服务区', lat: 35.4780, lng: 110.4480, type: 'service', 餐饮: '有', 充电: '有（4个快充桩）', 加油: '有' },
+        xiangyang_svc: { name: '襄阳服务区', lat: 32.0480, lng: 112.1780, type: 'service', 餐饮: '有', 充电: '有（4个快充桩）', 加油: '有' },
+        yueyang_svc: { name: '岳阳服务区', lat: 29.3680, lng: 113.0980, type: 'service', 餐饮: '有', 充电: '有（4个快充桩）', 加油: '有' },
+        zhumadian_svc: { name: '驻马店服务区', lat: 32.9980, lng: 114.0180, type: 'service', 餐饮: '有', 充电: '有（4个快充桩）', 加油: '有' },
+        xingtai_svc: { name: '邢台服务区', lat: 37.0180, lng: 114.5580, type: 'service', 餐饮: '有', 充电: '有（4个快充桩）', 加油: '有' },
+        baoding_svc: { name: '保定服务区', lat: 38.8580, lng: 115.4780, type: 'service', 餐饮: '有', 充电: '有（4个快充桩）', 加油: '有' }
+    };
+
+    // ---- 美食 ----
+    const foods = {
+        huimin: { name: '回民街老孙家泡馍', lat: 34.2650, lng: 108.9400, type: 'food', addr: '回民街', price: '¥40-60', hours: '10:00-22:00' },
+        ziwu: { name: '子午路张记肉夹馍', lat: 34.2300, lng: 108.9350, type: 'food', addr: '子午路', price: '¥15-25', hours: '8:00-21:00' },
+        changan: { name: '长安大排档', lat: 34.2250, lng: 108.9600, type: 'food', addr: '赛格购物中心', price: '¥80-120', hours: '11:00-21:30' },
+        wenheyou: { name: '文和友（海信广场）', lat: 28.1950, lng: 112.9750, type: 'food', addr: '湘江中路', price: '¥100-150', hours: '11:00-次日3:00' },
+        chayan: { name: '茶颜悦色', lat: 28.2000, lng: 112.9750, type: 'food', addr: '五一广场', price: '¥15-20', hours: '10:00-22:00' },
+        chuiyan: { name: '炊烟小炒黄牛肉', lat: 28.1980, lng: 112.9780, type: 'food', addr: '五一广场', price: '¥80-100', hours: '11:00-21:30' }
+    };
+
+    function pushAll(obj) { for (let k in obj) locations.push(obj[k]); }
+    pushAll(hotels); pushAll(attractions); pushAll(chargers); pushAll(services); pushAll(foods);
+
+    // ---------- 初始化地图 ----------
+    try {
+        const map = new AMap.Map('mapContainer', {
+            zoom: 5,
+            center: [112.0, 34.0],
+            mapStyle: 'amap://styles/whitesmoke',
+            viewMode: '2D',
+            zooms: [4, 20],
+            showIndoorMap: false
+        });
+
+        // 添加高德自带控件（比例尺、工具栏、全屏/缩放）
+        map.addControl(new AMap.Scale());
+        map.addControl(new AMap.ToolBar({ position: 'RT' }));
+        map.addControl(new AMap.ControlBar({ position: 'RB' }));
+
+        // -------- 自定义按钮绑定 --------
+        document.getElementById('resetView').addEventListener('click', function() {
+            map.setFitView();
+        });
+        document.getElementById('refreshMap').addEventListener('click', function() {
+            location.reload();
+        });
+        document.getElementById('zoomIn').addEventListener('click', function() {
+            map.zoomIn();
+        });
+        document.getElementById('zoomOut').addEventListener('click', function() {
+            map.zoomOut();
+        });
+        document.getElementById('fullScreen').addEventListener('click', function() {
+            const el = document.querySelector('.map-wrap');
+            if (el.requestFullscreen) { el.requestFullscreen(); }
+            else if (el.webkitRequestFullscreen) { el.webkitRequestFullscreen(); }
+            else if (el.msRequestFullscreen) { el.msRequestFullscreen(); }
+        });
+
+        // -------- 标记与聚合 --------
+        const typeColors = {
+            hotel: '#e74c3c', 'hotel-alt': '#f39c12',
+            attraction: '#2ecc71', 'attraction-alt': '#1abc9c',
+            charging: '#3498db', service: '#9b59b6', food: '#e67e22'
+        };
+        const typeLabels = {
+            hotel: '住宿', 'hotel-alt': '备选住宿',
+            attraction: '景点', 'attraction-alt': '备选景点',
+            charging: '充电站', service: '高速服务区', food: '美食'
+        };
+
+        // -------- 悬停信息窗 --------
+        const infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(0, -30), isCustom: false });
+
+        function row(icon, label, value) {
+            if (!value) return '';
+            return `<div class="riw-row"><span class="riw-icon">${icon}</span><span class="riw-label">${label}</span><span class="riw-value">${value}</span></div>`;
+        }
+
+        function buildInfoContent(data) {
+            let body = '';
+            if (data.type === 'hotel' || data.type === 'hotel-alt') {
+                body = row('💰', '价格', data.price) + row('🐾', '宠物', data.pet) + row('🅿️', '停车', data.parking) + row('🔋', '充电', data.charging)
+                    + (data.link && data.link !== '#' ? `<div class="riw-row"><span class="riw-icon">🔗</span><a class="riw-link" href="${data.link}" target="_blank">查看房源</a></div>` : '');
+            } else if (data.type === 'attraction' || data.type === 'attraction-alt') {
+                body = row('🎫', '门票', data.price) + row('🐾', '宠物', data.pet) + row('⏱️', '时长', data.duration) + row('🕐', '开放', data.hours) + row('📋', '预约', data.reserve);
+            } else if (data.type === 'charging') {
+                body = row('⚡', '功率', data.power) + row('🔌', '桩数', data.count) + row('💰', '费用', data.fee);
+            } else if (data.type === 'service') {
+                body = row('🍽️', '餐饮', data.餐饮) + row('🔋', '充电', data.充电) + row('⛽', '加油', data.加油);
+            } else if (data.type === 'food') {
+                body = row('📍', '地址', data.addr) + row('💰', '人均', data.price) + row('🕐', '营业', data.hours);
+            }
+            return `<div class="riw">
+                <div class="riw-head"><div class="riw-title">${data.name}</div><span class="riw-badge">${typeLabels[data.type] || data.type}</span></div>
+                <div class="riw-body">${body}</div>
+            </div>`;
+        }
+
+        // -------- 标记点：先逐个加入地图，保证一定可见；再交给聚合插件按需分组 --------
+        // 注：AMap.MarkerCluster（2.0原生）要求传入 {lnglat} 的数据点数组，而非 Marker 实例，
+        // 之前误把 Marker[] 传给它导致其内部无法解析坐标、标记完全不渲染。
+        // 这里改用 AMap.MarkerClusterer（旧版插件，接受 Marker[]），并参考
+        // beijing-xian-hunan-tesla-pet-roadtrip-2026.html 的做法：先 map.add() 保证兜底显示。
+        const markers = [];
+        locations.forEach(loc => {
+            const color = typeColors[loc.type] || '#888';
+            const marker = new AMap.Marker({
+                position: [loc.lng, loc.lat],
+                title: loc.name,
+                label: {
+                    content: `<div style="background:${color};color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;white-space:nowrap;border:1px solid rgba(255,255,255,0.3);">${loc.name}</div>`,
+                    direction: 'top',
+                    offset: new AMap.Pixel(0, -8)
+                },
+                icon: new AMap.Icon({
+                    size: new AMap.Size(28, 28),
+                    image: 'https://webapi.amap.com/theme/v1.3/markers/b/mark_bs.png',
+                    imageSize: new AMap.Size(28, 28)
+                }),
+                extData: loc
+            });
+            marker.on('mouseover', function() {
+                infoWindow.setContent(buildInfoContent(loc));
+                infoWindow.open(map, [loc.lng, loc.lat]);
+            });
+            marker.on('mouseout', function() { infoWindow.close(); });
+            map.add(marker);
+            markers.push(marker);
+        });
+
+        map.on('click', function() { infoWindow.close(); });
+
+        let cluster = null;
+        try {
+            cluster = new AMap.MarkerClusterer(map, markers, {
+                gridSize: 60,
+                maxZoom: 15,
+                styles: [{
+                    url: 'https://webapi.amap.com/theme/v1.3/markers/b/mark_bs.png',
+                    size: new AMap.Size(32, 32),
+                    textColor: '#fff',
+                    textSize: 12
+                }]
+            });
+        } catch (e) {
+            console.error('点聚合插件初始化失败，标记仍以非聚合方式显示：', e);
+        }
+
+        // -------- 图例筛选 --------
+        document.querySelectorAll('.legend-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const type = this.dataset.type;
+                this.classList.toggle('hidden');
+                markers.forEach(m => {
+                    if (m.getExtData().type !== type) return;
+                    this.classList.contains('hidden') ? m.hide() : m.show();
+                });
+                if (cluster) {
+                    try {
+                        const visible = markers.filter(m => {
+                            const li = document.querySelector(`.legend-item[data-type="${m.getExtData().type}"]`);
+                            return !li || !li.classList.contains('hidden');
+                        });
+                        cluster.setMarkers(visible);
+                    } catch (e) {}
+                }
+            });
+        });
+
+        // -------- 路线：用高德驾车路线规划 + 途经点，贴合真实道路生成环线 --------
+        // 参考 beijing-xian-hunan-tesla-pet-roadtrip-2026.html 的 drawRoute() 写法：
+        // origin 与 destination 同为北京，中间按顺序传入途经城市，插件会自动画出
+        // 起点/途经点/终点的圆形标注（起/经/终），不再需要自定义大图钉。
+        const routeCities = [
+            [116.397, 39.908], // 北京（起点/终点）
+            [112.549, 37.870], // 太原
+            [108.940, 34.260], // 西安
+            [110.798, 32.629], // 十堰
+            [113.219, 28.189], // 长沙
+            [113.665, 34.756], // 郑州
+            [114.515, 38.043]  // 石家庄
+        ];
+
+        function drawStraightFallback() {
+            new AMap.Polyline({
+                path: routeCities.concat([routeCities[0]]),
+                strokeColor: '#3b82f6',
+                strokeWeight: 5,
+                strokeOpacity: 0.8,
+                lineJoin: 'round'
+            }).setMap(map);
+        }
+
+        try {
+            const driving = new AMap.Driving({ map, policy: 0, showTraffic: false });
+            driving.search(routeCities[0], routeCities[0], { waypoints: routeCities.slice(1) }, function(status, result) {
+                if (status !== 'complete') {
+                    console.error('驾车路线规划失败，已用直线兜底显示：', result);
+                    drawStraightFallback();
+                } else {
+                    map.setFitView();
+                }
+            });
+        } catch (e) {
+            console.error('AMap.Driving 初始化异常，已用直线兜底显示：', e);
+            drawStraightFallback();
+        }
+
+        const legendContainer = document.getElementById('legendContainer');
+        const legendTitle = document.createElement('div');
+        legendTitle.style.cssText = 'width:100%;font-size:12px;color:#888;margin-bottom:4px;';
+        legendTitle.textContent = '点击筛选：';
+        legendContainer.prepend(legendTitle);
+
+        // 自适应视野
+        window.addEventListener('resize', function() { map.setFitView(); });
+        setTimeout(() => { map.setFitView(); }, 600);
+
+    } catch (e) {
+        console.error('地图加载异常:', e);
+        document.getElementById('mapErrorTip').classList.add('show');
+    }
+})();
+</script>
+</body>
+</html>
