@@ -90,7 +90,7 @@ HTML 要求：
 
 ## 三、高德地图 API 配置
 
-```html
+
 <script>
   window._AMapSecurityConfig = {
     securityJsCode: "{{securityJsCode}}"
@@ -99,7 +99,7 @@ HTML 要求：
 <script src="https://webapi.amap.com/maps?v=2.0&key={{amapKey}}&plugin=AMap.Driving,AMap.Scale"
   onerror="document.getElementById('mapError').style.display='block';document.getElementById('loading').style.display='none';">
 </script>
-```
+
 
 **重要：插件只加载 `AMap.Driving` 和 `AMap.Scale`，禁止加载 `AMap.ToolBar`、`AMap.ControlBar`、`AMap.MarkerClusterer`。**
 
@@ -252,10 +252,10 @@ HTML 要求：
 
 ## 七、API 密钥
 
-```javascript
+javascript
 securityJsCode: "{{securityJsCode}}"
 amapKey: "{{amapKey}}"
-```
+
 
 当前可用值：
 - securityJsCode: `8dea8562090a713e47d811c17a1d8806`
