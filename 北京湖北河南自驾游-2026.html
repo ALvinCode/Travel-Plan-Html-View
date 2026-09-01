@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>北京→湖北→河南 携宠自驾12日全攻略</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f7f9fc;
+            color: #1f2937;
+            padding: 16px 12px 0;
+            line-height: 1.6;
+        }
+        @media (min-width: 768px) {
+            body {
+                padding: 24px 32px 0;
+            }
+        }
+        .app {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 18px 0 14px;
+            border-bottom: 4px solid #2ecc71;
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            font-size: 26px;
+            letter-spacing: 1px;
+            color: #0b2a4a;
+        }
+        .header h1 small {
+            font-size: 14px;
+            font-weight: 400;
+            color: #e74c3c;
+            margin-left: 10px;
+        }
+        .header .sub {
+            color: #6b7280;
+            margin-top: 6px;
+            font-size: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px 14px;
+        }
+        .header .sub span {
+            background: #e8f5e9;
+            padding: 2px 12px;
+            border-radius: 30px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            padding: 18px 16px;
+            margin-bottom: 24px;
+            border: 1px solid #edf2f7;
+        }
+        @media (min-width: 768px) {
+            .card {
+                padding: 24px 28px;
+            }
+        }
+        .card h2 {
+            font-size: 20px;
+            border-left: 6px solid #3498db;
+            padding-left: 14px;
+            margin-bottom: 16px;
+            color: #0b2a4a;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .card h2 .badge {
+            font-size: 12px;
+            background: #3498db;
+            color: #fff;
+            padding: 0 14px;
+            border-radius: 30px;
+            font-weight: 400;
+            line-height: 24px;
+        }
+        .card h3 {
+            font-size: 17px;
+            margin: 16px 0 10px;
+            color: #1f3a57;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 6px 0 4px;
+            border-radius: 12px;
+            border: 1px solid #eef2f6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 600px;
+        }
+        th {
+            background: #f2f6fc;
+            color: #1a2b4a;
+            font-weight: 600;
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 2px solid #dde4ec;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #edf2f7;
+            vertical-align: top;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 1px 10px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 500;
+            margin: 1px 2px;
+            white-space: nowrap;
+        }
+        .tag-green {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .tag-red {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .tag-blue {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        .tag-orange {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        .tag-purple {
+            background: #f3e5f5;
+            color: #6a1b9a;
+        }
+        .tag-gray {
+            background: #f5f5f5;
+            color: #616161;
+        }
+
+        .highlight-box {
+            background: #fffde7;
+            border-left: 4px solid #fbc02d;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 14px 0 6px;
+            font-size: 14px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        @media (min-width: 780px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+            }
+        }
+
+        .list-dot {
+            list-style: none;
+            padding: 0;
+        }
+        .list-dot li {
+            padding: 5px 0 5px 28px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="%232ecc71"><circle cx="12" cy="12" r="6"/></svg>') left center no-repeat;
+            background-size: 16px;
+            line-height: 1.5;
+        }
+
+        .map-wrap {
+            padding: 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            margin-bottom: 20px;
+        }
+        #mapContainer {
+            width: 100%;
+            height: 65vh;
+            min-height: 420px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e9f0;
+            position: relative;
+            background: #eef2f6;
+        }
+        @media (min-width: 768px) {
+            #mapContainer {
+                height: 72vh;
+                min-height: 560px;
+            }
+        }
+
+        /* 图例面板 */
+        #legendPanel {
+            position: absolute;
+            bottom: 24px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 16px;
+            padding: 14px 18px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            max-width: 220px;
+            font-size: 12px;
+            pointer-events: auto;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        #legendPanel h4 {
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #1a2b4a;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 6px;
+            font-weight: 600;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 3px 0;
+            cursor: pointer;
+            padding: 3px 4px;
+            border-radius: 6px;
+            transition: background 0.1s;
+        }
+        .legend-item:hover {
+            background: #f0f4ff;
+        }
+        .legend-item input[type="checkbox"] {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            flex-shrink: 0;
+            accent-color: #1a73e8;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            flex-shrink: 0;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .legend-label {
+            font-size: 12px;
+            color: #1f2937;
+            font-weight: 500;
+        }
+        .legend-count {
+            font-size: 10px;
+            color: #9ca3af;
+            margin-left: auto;
+            padding-left: 6px;
+        }
+        .legend-actions {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid #edf2f7;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .legend-actions button {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 4px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .legend-actions button:hover {
+            background: #1d4ed8;
+        }
+        .legend-actions button.secondary {
+            background: #6b7280;
+        }
+        .legend-actions button.secondary:hover {
+            background: #4b5563;
+        }
+        .legend-note {
+            margin-top: 6px;
+            font-size: 10px;
+            color: #9ca3af;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            #legendPanel {
+                bottom: 12px;
+                left: 12px;
+                padding: 10px 12px;
+                max-width: 170px;
+            }
+            #legendPanel h4 {
+                font-size: 11px;
+            }
+            .legend-item {
+                font-size: 10px;
+                padding: 2px 2px;
+            }
+            .legend-dot {
+                width: 10px;
+                height: 10px;
+                margin-right: 4px;
+            }
+            .legend-label {
+                font-size: 10px;
+            }
+            .legend-item input[type="checkbox"] {
+                width: 14px;
+                height: 14px;
+                margin-right: 4px;
+            }
+            .legend-actions button {
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+        }
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 14px 28px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            font-size: 15px;
+            color: #333;
+            pointer-events: none;
+        }
+        #mapError {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            text-align: center;
+            max-width: 90%;
+        }
+        #mapError p:first-child {
+            font-size: 16px;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        #mapError p {
+            font-size: 14px;
+            color: #555;
+            margin: 8px 0;
+        }
+        #mapError button {
+            margin-top: 10px;
+            padding: 6px 18px;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 0 16px;
+            color: #9ca3af;
+            font-size: 13px;
+            border-top: 1px solid #eef2f6;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 20px;
+            }
+            .header h1 small {
+                font-size: 12px;
+                display: block;
+                margin-left: 0;
+                margin-top: 4px;
+            }
+            .card {
+                padding: 14px 12px;
+            }
+            .card h2 {
+                font-size: 17px;
+            }
+            table {
+                font-size: 12px;
+                min-width: 480px;
+            }
+            th,
+            td {
+                padding: 6px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>🚗 北京·湖北·河南 自驾环线 <small>携宠·Model Y</small></h1>
+            <div class="sub">
+                <span>📅 9.25 – 10.6</span>
+                <span>🗺️ 先鄂后豫</span>
+                <span>⏱️ 每日 ≤500km</span>
+                <span>🏨 宠物友好</span>
+            </div>
+        </div>
+
+        <!-- 总览 -->
+        <div class="card">
+            <h2>📋 行程总览</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>日期</th><th>星期</th><th>行程</th><th>住宿地</th><th>车程</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>9/25</td><td>周五</td><td>北京 → 驻马店（过夜）</td><td>驻马店</td><td>~500km</td></tr>
+                        <tr><td>9/26</td><td>周六</td><td>驻马店 → 武汉</td><td>武汉</td><td>~350km</td></tr>
+                        <tr><td>9/27</td><td>周日</td><td>武汉游览（东湖/黄鹤楼）</td><td>武汉</td><td>—</td></tr>
+                        <tr><td>9/28</td><td>周一</td><td>武汉 → 随州</td><td>随州</td><td>~180km</td></tr>
+                        <tr><td>9/29</td><td>周二</td><td>随州游览（银杏谷）</td><td>随州</td><td>—</td></tr>
+                        <tr><td>9/30</td><td>周三</td><td>随州 → 洛阳</td><td>洛阳</td><td>~420km</td></tr>
+                        <tr><td>10/1</td><td>周四</td><td>洛阳游览（龙门石窟）</td><td>洛阳</td><td>—</td></tr>
+                        <tr><td>10/2</td><td>周五</td><td>洛阳游览（白马寺/洛邑古城）</td><td>洛阳</td><td>—</td></tr>
+                        <tr><td>10/3</td><td>周六</td><td>洛阳 → 许昌</td><td>许昌</td><td>~160km</td></tr>
+                        <tr><td>10/4</td><td>周日</td><td>许昌游览（曹魏古城/胖东来）</td><td>许昌</td><td>—</td></tr>
+                        <tr><td>10/5</td><td>周一</td><td>许昌 → 鹤壁</td><td>鹤壁</td><td>~220km</td></tr>
+                        <tr><td>10/6</td><td>周二</td><td>鹤壁 → 北京</td><td>北京</td><td>~510km</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="highlight-box">
+                ⭐ <strong>路线策略</strong>：去程经河北、河南南部进入湖北（武汉→随州）；返程经河南西部、中部北上（洛阳→许昌→鹤壁），不走回头路，感受不同人文。
+            </div>
+        </div>
+
+        <!-- 每日详情 -->
+        <div class="card">
+            <h2>📅 逐日详细安排</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>📍 Day 1-2：北京 → 武汉</h3>
+                    <ul class="list-dot">
+                        <li><strong>9/25</strong> 北京→驻马店（G4，约500km），过夜补电。</li>
+                        <li><strong>9/26</strong> 驻马店→武汉（约350km），下午抵达，入住东湖附近。</li>
+                        <li><span class="tag tag-blue">充电</span> 涿州、正定、信阳服务区；武汉东西湖超充。</li>
+                        <li><span class="tag tag-green">住宿</span> 主选：东湖岳家嘴民宿；备选：万达瑞华/光明万丽。</li>
+                    </ul>
+                    <h3 style="margin-top:18px;">📍 Day 3：武汉游览</h3>
+                    <ul class="list-dot">
+                        <li>上午 <strong>东湖绿道</strong>（✅ 宠物友好，免费，3-4h）。</li>
+                        <li>下午 <strong>黄鹤楼</strong>（❌ 不可带宠，¥70，需预约，轮流看狗）。</li>
+                        <li>美食：蔡林记热干面、巴厘龙虾。</li>
+                    </ul>
+                    <h3 style="margin-top:18px;">📍 Day 4-5：武汉 → 随州</h3>
+                    <ul class="list-dot">
+                        <li><strong>9/28</strong> 武汉→随州（G70，约180km）。</li>
+                        <li><strong>9/29</strong> 游览 <strong>千年银杏谷</strong>（¥78，3-4h，宠物需电话确认）。</li>
+                        <li><span class="tag tag-green">住宿</span> 主选：大乐之野·银杏谷（自带充电车位）。</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>📍 Day 6-8：随州 → 洛阳</h3>
+                    <ul class="list-dot">
+                        <li><strong>9/30</strong> 随州→洛阳（G70转G55，约420km），南阳服务区补电。</li>
+                        <li><strong>10/1</strong> 龙门石窟（¥90，❌ 不可带宠，需预约）。</li>
+                        <li><strong>10/2</strong> 白马寺（¥35，❌ 不可带宠）+ 洛邑古城（开放式）。</li>
+                        <li>美食：真不同水席、十字街夜市。</li>
+                        <li><span class="tag tag-green">住宿</span> 主选：IU酒店龙门石窟店；备选：其临/岸芷汀岚。</li>
+                    </ul>
+                    <h3 style="margin-top:18px;">📍 Day 9-10：洛阳 → 许昌</h3>
+                    <ul class="list-dot">
+                        <li><strong>10/3</strong> 洛阳→许昌（盐洛高速，约160km）。</li>
+                        <li><strong>10/4</strong> 曹魏古城（免费，开放式）+ 胖东来天使城（宠物寄存）。</li>
+                        <li><span class="tag tag-green">住宿</span> 主选：初见优选民宿（近胖东来，有充电桩）。</li>
+                    </ul>
+                    <h3 style="margin-top:18px;">📍 Day 11-12：许昌 → 鹤壁 → 北京</h3>
+                    <ul class="list-dot">
+                        <li><strong>10/5</strong> 许昌→鹤壁（G4，约220km），游浚县古城。</li>
+                        <li><strong>10/6</strong> 鹤壁→北京（G4，约510km），尽早出发避堵。</li>
+                        <li><span class="tag tag-green">住宿</span> 格林東方酒店（浚县古城店）。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 充电攻略 -->
+        <div class="card">
+            <h2>🔌 充电总攻略 <span class="badge">无焦虑</span></h2>
+            <div class="grid-2">
+                <div>
+                    <h3>特斯拉超充站</h3>
+                    <ul class="list-dot">
+                        <li><strong>武汉</strong> 东西湖中心(6桩/250kW)、凯德西城(9桩)、凯信大厦(12桩)</li>
+                        <li><strong>洛阳</strong> 正大国际广场(6桩/250kW)</li>
+                        <li><strong>鹤壁</strong> 中凯铂爵酒店(120kW)</li>
+                        <li><strong>许昌</strong> 中原国际饭店(120kW)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>高速服务区（国网）</h3>
+                    <ul class="list-dot">
+                        <li><strong>京港澳G4</strong>：涿州、正定、安阳、鹤壁、许昌、信阳（均有120kW+）</li>
+                        <li><strong>福银G70</strong>：南阳服务区（120kW）</li>
+                        <li><span class="tag tag-orange">💡 策略</span> 优先特斯拉超充；排队严重时果断下高速找超充；电量低于30%即补。</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box">
+                ⚡ <strong>节假日充电贴士</strong>：备好“加电”APP扫国网桩；京港澳河南段服务区充电车位占比已达30%，单桩最大功率600kW。
+            </div>
+        </div>
+
+        <!-- 宠物政策 + 必备 -->
+        <div class="card">
+            <h2>🐾 宠物友好政策 & 必备清单</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>📍 景区宠物政策</h3>
+                    <table style="min-width:auto;font-size:13px;">
+                        <tr><td>武汉东湖绿道</td><td><span class="tag tag-green">✅ 可带（牵绳）</span></td></tr>
+                        <tr><td>黄鹤楼/龙门石窟/白马寺</td><td><span class="tag tag-red">❌ 不可带</span></td></tr>
+                        <tr><td>随州银杏谷</td><td><span class="tag tag-orange">⚠️ 需电话确认</span></td></tr>
+                        <tr><td>洛邑古城/曹魏古城</td><td><span class="tag tag-blue">⚠️ 开放式可牵绳</span></td></tr>
+                        <tr><td>许昌胖东来</td><td><span class="tag tag-green">✅ 宠物寄存</span></td></tr>
+                    </table>
+                </div>
+                <div>
+                    <h3>🧳 携宠必备</h3>
+                    <ul class="list-dot">
+                        <li><strong>证件</strong>：狗证、疫苗本（跨省查验）</li>
+                        <li><strong>饮食</strong>：足量狗粮、便携水碗、零食</li>
+                        <li><strong>安全</strong>：车载安全带/航空箱、宠物模式</li>
+                        <li><strong>卫生</strong>：拾便袋、湿巾、尿垫</li>
+                        <li><strong>药品</strong>：驱虫药、晕车药、急救包</li>
+                    </ul>
+                    <div style="background:#fef9e7;padding:10px;border-radius:8px;margin-top:10px;font-size:13px;">
+                        ⚠️ 景区不让进时，轮流游览，勿将狗单独留车内超2小时（务必开启宠物模式/留缝）。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 地图 -->
+        <div class="card map-wrap">
+            <h2 style="border-left-color:#e74c3c;">🗺️ 交互式路线图 <span class="badge">悬停看详情 · 勾选筛选</span></h2>
+            <div id="mapContainer">
+                <div id="legendPanel">
+                    <h4>📍 图例筛选</h4>
+                    <div class="legend-item" data-type="hotel">
+                        <input type="checkbox" checked>
+                        <span class="legend-dot" style="background:#2563eb;"></span>
+                        <span class="legend-label">住宿</span>
+                        <span class="legend-count">主+备</span>
+                    </div>
+                    <div class="legend-item" data-type="scenic">
+                        <input type="checkbox" checked>
+                        <span class="legend-dot" style="background:#16a34a;"></span>
+                        <span class="legend-label">景点</span>
+                    </div>
+                    <div class="legend-item" data-type="charger">
+                        <input type="checkbox" checked>
+                        <span class="legend-dot" style="background:#f59e0b;"></span>
+                        <span class="legend-label">充电站</span>
+                    </div>
+                    <div class="legend-item" data-type="service">
+                        <input type="checkbox" checked>
+                        <span class="legend-dot" style="background:#64748b;"></span>
+                        <span class="legend-label">服务区</span>
+                    </div>
+                    <div class="legend-item" data-type="food">
+                        <input type="checkbox" checked>
+                        <span class="legend-dot" style="background:#e11d48;"></span>
+                        <span class="legend-label">美食</span>
+                    </div>
+                    <div class="legend-actions">
+                        <button id="resetViewBtn">🔄 重置视图</button>
+                        <button id="refreshMapBtn" class="secondary">⟳ 刷新</button>
+                    </div>
+                    <div class="legend-note">点击勾选筛选 · 悬停查看详情</div>
+                </div>
+                <div id="loading">🗺️ 地图加载中…</div>
+                <div id="mapError">
+                    <p>⚠️ 地图加载失败</p>
+                    <p>请检查网络连接，或确认高德地图 API Key 配置正确。</p>
+                    <p style="font-size:12px;color:#999;">错误详情请查看浏览器控制台（F12）</p>
+                    <button onclick="location.reload()">重试加载</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            ⚡ 自驾规划 · 北京→湖北→河南 · 携宠Model Y · 全程约3000km · 祝旅途愉快！
+        </div>
+    </div>
+
+    <!-- 高德地图 API -->
+    <script>
+        window._AMapSecurityConfig = {
+            securityJsCode: "8dea8562090a713e47d811c17a1d8806"
+        };
+    </script>
+    <script src="https://webapi.amap.com/maps?v=2.0&key=c2de27926382776d9281eb5531d9ac06&plugin=AMap.Driving,AMap.MarkerClusterer"
+    onerror="document.getElementById('mapError').style.display='block';document.getElementById('loading').style.display='none';">
+</script>
+
+<script>
+    // ======================== 数据定义 ========================
+    const mapData = [
+        // 住宿
+        { name: '武汉东湖岳家嘴民宿(主)', cat: 'hotel', lng: 114.371, lat: 30.593, info: '主选｜¥300-500｜宠物友好(需确认)｜停车有｜附近有超充' },
+        { name: '武汉万达瑞华酒店(备1)', cat: 'hotel', lng: 114.336, lat: 30.558, info: '备选｜¥400-500｜宠物友好(需确认)｜停车有｜有充电桩' },
+        { name: '武汉光明万丽酒店(备2)', cat: 'hotel', lng: 114.325, lat: 30.593, info: '备选｜¥350-450｜宠物友好(需确认)｜停车有｜附近有充电桩' },
+        { name: '大乐之野·银杏谷(主)', cat: 'hotel', lng: 113.373, lat: 31.442, info: '主选｜¥400-500｜✅宠物友好｜停车有｜有充电车位' },
+        { name: '随州裸心隐乡GRAND(备1)', cat: 'hotel', lng: 113.360, lat: 31.430, info: '备选｜¥400-500｜✅宠物友好(¥400)｜停车有｜充电需确认' },
+        { name: '麗枫酒店随州文峰店(备2)', cat: 'hotel', lng: 113.382, lat: 31.702, info: '备选｜¥300-400｜✅宠物友好｜停车有｜附近有充电桩' },
+        { name: 'IU酒店龙门石窟店(主)', cat: 'hotel', lng: 112.459, lat: 34.607, info: '主选｜¥300-400｜✅宠物友好｜停车免费｜附近有充电桩' },
+        { name: '其临酒店三川大道店(备1)', cat: 'hotel', lng: 112.496, lat: 34.688, info: '备选｜¥300-400｜✅宠物友好(免费)｜停车免费｜充电需确认' },
+        { name: '岸芷汀岚雅筑公寓(备2)', cat: 'hotel', lng: 112.468, lat: 34.674, info: '备选｜¥400-500｜✅宠物友好｜停车有｜有充电桩' },
+        { name: '初见优选民宿(主)', cat: 'hotel', lng: 113.855, lat: 34.035, info: '主选｜¥300-400｜✅宠物友好(免费)｜停车有｜有充电桩' },
+        { name: '詩雅花園酒店(备1)', cat: 'hotel', lng: 113.830, lat: 34.026, info: '备选｜¥300-400｜✅宠物友好(免费)｜停车免费｜有充电桩(交流)' },
+        { name: '東方精品酒店(备2)', cat: 'hotel', lng: 113.838, lat: 34.045, info: '备选｜¥300-400｜✅宠物友好(免费)｜大型停车场｜有充电桩(交流)' },
+        { name: '格林東方酒店浚县古城(主)', cat: 'hotel', lng: 114.552, lat: 35.677, info: '主选｜¥300-400｜✅宠物友好(免费)｜停车有｜有充电车位' },
+        { name: '7c民宿鹤淇大道店(备1)', cat: 'hotel', lng: 114.298, lat: 35.735, info: '备选｜¥250-350｜✅宠物友好｜停车有｜有充电桩' },
+        { name: '鹤壁非凡假日酒店(备2)', cat: 'hotel', lng: 114.200, lat: 35.900, info: '备选｜¥250-350｜✅宠物友好(免费)｜停车有｜充电需确认' },
+        { name: '驻马店爱克建国国际酒店(主)', cat: 'hotel', lng: 114.025, lat: 32.978, info: '主选｜¥400-500｜宠物友好(需确认)｜停车有｜附近有超充' },
+        // 景点
+        { name: '武汉东湖绿道', cat: 'scenic', lng: 114.355, lat: 30.552, info: '免费｜✅宠物友好(牵绳)｜建议3-4h｜全天开放｜不需预约' },
+        { name: '武汉黄鹤楼', cat: 'scenic', lng: 114.307, lat: 30.547, info: '¥70｜❌不可带宠｜建议2h｜8:00-18:00｜需预约' },
+        { name: '随州千年银杏谷', cat: 'scenic', lng: 113.373, lat: 31.442, info: '¥78+观光车¥20｜⚠️需电话确认｜3-4h｜8:00-18:00｜现场购票' },
+        { name: '随州炎帝神农故里', cat: 'scenic', lng: 113.322, lat: 31.850, info: '¥50-70｜⚠️需确认｜2-2.5h｜8:00-17:30｜现场购票' },
+        { name: '洛阳龙门石窟', cat: 'scenic', lng: 112.478, lat: 34.558, info: '¥90｜❌不可带宠｜3-4h｜8:00-18:00｜需预约' },
+        { name: '洛阳白马寺', cat: 'scenic', lng: 112.604, lat: 34.722, info: '¥35｜❌不可带宠｜2h｜7:30-18:00｜现场购票' },
+        { name: '洛阳洛邑古城', cat: 'scenic', lng: 112.478, lat: 34.681, info: '免费｜⚠️开放式可牵绳｜2h｜全天(夜景佳)｜不需预约' },
+        { name: '许昌曹魏古城', cat: 'scenic', lng: 113.835, lat: 34.035, info: '免费｜⚠️开放式可牵绳｜2-3h｜全天(夜景更佳)｜不需预约' },
+        { name: '许昌胖东来天使城', cat: 'scenic', lng: 113.855, lat: 34.040, info: '免费(超市)｜✅宠物寄存｜2-3h｜9:30-21:00｜不需预约' },
+        { name: '鹤壁浚县古城', cat: 'scenic', lng: 114.552, lat: 35.677, info: '¥60(挂牌)｜⚠️需确认｜2-3h｜全天｜现场购票' },
+        { name: '鹤壁云梦山', cat: 'scenic', lng: 114.050, lat: 35.613, info: '¥60｜⚠️需确认｜3-4h｜8:00-18:00｜现场购票' },
+        // 充电站
+        { name: '武汉东西湖特斯拉中心', cat: 'charger', lng: 114.150, lat: 30.624, info: '特斯拉超充｜6桩｜250kW' },
+        { name: '武汉凯德西城广场超充', cat: 'charger', lng: 114.205, lat: 30.584, info: '特斯拉超充｜9桩｜250kW' },
+        { name: '武汉凯信大厦超充', cat: 'charger', lng: 114.311, lat: 30.598, info: '特斯拉超充｜12桩｜250kW' },
+        { name: '洛阳正大国际广场超充', cat: 'charger', lng: 112.455, lat: 34.620, info: '特斯拉超充｜6桩｜250kW' },
+        { name: '鹤壁中凯铂爵酒店超充', cat: 'charger', lng: 114.298, lat: 35.735, info: '特斯拉超充｜—｜120kW' },
+        { name: '许昌中原国际饭店超充', cat: 'charger', lng: 113.855, lat: 34.030, info: '特斯拉超充｜—｜120kW' },
+        { name: '驻马店中鑫超充', cat: 'charger', lng: 114.025, lat: 32.978, info: '特斯拉超充｜—｜120kW' },
+        // 服务区
+        { name: '涿州服务区', cat: 'service', lng: 116.035, lat: 39.485, info: '有餐饮｜国网4桩/120kW' },
+        { name: '石家庄正定服务区', cat: 'service', lng: 114.570, lat: 38.137, info: '有餐饮｜国网60-70kW' },
+        { name: '安阳服务区', cat: 'service', lng: 114.393, lat: 36.103, info: '有餐饮｜国网120kW' },
+        { name: '鹤壁服务区', cat: 'service', lng: 114.280, lat: 35.830, info: '有餐饮｜国网/理想超充' },
+        { name: '许昌服务区', cat: 'service', lng: 113.900, lat: 34.000, info: '有餐饮｜国网8桩+小鹏2桩' },
+        { name: '信阳服务区', cat: 'service', lng: 114.100, lat: 32.200, info: '有餐饮｜国网120kW' },
+        { name: '南阳服务区', cat: 'service', lng: 112.500, lat: 33.000, info: '有餐饮｜国网120kW' },
+        { name: '藁城服务区', cat: 'service', lng: 114.800, lat: 38.000, info: '有餐饮｜国网160kW' },
+        // 美食
+        { name: '蔡林记热干面(武汉)', cat: 'food', lng: 114.305, lat: 30.592, info: '人均¥20-30｜多家分店｜6:00-20:00｜高峰期排队' },
+        { name: '巴厘龙虾(武汉)', cat: 'food', lng: 114.270, lat: 30.595, info: '人均¥100-150｜雪松路｜11:00-02:00｜晚餐排队' },
+        { name: '真不同饭店(洛阳)', cat: 'food', lng: 112.470, lat: 34.680, info: '人均¥80-120｜老城区｜11:00-21:00｜建议预约' },
+        { name: '老洛阳面馆(洛阳)', cat: 'food', lng: 112.460, lat: 34.670, info: '人均¥30-50｜多家分店｜10:00-22:00｜较少排队' },
+        { name: '十字街夜市(洛阳)', cat: 'food', lng: 112.476, lat: 34.684, info: '人均¥20-50｜老城十字街｜18:00-24:00｜晚上人多' },
+    ];
+
+    const catColor = {
+        hotel: '#2563eb',
+        scenic: '#16a34a',
+        charger: '#f59e0b',
+        service: '#64748b',
+        food: '#e11d48'
+    };
+
+    // ======================== 地图初始化 ========================
+    let map = null;
+    let markers = [];
+    let markerCluster = null;
+
+    function initMap() {
+        if (typeof AMap === 'undefined') {
+            document.getElementById('mapError').style.display = 'block';
+            document.getElementById('loading').style.display = 'none';
+            return;
+        }
+
+        document.getElementById('loading').textContent = '🗺️ 地图加载中…';
+        document.getElementById('mapError').style.display = 'none';
+
+        map = new AMap.Map('mapContainer', {
+            zoom: 6,
+            center: [113.5, 33.2],
+            mapStyle: 'amap://styles/whitesmoke',
+            viewMode: '2D',
+            pitch: 0,
+            showIndoorMap: false,
+            features: ['bg', 'road', 'building', 'point']
+        });
+
+        // 地图加载完成
+        map.on('complete', function() {
+            document.getElementById('loading').style.display = 'none';
+            addMarkers();
+            drawRoute();
+            // 初始化后适配视图
+            map.setFitView();
+        });
+
+        // 添加控件（缩放、全屏等）
+        map.addControl(new AMap.Scale()); // 比例尺
+        // 工具栏（缩放、复位）
+        const toolbar = new AMap.ToolBar({
+            position: 'RT',
+            offset: new AMap.Pixel(10, 10),
+            direction: 'vertical'
+        });
+        map.addControl(toolbar);
+        // 全屏按钮
+        const controlBar = new AMap.ControlBar({
+            position: 'RT',
+            offset: new AMap.Pixel(10, 80)
+        });
+        map.addControl(controlBar);
+
+        // ---- 图例筛选逻辑 ----
+        const legendCheckboxes = document.querySelectorAll('.legend-item input[type="checkbox"]');
+        legendCheckboxes.forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                updateMarkersVisibility();
+            });
+        });
+
+        // ---- 重置视图按钮 ----
+        document.getElementById('resetViewBtn').addEventListener('click', function() {
+            if (map) {
+                map.setFitView();
+                // 也可同时重置缩放和中心
+                // map.setZoomAndCenter(6, [113.5, 33.2]);
+            }
+        });
+
+        // ---- 刷新按钮（重载地图数据） ----
+        document.getElementById('refreshMapBtn').addEventListener('click', function() {
+            if (map) {
+                // 清除所有覆盖物
+                map.clearMap();
+                markers = [];
+                if (markerCluster) {
+                    markerCluster.setMap(null);
+                    markerCluster = null;
+                }
+                // 重新添加标记和路线
+                addMarkers();
+                drawRoute();
+                map.setFitView();
+            }
+        });
+
+        // 超时保护
+        setTimeout(function() {
+            if (document.getElementById('loading').style.display !== 'none') {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('mapError').style.display = 'block';
+            }
+        }, 10000);
+    }
+
+    // 更新标记可见性（根据checkbox状态）
+    function updateMarkersVisibility() {
+        const checkboxes = document.querySelectorAll('.legend-item input[type="checkbox"]');
+        const visibleCats = [];
+        checkboxes.forEach(function(cb) {
+            const type = cb.closest('.legend-item').dataset.type;
+            if (cb.checked) {
+                visibleCats.push(type);
+            }
+        });
+
+        // 控制每个marker的显示隐藏
+        markers.forEach(function(m) {
+            if (visibleCats.includes(m.__cat)) {
+                m.show();
+            } else {
+                m.hide();
+            }
+        });
+
+        // 更新聚合器：只聚合可见的marker
+        if (markerCluster) {
+            const visibleMarkers = markers.filter(function(m) {
+                return visibleCats.includes(m.__cat);
+            });
+            markerCluster.setMarkers(visibleMarkers);
+        }
+    }
+
+    function addMarkers() {
+        mapData.forEach(function(item) {
+            const color = catColor[item.cat] || '#888';
+            const marker = new AMap.Marker({
+                position: [item.lng, item.lat],
+                title: item.name,
+                offset: new AMap.Pixel(-8, -8),
+                content: '<div style="width:16px;height:16px;border-radius:50%;background:' + color +
+                    ';border:2px solid white;box-shadow:0 1px 5px rgba(0,0,0,0.3);"></div>',
+                __data: item,
+                __cat: item.cat
+            });
+
+            // 悬停信息
+            marker.on('mouseover', function() {
+                const info = item.info || '';
+                const html = '<div style="min-width:200px;max-width:300px;padding:4px 2px;font-size:13px;line-height:1.5;">' +
+                    '<div style="font-weight:bold;font-size:15px;color:#1a73e8;margin-bottom:4px;">' + item.name + '</div>' +
+                    '<div style="color:#444;">' + info.replace(/\|/g, '｜') + '</div>' +
+                    '</div>';
+                marker.setLabel({
+                    content: html,
+                    direction: 'top',
+                    offset: new AMap.Pixel(0, -10)
+                });
+            });
+            marker.on('mouseout', function() {
+                marker.setLabel(null);
+            });
+
+            map.add(marker);
+            markers.push(marker);
+        });
+
+        // 创建聚合（初始全部可见）
+        try {
+            markerCluster = new AMap.MarkerClusterer(map, markers, {
+                gridSize: 60,
+                maxZoom: 13,
+                minClusterSize: 2,
+                averageCenter: true,
+                styles: [{
+                    url: 'https://webapi.amap.com/theme/v1.3/markers/b/mark_bs.png',
+                    size: new AMap.Size(40, 50),
+                    textColor: '#fff',
+                    fontSize: 14,
+                    offset: new AMap.Pixel(-20, -25)
+                }]
+            });
+        } catch (e) {
+            console.warn('聚合创建失败，使用普通标记', e);
+        }
+    }
+
+    function drawRoute() {
+        // 去程：北京 → 驻马店 → 武汉 → 随州
+        const way1 = [
+            [116.397, 39.908],
+            [114.025, 32.978],
+            [114.305, 30.592],
+            [113.382, 31.702]
+        ];
+        // 返程：随州 → 洛阳 → 许昌 → 鹤壁 → 北京
+        const way2 = [
+            [113.382, 31.702],
+            [112.454, 34.618],
+            [113.855, 34.035],
+            [114.298, 35.735],
+            [116.397, 39.908]
+        ];
+
+        const driving1 = new AMap.Driving({
+            map: map,
+            panel: null,
+            autoFitView: false,
+            showTraffic: false,
+            policy: AMap.DrivingPolicy.LEAST_TIME
+        });
+        const driving2 = new AMap.Driving({
+            map: map,
+            panel: null,
+            autoFitView: false,
+            showTraffic: false,
+            policy: AMap.DrivingPolicy.LEAST_TIME
+        });
+
+        // 去程
+        const start1 = way1[0],
+            end1 = way1[way1.length - 1];
+        const mids1 = way1.slice(1, -1).map(p => new AMap.LngLat(p[0], p[1]));
+        driving1.search(
+            new AMap.LngLat(start1[0], start1[1]),
+            new AMap.LngLat(end1[0], end1[1]), { waypoints: mids1 },
+            function(status, result) {
+                if (status === 'complete' && result.routes && result.routes[0]) {
+                    const path = result.routes[0].steps.map(s => s.path).flat();
+                    new AMap.Polyline({
+                        map: map,
+                        path: path,
+                        strokeColor: '#3498db',
+                        strokeWeight: 5,
+                        strokeStyle: 'solid',
+                        strokeOpacity: 0.7,
+                        showDir: true
+                    });
+                }
+            }
+        );
+
+        // 返程
+        const start2 = way2[0],
+            end2 = way2[way2.length - 1];
+        const mids2 = way2.slice(1, -1).map(p => new AMap.LngLat(p[0], p[1]));
+        driving2.search(
+            new AMap.LngLat(start2[0], start2[1]),
+            new AMap.LngLat(end2[0], end2[1]), { waypoints: mids2 },
+            function(status, result) {
+                if (status === 'complete' && result.routes && result.routes[0]) {
+                    const path = result.routes[0].steps.map(s => s.path).flat();
+                    new AMap.Polyline({
+                        map: map,
+                        path: path,
+                        strokeColor: '#e74c3c',
+                        strokeWeight: 5,
+                        strokeStyle: 'dashed',
+                        strokeOpacity: 0.7,
+                        showDir: true
+                    });
+                }
+            }
+        );
+    }
+
+    // ---------- 启动 ----------
+    if (document.readyState === 'complete') {
+        initMap();
+    } else {
+        window.addEventListener('load', initMap);
+    }
+</script>
+
+</body>
+</html>
