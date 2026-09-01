@@ -315,6 +315,130 @@
             text-align: center;
         }
 
+        /* 地图控件：缩放 + 全屏 */
+        #mapControls {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            pointer-events: auto;
+        }
+        #mapControls button {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.96);
+            color: #1f2937;
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+            transition: background 0.15s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #mapControls button:hover {
+            background: #f0f4ff;
+        }
+        #mapControls button:active {
+            transform: scale(0.96);
+        }
+        #mapControls button.active {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        /* 标记 hover 信息弹层 */
+        #markerTooltip {
+            position: absolute;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            display: none;
+            pointer-events: none;
+            max-width: min(320px, calc(100vw - 48px));
+            filter: drop-shadow(0 8px 24px rgba(15, 23, 42, 0.18));
+            transition: opacity 0.12s ease;
+        }
+        #markerTooltip.visible {
+            display: block;
+        }
+        #markerTooltip .tooltip-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+        }
+        #markerTooltip .tooltip-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+            border-bottom: 1px solid #eef2f7;
+        }
+        #markerTooltip .tooltip-cat {
+            flex-shrink: 0;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.4;
+        }
+        #markerTooltip .tooltip-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.35;
+        }
+        #markerTooltip .tooltip-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 10px 12px 12px;
+        }
+        #markerTooltip .tooltip-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: #f1f5f9;
+            color: #334155;
+            font-size: 12px;
+            line-height: 1.35;
+            white-space: nowrap;
+        }
+        #markerTooltip .tooltip-arrow {
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            transform: rotate(45deg);
+            margin: -7px auto 0;
+        }
+        .map-marker-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        #mapContainer:fullscreen {
+            width: 100vw;
+            height: 100vh;
+            min-height: 100vh;
+            border-radius: 0;
+        }
+
         @media (max-width: 480px) {
             #legendPanel {
                 bottom: 12px;
@@ -585,6 +709,12 @@
         <div class="card map-wrap">
             <h2 style="border-left-color:#e74c3c;">🗺️ 交互式路线图 <span class="badge">悬停看详情 · 勾选筛选</span></h2>
             <div id="mapContainer">
+                <div id="mapControls" aria-label="地图控件">
+                    <button id="zoomInBtn" type="button" title="放大">+</button>
+                    <button id="zoomOutBtn" type="button" title="缩小">−</button>
+                    <button id="fullscreenBtn" type="button" title="全屏">⛶</button>
+                </div>
+                <div id="markerTooltip" aria-hidden="true"></div>
                 <div id="legendPanel">
                     <h4>📍 图例筛选</h4>
                     <div class="legend-item" data-type="hotel">
@@ -640,7 +770,7 @@
             securityJsCode: "8dea8562090a713e47d811c17a1d8806"
         };
     </script>
-    <script src="https://webapi.amap.com/maps?v=2.0&key=c2de27926382776d9281eb5531d9ac06&plugin=AMap.Driving,AMap.MarkerClusterer"
+    <script src="https://webapi.amap.com/maps?v=2.0&key=c2de27926382776d9281eb5531d9ac06&plugin=AMap.Driving,AMap.Scale"
     onerror="document.getElementById('mapError').style.display='block';document.getElementById('loading').style.display='none';">
 </script>
 
@@ -709,10 +839,194 @@
         food: '#e11d48'
     };
 
+    const catName = {
+        hotel: '住宿',
+        scenic: '景点',
+        charger: '充电站',
+        service: '服务区',
+        food: '美食'
+    };
+
     // ======================== 地图初始化 ========================
     let map = null;
     let markers = [];
-    let markerCluster = null;
+    let drivingInstances = [];
+    let defaultView = { center: [113.5, 33.2], zoom: 6 };
+    let markerTooltipEl = null;
+    let activeTooltipMarker = null;
+
+    function escapeHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function buildTooltipHtml(item) {
+        const color = catColor[item.cat] || '#64748b';
+        const label = catName[item.cat] || item.cat;
+        const tags = (item.info || '').split('|').map(function(part) {
+            return part.trim();
+        }).filter(Boolean);
+        const tagsHtml = tags.map(function(tag) {
+            return '<span class="tooltip-tag">' + escapeHtml(tag) + '</span>';
+        }).join('');
+
+        return '<div class="tooltip-card">' +
+            '<div class="tooltip-header">' +
+            '<span class="tooltip-cat" style="background:' + color + ';">' + escapeHtml(label) + '</span>' +
+            '<span class="tooltip-name">' + escapeHtml(item.name) + '</span>' +
+            '</div>' +
+            '<div class="tooltip-tags">' + tagsHtml + '</div>' +
+            '</div>' +
+            '<div class="tooltip-arrow"></div>';
+    }
+
+    function positionMarkerTooltip(marker) {
+        if (!map || !markerTooltipEl || !marker) {
+            return;
+        }
+        const pos = marker.getPosition();
+        const pixel = map.lngLatToContainer(pos);
+        markerTooltipEl.style.left = pixel.x + 'px';
+        markerTooltipEl.style.top = (pixel.y - 14) + 'px';
+        markerTooltipEl.style.transform = 'translate(-50%, -100%)';
+    }
+
+    function showMarkerTooltip(item, marker) {
+        if (!markerTooltipEl) {
+            markerTooltipEl = document.getElementById('markerTooltip');
+        }
+        activeTooltipMarker = marker;
+        markerTooltipEl.innerHTML = buildTooltipHtml(item);
+        markerTooltipEl.classList.add('visible');
+        markerTooltipEl.setAttribute('aria-hidden', 'false');
+        positionMarkerTooltip(marker);
+    }
+
+    function hideMarkerTooltip() {
+        activeTooltipMarker = null;
+        if (!markerTooltipEl) {
+            markerTooltipEl = document.getElementById('markerTooltip');
+        }
+        if (markerTooltipEl) {
+            markerTooltipEl.classList.remove('visible');
+            markerTooltipEl.setAttribute('aria-hidden', 'true');
+            markerTooltipEl.innerHTML = '';
+        }
+    }
+
+    function bindTooltipMapEvents() {
+        if (!map) {
+            return;
+        }
+        map.on('mapmove', function() {
+            if (activeTooltipMarker) {
+                positionMarkerTooltip(activeTooltipMarker);
+            }
+        });
+        map.on('zoomchange', function() {
+            if (activeTooltipMarker) {
+                positionMarkerTooltip(activeTooltipMarker);
+            }
+        });
+        map.on('dragstart', hideMarkerTooltip);
+    }
+
+    function getVisibleCategories() {
+        const visibleCats = [];
+        document.querySelectorAll('.legend-item input[type="checkbox"]').forEach(function(cb) {
+            const type = cb.closest('.legend-item').dataset.type;
+            if (cb.checked) {
+                visibleCats.push(type);
+            }
+        });
+        return visibleCats;
+    }
+
+    function getMarkerCategory(marker) {
+        const ext = marker.getExtData();
+        return ext && ext.cat ? ext.cat : null;
+    }
+
+    function getVisibleMarkers() {
+        return markers.filter(function(m) {
+            return getVisibleCategories().includes(getMarkerCategory(m));
+        });
+    }
+
+    function fitMapToContent() {
+        if (!map) {
+            return;
+        }
+        const visibleMarkers = getVisibleMarkers();
+        if (visibleMarkers.length > 0) {
+            map.setFitView(visibleMarkers, false, [80, 80, 80, 280]);
+        } else if (markers.length > 0) {
+            map.setFitView(markers, false, [80, 80, 80, 280]);
+        } else {
+            map.setZoomAndCenter(defaultView.zoom, defaultView.center);
+        }
+    }
+
+    function clearRoutes() {
+        drivingInstances.forEach(function(driving) {
+            driving.clear();
+        });
+        drivingInstances = [];
+    }
+
+    function bindLegendFilters() {
+        document.querySelectorAll('.legend-item').forEach(function(item) {
+            item.addEventListener('click', function(e) {
+                if (e.target.tagName === 'INPUT') {
+                    return;
+                }
+                const cb = item.querySelector('input[type="checkbox"]');
+                cb.checked = !cb.checked;
+                cb.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+        });
+
+        document.querySelectorAll('.legend-item input[type="checkbox"]').forEach(function(cb) {
+            cb.addEventListener('change', updateMarkersVisibility);
+        });
+    }
+
+    function bindMapControls() {
+        document.getElementById('zoomInBtn').addEventListener('click', function() {
+            if (map) {
+                map.zoomIn();
+            }
+        });
+        document.getElementById('zoomOutBtn').addEventListener('click', function() {
+            if (map) {
+                map.zoomOut();
+            }
+        });
+
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const mapContainer = document.getElementById('mapContainer');
+
+        function syncFullscreenButton() {
+            const active = !!document.fullscreenElement;
+            fullscreenBtn.classList.toggle('active', active);
+            fullscreenBtn.title = active ? '退出全屏' : '全屏';
+            fullscreenBtn.textContent = active ? '⛶' : '⛶';
+        }
+
+        fullscreenBtn.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                mapContainer.requestFullscreen().catch(function(err) {
+                    console.warn('全屏切换失败', err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+        document.addEventListener('fullscreenchange', syncFullscreenButton);
+    }
 
     function initMap() {
         if (typeof AMap === 'undefined') {
@@ -737,60 +1051,37 @@
         // 地图加载完成
         map.on('complete', function() {
             document.getElementById('loading').style.display = 'none';
+            markerTooltipEl = document.getElementById('markerTooltip');
+            bindTooltipMapEvents();
             addMarkers();
             drawRoute();
-            // 初始化后适配视图
-            map.setFitView();
+            setTimeout(fitMapToContent, 800);
         });
 
-        // 添加控件（缩放、全屏等）
-        map.addControl(new AMap.Scale()); // 比例尺
-        // 工具栏（缩放、复位）
-        const toolbar = new AMap.ToolBar({
-            position: 'RT',
-            offset: new AMap.Pixel(10, 10),
-            direction: 'vertical'
-        });
-        map.addControl(toolbar);
-        // 全屏按钮
-        const controlBar = new AMap.ControlBar({
-            position: 'RT',
-            offset: new AMap.Pixel(10, 80)
-        });
-        map.addControl(controlBar);
+        if (typeof AMap.Scale === 'function') {
+            map.addControl(new AMap.Scale({ position: 'LB' }));
+        }
 
-        // ---- 图例筛选逻辑 ----
-        const legendCheckboxes = document.querySelectorAll('.legend-item input[type="checkbox"]');
-        legendCheckboxes.forEach(function(cb) {
-            cb.addEventListener('change', function() {
-                updateMarkersVisibility();
-            });
-        });
+        bindLegendFilters();
+        bindMapControls();
 
-        // ---- 重置视图按钮 ----
         document.getElementById('resetViewBtn').addEventListener('click', function() {
-            if (map) {
-                map.setFitView();
-                // 也可同时重置缩放和中心
-                // map.setZoomAndCenter(6, [113.5, 33.2]);
-            }
+            fitMapToContent();
         });
 
-        // ---- 刷新按钮（重载地图数据） ----
         document.getElementById('refreshMapBtn').addEventListener('click', function() {
-            if (map) {
-                // 清除所有覆盖物
-                map.clearMap();
-                markers = [];
-                if (markerCluster) {
-                    markerCluster.setMap(null);
-                    markerCluster = null;
-                }
-                // 重新添加标记和路线
-                addMarkers();
-                drawRoute();
-                map.setFitView();
+            if (!map) {
+                return;
             }
+            hideMarkerTooltip();
+            markers.forEach(function(m) {
+                map.remove(m);
+            });
+            markers = [];
+            clearRoutes();
+            addMarkers();
+            drawRoute();
+            setTimeout(fitMapToContent, 800);
         });
 
         // 超时保护
@@ -802,90 +1093,49 @@
         }, 10000);
     }
 
-    // 更新标记可见性（根据checkbox状态）
     function updateMarkersVisibility() {
-        const checkboxes = document.querySelectorAll('.legend-item input[type="checkbox"]');
-        const visibleCats = [];
-        checkboxes.forEach(function(cb) {
-            const type = cb.closest('.legend-item').dataset.type;
-            if (cb.checked) {
-                visibleCats.push(type);
-            }
-        });
-
-        // 控制每个marker的显示隐藏
+        hideMarkerTooltip();
+        const visibleCats = getVisibleCategories();
         markers.forEach(function(m) {
-            if (visibleCats.includes(m.__cat)) {
+            if (visibleCats.includes(getMarkerCategory(m))) {
                 m.show();
             } else {
                 m.hide();
             }
         });
-
-        // 更新聚合器：只聚合可见的marker
-        if (markerCluster) {
-            const visibleMarkers = markers.filter(function(m) {
-                return visibleCats.includes(m.__cat);
-            });
-            markerCluster.setMarkers(visibleMarkers);
-        }
+        fitMapToContent();
     }
 
     function addMarkers() {
         mapData.forEach(function(item) {
             const color = catColor[item.cat] || '#888';
+            const dotEl = document.createElement('div');
+            dotEl.className = 'map-marker-dot';
+            dotEl.style.background = color;
+
             const marker = new AMap.Marker({
                 position: [item.lng, item.lat],
-                title: item.name,
                 offset: new AMap.Pixel(-8, -8),
-                content: '<div style="width:16px;height:16px;border-radius:50%;background:' + color +
-                    ';border:2px solid white;box-shadow:0 1px 5px rgba(0,0,0,0.3);"></div>',
-                __data: item,
-                __cat: item.cat
+                content: dotEl,
+                bubble: true
             });
+            marker.setExtData({ cat: item.cat, data: item });
 
-            // 悬停信息
-            marker.on('mouseover', function() {
-                const info = item.info || '';
-                const html = '<div style="min-width:200px;max-width:300px;padding:4px 2px;font-size:13px;line-height:1.5;">' +
-                    '<div style="font-weight:bold;font-size:15px;color:#1a73e8;margin-bottom:4px;">' + item.name + '</div>' +
-                    '<div style="color:#444;">' + info.replace(/\|/g, '｜') + '</div>' +
-                    '</div>';
-                marker.setLabel({
-                    content: html,
-                    direction: 'top',
-                    offset: new AMap.Pixel(0, -10)
-                });
+            dotEl.addEventListener('mouseenter', function() {
+                showMarkerTooltip(item, marker);
             });
-            marker.on('mouseout', function() {
-                marker.setLabel(null);
+            dotEl.addEventListener('mouseleave', function() {
+                hideMarkerTooltip();
             });
 
             map.add(marker);
             markers.push(marker);
         });
-
-        // 创建聚合（初始全部可见）
-        try {
-            markerCluster = new AMap.MarkerClusterer(map, markers, {
-                gridSize: 60,
-                maxZoom: 13,
-                minClusterSize: 2,
-                averageCenter: true,
-                styles: [{
-                    url: 'https://webapi.amap.com/theme/v1.3/markers/b/mark_bs.png',
-                    size: new AMap.Size(40, 50),
-                    textColor: '#fff',
-                    fontSize: 14,
-                    offset: new AMap.Pixel(-20, -25)
-                }]
-            });
-        } catch (e) {
-            console.warn('聚合创建失败，使用普通标记', e);
-        }
     }
 
     function drawRoute() {
+        clearRoutes();
+
         // 去程：北京 → 驻马店 → 武汉 → 随州
         const way1 = [
             [116.397, 39.908],
@@ -916,51 +1166,22 @@
             showTraffic: false,
             policy: AMap.DrivingPolicy.LEAST_TIME
         });
+        drivingInstances.push(driving1, driving2);
 
-        // 去程
-        const start1 = way1[0],
-            end1 = way1[way1.length - 1];
-        const mids1 = way1.slice(1, -1).map(p => new AMap.LngLat(p[0], p[1]));
+        const start1 = way1[0], end1 = way1[way1.length - 1];
+        const mids1 = way1.slice(1, -1).map(function(p) { return new AMap.LngLat(p[0], p[1]); });
         driving1.search(
             new AMap.LngLat(start1[0], start1[1]),
-            new AMap.LngLat(end1[0], end1[1]), { waypoints: mids1 },
-            function(status, result) {
-                if (status === 'complete' && result.routes && result.routes[0]) {
-                    const path = result.routes[0].steps.map(s => s.path).flat();
-                    new AMap.Polyline({
-                        map: map,
-                        path: path,
-                        strokeColor: '#3498db',
-                        strokeWeight: 5,
-                        strokeStyle: 'solid',
-                        strokeOpacity: 0.7,
-                        showDir: true
-                    });
-                }
-            }
+            new AMap.LngLat(end1[0], end1[1]),
+            { waypoints: mids1 }
         );
 
-        // 返程
-        const start2 = way2[0],
-            end2 = way2[way2.length - 1];
-        const mids2 = way2.slice(1, -1).map(p => new AMap.LngLat(p[0], p[1]));
+        const start2 = way2[0], end2 = way2[way2.length - 1];
+        const mids2 = way2.slice(1, -1).map(function(p) { return new AMap.LngLat(p[0], p[1]); });
         driving2.search(
             new AMap.LngLat(start2[0], start2[1]),
-            new AMap.LngLat(end2[0], end2[1]), { waypoints: mids2 },
-            function(status, result) {
-                if (status === 'complete' && result.routes && result.routes[0]) {
-                    const path = result.routes[0].steps.map(s => s.path).flat();
-                    new AMap.Polyline({
-                        map: map,
-                        path: path,
-                        strokeColor: '#e74c3c',
-                        strokeWeight: 5,
-                        strokeStyle: 'dashed',
-                        strokeOpacity: 0.7,
-                        showDir: true
-                    });
-                }
-            }
+            new AMap.LngLat(end2[0], end2[1]),
+            { waypoints: mids2 }
         );
     }
 
