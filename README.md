@@ -164,9 +164,7 @@ HTML 要求：
 
 所有 POI 写入 `mapData` 数组，字段：
 
-```javascript
 { name: '名称', cat: 'hotel|scenic|charger|service|food', lng: 经度, lat: 纬度, info: '字段1|字段2|字段3...' }
-```
 
 - 经纬度必须精确，禁止重叠到无法选中
 - 每个住宿城市标记主选 + 2 个备选（共 3 个 hotel 点）
@@ -264,7 +262,6 @@ amapKey: "{{amapKey}}"
 ---
 
 请按以上全部要求，输出完整行程安排 + 可直接在浏览器打开的 HTML 单文件。
-```
 
 ---
 
@@ -300,3 +297,4 @@ amapKey: "{{amapKey}}"
 ## 参考实现
 
 已验证的 HTML 样例：`[docs/deepseek_html_20260901_ed9784.html](https://alvincode.github.io/travelplan/%E5%8C%97%E4%BA%AC%E6%B9%96%E5%8C%97%E6%B2%B3%E5%8D%97%E8%87%AA%E9%A9%BE%E6%B8%B8-2026.html)`
+```
